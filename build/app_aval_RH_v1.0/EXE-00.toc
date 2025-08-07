@@ -1,0 +1,3446 @@
+('Y:\\Wagner\\Programações\\RH\\Questionário '
+ 'ENIND\\App\\dist\\app_aval_RH_v1.0.exe',
+ True,
+ False,
+ False,
+ ['Y:\\Wagner\\Programações\\RH\\Questionário ENIND\\App\\enind.ico'],
+ None,
+ False,
+ False,
+ b'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<assembly xmlns='
+ b'"urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">\n  <trustInfo x'
+ b'mlns="urn:schemas-microsoft-com:asm.v3">\n    <security>\n      <requested'
+ b'Privileges>\n        <requestedExecutionLevel level="asInvoker" uiAccess='
+ b'"false"/>\n      </requestedPrivileges>\n    </security>\n  </trustInfo>\n  '
+ b'<compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">\n    <'
+ b'application>\n      <supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f'
+ b'0}"/>\n      <supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}"/>\n '
+ b'     <supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}"/>\n      <s'
+ b'upportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}"/>\n      <supporte'
+ b'dOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}"/>\n    </application>\n  <'
+ b'/compatibility>\n  <application xmlns="urn:schemas-microsoft-com:asm.v3">'
+ b'\n    <windowsSettings>\n      <longPathAware xmlns="http://schemas.micros'
+ b'oft.com/SMI/2016/WindowsSettings">true</longPathAware>\n    </windowsSett'
+ b'ings>\n  </application>\n  <dependency>\n    <dependentAssembly>\n      <ass'
+ b'emblyIdentity type="win32" name="Microsoft.Windows.Common-Controls" version='
+ b'"6.0.0.0" processorArchitecture="*" publicKeyToken="6595b64144ccf1df" langua'
+ b'ge="*"/>\n    </dependentAssembly>\n  </dependency>\n</assembly>',
+ True,
+ False,
+ None,
+ None,
+ None,
+ 'Y:\\Wagner\\Programações\\RH\\Questionário '
+ 'ENIND\\App\\build\\app_aval_RH_v1.0\\app_aval_RH_v1.0.pkg',
+ [('pyi-contents-directory _internal', '', 'OPTION'),
+  ('PYZ-00.pyz',
+   'Y:\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\build\\app_aval_RH_v1.0\\PYZ-00.pyz',
+   'PYZ'),
+  ('struct',
+   'Y:\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\build\\app_aval_RH_v1.0\\localpycs\\struct.pyc',
+   'PYMODULE'),
+  ('pyimod01_archive',
+   'Y:\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\build\\app_aval_RH_v1.0\\localpycs\\pyimod01_archive.pyc',
+   'PYMODULE'),
+  ('pyimod02_importers',
+   'Y:\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\build\\app_aval_RH_v1.0\\localpycs\\pyimod02_importers.pyc',
+   'PYMODULE'),
+  ('pyimod03_ctypes',
+   'Y:\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\build\\app_aval_RH_v1.0\\localpycs\\pyimod03_ctypes.pyc',
+   'PYMODULE'),
+  ('pyimod04_pywin32',
+   'Y:\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\build\\app_aval_RH_v1.0\\localpycs\\pyimod04_pywin32.pyc',
+   'PYMODULE'),
+  ('pyiboot01_bootstrap',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\PyInstaller\\loader\\pyiboot01_bootstrap.py',
+   'PYSOURCE'),
+  ('pyi_rth_inspect',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_inspect.py',
+   'PYSOURCE'),
+  ('pyi_rth_pkgutil',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_pkgutil.py',
+   'PYSOURCE'),
+  ('pyi_rth_multiprocessing',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_multiprocessing.py',
+   'PYSOURCE'),
+  ('pyi_rth_setuptools',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_setuptools.py',
+   'PYSOURCE'),
+  ('pyi_rth_localhost_fletd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_cli\\__pyinstaller\\rthooks\\pyi_rth_localhost_fletd.py',
+   'PYSOURCE'),
+  ('app_aval_RH_v1.0',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\app_aval_RH_v1.0.py',
+   'PYSOURCE'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-profile-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-profile-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-locale-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-locale-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-memory-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-memory-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\window_to_front_plugin.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\window_to_front_plugin.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-processenvironment-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-processenvironment-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-process-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-process-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-handle-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-handle-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\geolocator_windows_plugin.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\geolocator_windows_plugin.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-convert-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-convert-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-errorhandling-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-errorhandling-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-sysinfo-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-sysinfo-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\vccorlib140.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\vccorlib140.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-timezone-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-timezone-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-console-l1-2-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-console-l1-2-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-eventing-provider-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-eventing-provider-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-synch-l1-2-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-synch-l1-2-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-namedpipe-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-namedpipe-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\concrt140.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\concrt140.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-runtime-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-runtime-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\ucrtbased.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\ucrtbased.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\flet.exe',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\flet.exe',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-synch-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-synch-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\vcruntime140d.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\vcruntime140d.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\permission_handler_windows_plugin.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\permission_handler_windows_plugin.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\media_kit_native_event_loop.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\media_kit_native_event_loop.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\libEGL.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\libEGL.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-file-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-file-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-processthreads-l1-1-1.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-processthreads-l1-1-1.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-rtlsupport-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-rtlsupport-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\libc++.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\libc++.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-utility-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-utility-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\record_windows_plugin.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\record_windows_plugin.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\rive_common_plugin.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\rive_common_plugin.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\flutter_windows.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\flutter_windows.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\screen_retriever_windows_plugin.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\screen_retriever_windows_plugin.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\d3dcompiler_47.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\d3dcompiler_47.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-datetime-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-datetime-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-filesystem-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-filesystem-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\vccorlib140d.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\vccorlib140d.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\vulkan-1.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\vulkan-1.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\vcruntime140.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\vcruntime140.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-util-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-util-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\libGLESv2.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\libGLESv2.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-libraryloader-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-libraryloader-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-string-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-string-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-stdio-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-stdio-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-heap-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-heap-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-environment-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-environment-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-string-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-string-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-multibyte-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-multibyte-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\media_kit_libs_windows_video_plugin.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\media_kit_libs_windows_video_plugin.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\window_manager_plugin.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\window_manager_plugin.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\screen_brightness_windows_plugin.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\screen_brightness_windows_plugin.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-time-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-time-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-debug-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-debug-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-file-l1-2-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-file-l1-2-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-math-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-math-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-interlocked-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-interlocked-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\vcruntime140_1.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\vcruntime140_1.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\vk_swiftshader.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\vk_swiftshader.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\zlib.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\zlib.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-private-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-private-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\msvcp140_2.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\msvcp140_2.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-heap-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-heap-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\libmpv-2.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\libmpv-2.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\vcruntime140_1d.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\vcruntime140_1d.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-console-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-console-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\url_launcher_windows_plugin.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\url_launcher_windows_plugin.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\msvcp140_1.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\msvcp140_1.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-file-l2-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-file-l2-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\audioplayers_windows_plugin.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\audioplayers_windows_plugin.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\ucrtbase.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\ucrtbase.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\msvcp140_atomic_wait.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\msvcp140_atomic_wait.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-crt-conio-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-crt-conio-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-processthreads-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-processthreads-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\msvcp140.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\msvcp140.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-downlevel-kernel32-l2-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-downlevel-kernel32-l2-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-fibers-l1-1-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-fibers-l1-1-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\media_kit_video_plugin.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\media_kit_video_plugin.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\api-ms-win-core-localization-l1-2-0.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\api-ms-win-core-localization-l1-2-0.dll',
+   'BINARY'),
+  ('flet_desktop\\app\\flet\\msvcp140_codecvt_ids.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\msvcp140_codecvt_ids.dll',
+   'BINARY'),
+  ('python313.dll',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll',
+   'BINARY'),
+  ('numpy.libs\\libscipy_openblas64_-13e2df515630b4a41f92893938845698.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-13e2df515630b4a41f92893938845698.dll',
+   'BINARY'),
+  ('numpy.libs\\msvcp140-263139962577ecda4cd9469ca360a746.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy.libs\\msvcp140-263139962577ecda4cd9469ca360a746.dll',
+   'BINARY'),
+  ('select.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\select.pyd',
+   'EXTENSION'),
+  ('_socket.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_socket.pyd',
+   'EXTENSION'),
+  ('unicodedata.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\unicodedata.pyd',
+   'EXTENSION'),
+  ('_lzma.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_lzma.pyd',
+   'EXTENSION'),
+  ('_bz2.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_bz2.pyd',
+   'EXTENSION'),
+  ('_queue.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_queue.pyd',
+   'EXTENSION'),
+  ('_ctypes.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_ctypes.pyd',
+   'EXTENSION'),
+  ('_hashlib.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_hashlib.pyd',
+   'EXTENSION'),
+  ('_multiprocessing.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_multiprocessing.pyd',
+   'EXTENSION'),
+  ('pyexpat.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\pyexpat.pyd',
+   'EXTENSION'),
+  ('_ssl.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_ssl.pyd',
+   'EXTENSION'),
+  ('_decimal.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_decimal.pyd',
+   'EXTENSION'),
+  ('_overlapped.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_overlapped.pyd',
+   'EXTENSION'),
+  ('_asyncio.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_asyncio.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\writers.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\writers.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy\\_core\\_multiarray_umath.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy\\_core\\_multiarray_umath.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy\\linalg\\_umath_linalg.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy\\linalg\\_umath_linalg.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('markupsafe\\_speedups.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\markupsafe\\_speedups.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('_elementtree.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_elementtree.pyd',
+   'EXTENSION'),
+  ('_uuid.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_uuid.pyd',
+   'EXTENSION'),
+  ('sqlalchemy\\cyextension\\util.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\sqlalchemy\\cyextension\\util.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('sqlalchemy\\cyextension\\resultproxy.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\sqlalchemy\\cyextension\\resultproxy.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('sqlalchemy\\cyextension\\processors.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\sqlalchemy\\cyextension\\processors.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('sqlalchemy\\cyextension\\immutabledict.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\sqlalchemy\\cyextension\\immutabledict.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('sqlalchemy\\cyextension\\collections.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\sqlalchemy\\cyextension\\collections.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('greenlet\\_greenlet.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\greenlet\\_greenlet.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('_sqlite3.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_sqlite3.pyd',
+   'EXTENSION'),
+  ('_mysql_connector.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\_mysql_connector.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy\\_core\\_multiarray_tests.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy\\_core\\_multiarray_tests.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('charset_normalizer\\md__mypyc.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\charset_normalizer\\md__mypyc.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('charset_normalizer\\md.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\charset_normalizer\\md.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy\\random\\mtrand.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy\\random\\mtrand.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy\\random\\bit_generator.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy\\random\\bit_generator.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy\\random\\_sfc64.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy\\random\\_sfc64.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy\\random\\_philox.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy\\random\\_philox.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy\\random\\_pcg64.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy\\random\\_pcg64.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy\\random\\_mt19937.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy\\random\\_mt19937.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy\\random\\_generator.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy\\random\\_generator.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy\\random\\_common.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy\\random\\_common.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy\\random\\_bounded_integers.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy\\random\\_bounded_integers.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('numpy\\fft\\_pocketfft_umath.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy\\fft\\_pocketfft_umath.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('yaml\\_yaml.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\yaml\\_yaml.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\window\\indexers.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\window\\indexers.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\window\\aggregations.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\window\\aggregations.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\vectorized.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\vectorized.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\tzconversion.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\tzconversion.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\timezones.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\timezones.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\timestamps.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\timestamps.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\timedeltas.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\timedeltas.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\strptime.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\strptime.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\period.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\period.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\parsing.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\parsing.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\offsets.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\offsets.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\np_datetime.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\np_datetime.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\nattype.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\nattype.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\fields.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\fields.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\dtypes.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\dtypes.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\conversion.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\conversion.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\ccalendar.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\ccalendar.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslibs\\base.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslibs\\base.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\tslib.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\tslib.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\testing.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\testing.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\sparse.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\sparse.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\sas.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\sas.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\reshape.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\reshape.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\properties.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\properties.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\parsers.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\parsers.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\pandas_parser.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\pandas_parser.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\pandas_datetime.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\pandas_datetime.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\ops_dispatch.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\ops_dispatch.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\ops.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\ops.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\missing.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\missing.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\lib.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\lib.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\json.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\json.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\join.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\join.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\interval.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\interval.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\internals.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\internals.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\indexing.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\indexing.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\index.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\index.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\hashtable.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\hashtable.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\hashing.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\hashing.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\groupby.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\groupby.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\byteswap.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\byteswap.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\arrays.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\arrays.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('pandas\\_libs\\algos.cp313-win_amd64.pyd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\_libs\\algos.cp313-win_amd64.pyd',
+   'EXTENSION'),
+  ('_wmi.pyd',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\_wmi.pyd',
+   'EXTENSION'),
+  ('VCRUNTIME140.dll',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140.dll',
+   'BINARY'),
+  ('VCRUNTIME140_1.dll',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140_1.dll',
+   'BINARY'),
+  ('libffi-8.dll',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libffi-8.dll',
+   'BINARY'),
+  ('libcrypto-3.dll',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libcrypto-3.dll',
+   'BINARY'),
+  ('libssl-3.dll',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\libssl-3.dll',
+   'BINARY'),
+  ('sqlite3.dll',
+   'C:\\Users\\Wagner '
+   'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\DLLs\\sqlite3.dll',
+   'BINARY'),
+  ('libmysql.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\libmysql.dll',
+   'BINARY'),
+  ('pandas.libs\\msvcp140-1a0962f2a91a74c6d7136a768987a591.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas.libs\\msvcp140-1a0962f2a91a74c6d7136a768987a591.dll',
+   'BINARY'),
+  ('libssl-3-x64.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\libssl-3-x64.dll',
+   'BINARY'),
+  ('libcrypto-3-x64.dll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\libcrypto-3-x64.dll',
+   'BINARY'),
+  ('MSVCP140.dll', 'C:\\WINDOWS\\system32\\MSVCP140.dll', 'BINARY'),
+  ('Imagem_Quest.png',
+   'Y:\\Wagner\\Programações\\RH\\Questionário ENIND\\App\\Imagem_Quest.png',
+   'DATA'),
+  ('dateutil\\zoneinfo\\dateutil-zoneinfo.tar.gz',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\dateutil\\zoneinfo\\dateutil-zoneinfo.tar.gz',
+   'DATA'),
+  ('pandas\\io\\formats\\templates\\latex.tpl',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\io\\formats\\templates\\latex.tpl',
+   'DATA'),
+  ('pandas\\io\\formats\\templates\\latex_table.tpl',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\io\\formats\\templates\\latex_table.tpl',
+   'DATA'),
+  ('pandas\\io\\formats\\templates\\html_style.tpl',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\io\\formats\\templates\\html_style.tpl',
+   'DATA'),
+  ('pandas\\io\\formats\\templates\\string.tpl',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\io\\formats\\templates\\string.tpl',
+   'DATA'),
+  ('pandas\\io\\formats\\templates\\html_table.tpl',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\io\\formats\\templates\\html_table.tpl',
+   'DATA'),
+  ('pandas\\io\\formats\\templates\\html.tpl',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\io\\formats\\templates\\html.tpl',
+   'DATA'),
+  ('pandas\\io\\formats\\templates\\latex_longtable.tpl',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pandas\\io\\formats\\templates\\latex_longtable.tpl',
+   'DATA'),
+  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\INSTALLER',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\INSTALLER',
+   'DATA'),
+  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\RECORD',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\RECORD',
+   'DATA'),
+  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\WHEEL',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\WHEEL',
+   'DATA'),
+  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\REQUESTED',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\REQUESTED',
+   'DATA'),
+  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\METADATA',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\METADATA',
+   'DATA'),
+  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\LICENSE',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\LICENSE',
+   'DATA'),
+  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\top_level.txt',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\top_level.txt',
+   'DATA'),
+  ('setuptools\\_vendor\\jaraco\\text\\Lorem ipsum.txt',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\setuptools\\_vendor\\jaraco\\text\\Lorem '
+   'ipsum.txt',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Argentina\\Rio_Gallegos',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Argentina\\Rio_Gallegos',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT+12',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT+12',
+   'DATA'),
+  ('pytz\\zoneinfo\\Brazil\\East',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Brazil\\East',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Harbin',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Harbin',
+   'DATA'),
+  ('pytz\\zoneinfo\\Antarctica\\Troll',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Antarctica\\Troll',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Yangon',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Yangon',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Halifax',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Halifax',
+   'DATA'),
+  ('pytz\\zoneinfo\\Antarctica\\Palmer',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Antarctica\\Palmer',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Fakaofo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Fakaofo',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Minsk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Minsk',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Kiritimati',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Kiritimati',
+   'DATA'),
+  ('pytz\\zoneinfo\\Antarctica\\South_Pole',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Antarctica\\South_Pole',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\ACT',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\ACT',
+   'DATA'),
+  ('pytz\\zoneinfo\\Atlantic\\Jan_Mayen',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Atlantic\\Jan_Mayen',
+   'DATA'),
+  ('pytz\\zoneinfo\\Mexico\\General',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Mexico\\General',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\NSW',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\NSW',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Argentina\\Ushuaia',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Argentina\\Ushuaia',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Chatham',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Chatham',
+   'DATA'),
+  ('pytz\\zoneinfo\\Canada\\Mountain',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Canada\\Mountain',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Argentina\\Jujuy',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Argentina\\Jujuy',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Atka',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Atka',
+   'DATA'),
+  ('pytz\\zoneinfo\\Libya',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Libya',
+   'DATA'),
+  ('pytz\\zoneinfo\\Iceland',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Iceland',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Belfast',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Belfast',
+   'DATA'),
+  ('pytz\\zoneinfo\\Canada\\Eastern',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Canada\\Eastern',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Pangnirtung',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Pangnirtung',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Ulyanovsk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Ulyanovsk',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Ndjamena',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Ndjamena',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Ojinaga',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Ojinaga',
+   'DATA'),
+  ('pytz\\zoneinfo\\Brazil\\DeNoronha',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Brazil\\DeNoronha',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Tehran',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Tehran',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\St_Barthelemy',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\St_Barthelemy',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Urumqi',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Urumqi',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Indiana\\Indianapolis',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Indiana\\Indianapolis',
+   'DATA'),
+  ('pytz\\zoneinfo\\Universal',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Universal',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT+5',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT+5',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Beirut',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Beirut',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Tunis',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Tunis',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Rarotonga',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Rarotonga',
+   'DATA'),
+  ('pytz\\zoneinfo\\GMT+0',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\GMT+0',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Anguilla',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Anguilla',
+   'DATA'),
+  ('pytz\\zoneinfo\\Antarctica\\Syowa',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Antarctica\\Syowa',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Midway',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Midway',
+   'DATA'),
+  ('pytz\\zoneinfo\\Antarctica\\McMurdo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Antarctica\\McMurdo',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Edmonton',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Edmonton',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Atikokan',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Atikokan',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Lindeman',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Lindeman',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Argentina\\ComodRivadavia',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Argentina\\ComodRivadavia',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Oslo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Oslo',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Matamoros',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Matamoros',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Hovd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Hovd',
+   'DATA'),
+  ('pytz\\zoneinfo\\Indian\\Maldives',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Indian\\Maldives',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Ust-Nera',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Ust-Nera',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Helsinki',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Helsinki',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Perth',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Perth',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Argentina\\Cordoba',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Argentina\\Cordoba',
+   'DATA'),
+  ('pytz\\zoneinfo\\Atlantic\\Canary',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Atlantic\\Canary',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\San_Marino',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\San_Marino',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Kyiv',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Kyiv',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Anchorage',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Anchorage',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Nauru',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Nauru',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Sao_Paulo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Sao_Paulo',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Boise',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Boise',
+   'DATA'),
+  ('pytz\\zoneinfo\\Mexico\\BajaSur',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Mexico\\BajaSur',
+   'DATA'),
+  ('pytz\\zoneinfo\\Cuba',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Cuba',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Sakhalin',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Sakhalin',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Lord_Howe',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Lord_Howe',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Puerto_Rico',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Puerto_Rico',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Barbados',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Barbados',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT+9',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT+9',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT+6',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT+6',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Argentina\\Tucuman',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Argentina\\Tucuman',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Barnaul',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Barnaul',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\El_Aaiun',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\El_Aaiun',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Nouakchott',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Nouakchott',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Uzhgorod',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Uzhgorod',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Marquesas',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Marquesas',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Santiago',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Santiago',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\West',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\West',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Aden',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Aden',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Norfolk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Norfolk',
+   'DATA'),
+  ('pytz\\zoneinfo\\Atlantic\\Faroe',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Atlantic\\Faroe',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Famagusta',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Famagusta',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Hobart',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Hobart',
+   'DATA'),
+  ('pytz\\zoneinfo\\Indian\\Reunion',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Indian\\Reunion',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Qostanay',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Qostanay',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Bogota',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Bogota',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Dushanbe',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Dushanbe',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Harare',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Harare',
+   'DATA'),
+  ('pytz\\zoneinfo\\GMT',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\GMT',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Indiana\\Vevay',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Indiana\\Vevay',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Buenos_Aires',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Buenos_Aires',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Moncton',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Moncton',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Mbabane',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Mbabane',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Merida',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Merida',
+   'DATA'),
+  ('pytz\\zoneinfo\\Indian\\Kerguelen',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Indian\\Kerguelen',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Hermosillo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Hermosillo',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Indiana\\Winamac',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Indiana\\Winamac',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Blanc-Sablon',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Blanc-Sablon',
+   'DATA'),
+  ('pytz\\zoneinfo\\Chile\\EasterIsland',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Chile\\EasterIsland',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-2',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-2',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\London',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\London',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Los_Angeles',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Los_Angeles',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Pitcairn',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Pitcairn',
+   'DATA'),
+  ('pytz\\zoneinfo\\US\\Mountain',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\US\\Mountain',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Araguaina',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Araguaina',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Cuiaba',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Cuiaba',
+   'DATA'),
+  ('pytz\\zoneinfo\\Indian\\Chagos',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Indian\\Chagos',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Tashkent',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Tashkent',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Kiev',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Kiev',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Ponape',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Ponape',
+   'DATA'),
+  ('pytz\\zoneinfo\\Egypt',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Egypt',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Kaliningrad',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Kaliningrad',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Srednekolymsk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Srednekolymsk',
+   'DATA'),
+  ('pytz\\zoneinfo\\US\\Aleutian',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\US\\Aleutian',
+   'DATA'),
+  ('pytz\\zoneinfo\\zone1970.tab',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\zone1970.tab',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Costa_Rica',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Costa_Rica',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Kabul',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Kabul',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Tasmania',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Tasmania',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Johnston',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Johnston',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Truk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Truk',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Dili',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Dili',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Lima',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Lima',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Port-au-Prince',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Port-au-Prince',
+   'DATA'),
+  ('pytz\\zoneinfo\\EET',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\EET',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Ulan_Bator',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Ulan_Bator',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Dakar',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Dakar',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Montreal',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Montreal',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Novokuznetsk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Novokuznetsk',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Toronto',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Toronto',
+   'DATA'),
+  ('pytz\\zoneinfo\\EST',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\EST',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Cairo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Cairo',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Queensland',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Queensland',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Damascus',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Damascus',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Jersey',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Jersey',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT0',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT0',
+   'DATA'),
+  ('pytz\\zoneinfo\\Antarctica\\Vostok',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Antarctica\\Vostok',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Darwin',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Darwin',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Prague',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Prague',
+   'DATA'),
+  ('pytz\\zoneinfo\\Japan',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Japan',
+   'DATA'),
+  ('pytz\\zoneinfo\\HST',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\HST',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\LHI',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\LHI',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Rainy_River',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Rainy_River',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Rio_Branco',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Rio_Branco',
+   'DATA'),
+  ('pytz\\zoneinfo\\Indian\\Mahe',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Indian\\Mahe',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Yakutat',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Yakutat',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Brunei',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Brunei',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Kigali',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Kigali',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Iqaluit',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Iqaluit',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Phoenix',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Phoenix',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Yekaterinburg',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Yekaterinburg',
+   'DATA'),
+  ('pytz\\zoneinfo\\EST5EDT',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\EST5EDT',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-5',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-5',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Jayapura',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Jayapura',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\St_Thomas',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\St_Thomas',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Abidjan',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Abidjan',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Kanton',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Kanton',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Metlakatla',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Metlakatla',
+   'DATA'),
+  ('pytz\\zoneinfo\\Hongkong',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Hongkong',
+   'DATA'),
+  ('pytz\\zoneinfo\\Antarctica\\Rothera',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Antarctica\\Rothera',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Argentina\\Buenos_Aires',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Argentina\\Buenos_Aires',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Adelaide',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Adelaide',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\UTC',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\UTC',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Virgin',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Virgin',
+   'DATA'),
+  ('pytz\\zoneinfo\\MET',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\MET',
+   'DATA'),
+  ('pytz\\zoneinfo\\Canada\\Central',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Canada\\Central',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Coyhaique',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Coyhaique',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Thunder_Bay',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Thunder_Bay',
+   'DATA'),
+  ('pytz\\zoneinfo\\Israel',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Israel',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Monrovia',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Monrovia',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Juneau',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Juneau',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Taipei',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Taipei',
+   'DATA'),
+  ('pytz\\zoneinfo\\GMT-0',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\GMT-0',
+   'DATA'),
+  ('pytz\\zoneinfo\\Antarctica\\Casey',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Antarctica\\Casey',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Pago_Pago',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Pago_Pago',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Belgrade',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Belgrade',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Asuncion',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Asuncion',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Nicosia',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Nicosia',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Denver',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Denver',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Port_Moresby',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Port_Moresby',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Eirunepe',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Eirunepe',
+   'DATA'),
+  ('pytz\\zoneinfo\\Atlantic\\Cape_Verde',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Atlantic\\Cape_Verde',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Malabo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Malabo',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Timbuktu',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Timbuktu',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Ljubljana',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Ljubljana',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Nipigon',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Nipigon',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Ensenada',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Ensenada',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Curacao',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Curacao',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Singapore',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Singapore',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Lusaka',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Lusaka',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Vilnius',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Vilnius',
+   'DATA'),
+  ('pytz\\zoneinfo\\Zulu',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Zulu',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Apia',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Apia',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Santa_Isabel',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Santa_Isabel',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Nicosia',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Nicosia',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Riga',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Riga',
+   'DATA'),
+  ('pytz\\zoneinfo\\Atlantic\\Bermuda',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Atlantic\\Bermuda',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Shiprock',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Shiprock',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Currie',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Currie',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Kinshasa',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Kinshasa',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Skopje',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Skopje',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Montevideo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Montevideo',
+   'DATA'),
+  ('pytz\\zoneinfo\\Indian\\Comoro',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Indian\\Comoro',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Gambier',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Gambier',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Rankin_Inlet',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Rankin_Inlet',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Chita',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Chita',
+   'DATA'),
+  ('pytz\\zoneinfo\\Chile\\Continental',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Chile\\Continental',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Magadan',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Magadan',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Bahia',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Bahia',
+   'DATA'),
+  ('pytz\\zoneinfo\\US\\East-Indiana',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\US\\East-Indiana',
+   'DATA'),
+  ('pytz\\zoneinfo\\Kwajalein',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Kwajalein',
+   'DATA'),
+  ('pytz\\zoneinfo\\UTC',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\UTC',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Hong_Kong',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Hong_Kong',
+   'DATA'),
+  ('pytz\\zoneinfo\\Atlantic\\South_Georgia',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Atlantic\\South_Georgia',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Berlin',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Berlin',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Dhaka',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Dhaka',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Coral_Harbour',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Coral_Harbour',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Punta_Arenas',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Punta_Arenas',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Istanbul',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Istanbul',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Victoria',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Victoria',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Brazzaville',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Brazzaville',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Ouagadougou',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Ouagadougou',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Antigua',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Antigua',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Saratov',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Saratov',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Kampala',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Kampala',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Cordoba',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Cordoba',
+   'DATA'),
+  ('pytz\\zoneinfo\\NZ-CHAT',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\NZ-CHAT',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Pyongyang',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Pyongyang',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT+3',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT+3',
+   'DATA'),
+  ('pytz\\zoneinfo\\Indian\\Mauritius',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Indian\\Mauritius',
+   'DATA'),
+  ('pytz\\zoneinfo\\CST6CDT',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\CST6CDT',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Omsk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Omsk',
+   'DATA'),
+  ('pytz\\zoneinfo\\Greenwich',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Greenwich',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Paramaribo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Paramaribo',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\Greenwich',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\Greenwich',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Belem',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Belem',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Grenada',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Grenada',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Sofia',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Sofia',
+   'DATA'),
+  ('pytz\\zoneinfo\\Antarctica\\Mawson',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Antarctica\\Mawson',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Vientiane',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Vientiane',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Managua',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Managua',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Chihuahua',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Chihuahua',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Zaporozhye',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Zaporozhye',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Volgograd',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Volgograd',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Stockholm',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Stockholm',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Moscow',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Moscow',
+   'DATA'),
+  ('pytz\\zoneinfo\\Antarctica\\Macquarie',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Antarctica\\Macquarie',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Wake',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Wake',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Busingen',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Busingen',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-7',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-7',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-14',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-14',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Porto-Novo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Porto-Novo',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT+11',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT+11',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Tomsk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Tomsk',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Yakutsk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Yakutsk',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Broken_Hill',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Broken_Hill',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Tallinn',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Tallinn',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Catamarca',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Catamarca',
+   'DATA'),
+  ('pytz\\zoneinfo\\PST8PDT',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\PST8PDT',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-6',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-6',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Accra',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Accra',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Tahiti',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Tahiti',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Indianapolis',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Indianapolis',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\La_Paz',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\La_Paz',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Chisinau',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Chisinau',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Swift_Current',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Swift_Current',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Athens',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Athens',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Vancouver',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Vancouver',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Qyzylorda',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Qyzylorda',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Jujuy',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Jujuy',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-1',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-1',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Asmera',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Asmera',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Warsaw',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Warsaw',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Choibalsan',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Choibalsan',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Tbilisi',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Tbilisi',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Cayman',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Cayman',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Amsterdam',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Amsterdam',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Dubai',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Dubai',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Oral',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Oral',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Kentucky\\Louisville',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Kentucky\\Louisville',
+   'DATA'),
+  ('pytz\\zoneinfo\\US\\Pacific',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\US\\Pacific',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT+10',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT+10',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Grand_Turk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Grand_Turk',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Freetown',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Freetown',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Manaus',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Manaus',
+   'DATA'),
+  ('pytz\\zoneinfo\\Atlantic\\St_Helena',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Atlantic\\St_Helena',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Niamey',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Niamey',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Adak',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Adak',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Montserrat',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Montserrat',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Santo_Domingo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Santo_Domingo',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Porto_Acre',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Porto_Acre',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Sarajevo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Sarajevo',
+   'DATA'),
+  ('pytz\\zoneinfo\\US\\Samoa',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\US\\Samoa',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Podgorica',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Podgorica',
+   'DATA'),
+  ('pytz\\zoneinfo\\Atlantic\\Azores',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Atlantic\\Azores',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Nuuk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Nuuk',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Vienna',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Vienna',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Efate',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Efate',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Eucla',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Eucla',
+   'DATA'),
+  ('pytz\\zoneinfo\\MST',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\MST',
+   'DATA'),
+  ('pytz\\zoneinfo\\Antarctica\\DumontDUrville',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Antarctica\\DumontDUrville',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Melbourne',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Melbourne',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Baghdad',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Baghdad',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Kwajalein',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Kwajalein',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Port_of_Spain',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Port_of_Spain',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Hebron',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Hebron',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Brussels',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Brussels',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Gaza',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Gaza',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Isle_of_Man',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Isle_of_Man',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Chongqing',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Chongqing',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Boa_Vista',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Boa_Vista',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Anadyr',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Anadyr',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Chuuk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Chuuk',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT+7',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT+7',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Phnom_Penh',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Phnom_Penh',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Riyadh',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Riyadh',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Kolkata',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Kolkata',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Indiana\\Marengo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Indiana\\Marengo',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Nassau',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Nassau',
+   'DATA'),
+  ('pytz\\zoneinfo\\US\\Michigan',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\US\\Michigan',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Nome',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Nome',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Whitehorse',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Whitehorse',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Kamchatka',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Kamchatka',
+   'DATA'),
+  ('pytz\\zoneinfo\\zone.tab',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\zone.tab',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Tongatapu',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Tongatapu',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Rangoon',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Rangoon',
+   'DATA'),
+  ('pytz\\zoneinfo\\UCT',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\UCT',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Ujung_Pandang',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Ujung_Pandang',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Guernsey',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Guernsey',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Amman',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Amman',
+   'DATA'),
+  ('pytz\\zoneinfo\\Canada\\Yukon',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Canada\\Yukon',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Indiana\\Knox',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Indiana\\Knox',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Bissau',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Bissau',
+   'DATA'),
+  ('pytz\\zoneinfo\\Canada\\Pacific',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Canada\\Pacific',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Monaco',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Monaco',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\North',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\North',
+   'DATA'),
+  ('pytz\\zoneinfo\\Mexico\\BajaNorte',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Mexico\\BajaNorte',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Regina',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Regina',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Guayaquil',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Guayaquil',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Jerusalem',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Jerusalem',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Noumea',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Noumea',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Gaborone',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Gaborone',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Makassar',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Makassar',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Kathmandu',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Kathmandu',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Dublin',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Dublin',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Luanda',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Luanda',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Fort_Wayne',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Fort_Wayne',
+   'DATA'),
+  ('pytz\\zoneinfo\\Indian\\Christmas',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Indian\\Christmas',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Douala',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Douala',
+   'DATA'),
+  ('pytz\\zoneinfo\\GB',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\GB',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Blantyre',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Blantyre',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Zagreb',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Zagreb',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Honolulu',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Honolulu',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Brisbane',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Brisbane',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Almaty',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Almaty',
+   'DATA'),
+  ('pytz\\zoneinfo\\Atlantic\\Faeroe',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Atlantic\\Faeroe',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Bujumbura',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Bujumbura',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Budapest',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Budapest',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Istanbul',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Istanbul',
+   'DATA'),
+  ('pytz\\zoneinfo\\Poland',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Poland',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Luxembourg',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Luxembourg',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Baku',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Baku',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Bougainville',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Bougainville',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Guadeloupe',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Guadeloupe',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Winnipeg',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Winnipeg',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Argentina\\La_Rioja',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Argentina\\La_Rioja',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Cambridge_Bay',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Cambridge_Bay',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Dominica',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Dominica',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Ceuta',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Ceuta',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Fortaleza',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Fortaleza',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Fiji',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Fiji',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\St_Lucia',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\St_Lucia',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Scoresbysund',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Scoresbysund',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Maseru',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Maseru',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Colombo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Colombo',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Samarkand',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Samarkand',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Pohnpei',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Pohnpei',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Auckland',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Auckland',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Aqtobe',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Aqtobe',
+   'DATA'),
+  ('pytz\\zoneinfo\\Brazil\\Acre',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Brazil\\Acre',
+   'DATA'),
+  ('pytz\\zoneinfo\\Turkey',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Turkey',
+   'DATA'),
+  ('pytz\\zoneinfo\\US\\Eastern',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\US\\Eastern',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Astrakhan',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Astrakhan',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Saigon',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Saigon',
+   'DATA'),
+  ('pytz\\zoneinfo\\WET',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\WET',
+   'DATA'),
+  ('pytz\\zoneinfo\\US\\Central',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\US\\Central',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Muscat',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Muscat',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT+2',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT+2',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Calcutta',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Calcutta',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Louisville',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Louisville',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Bamako',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Bamako',
+   'DATA'),
+  ('pytz\\zoneinfo\\Atlantic\\Stanley',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Atlantic\\Stanley',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Campo_Grande',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Campo_Grande',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\UCT',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\UCT',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-9',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-9',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Argentina\\San_Luis',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Argentina\\San_Luis',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Kralendijk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Kralendijk',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Galapagos',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Galapagos',
+   'DATA'),
+  ('pytz\\zoneinfo\\Jamaica',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Jamaica',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Juba',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Juba',
+   'DATA'),
+  ('pytz\\zoneinfo\\iso3166.tab',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\iso3166.tab',
+   'DATA'),
+  ('pytz\\zoneinfo\\leapseconds',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\leapseconds',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Samoa',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Samoa',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Guam',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Guam',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Bangkok',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Bangkok',
+   'DATA'),
+  ('pytz\\zoneinfo\\Iran',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Iran',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Rome',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Rome',
+   'DATA'),
+  ('pytz\\zoneinfo\\W-SU',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\W-SU',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Porto_Velho',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Porto_Velho',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\El_Salvador',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\El_Salvador',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Detroit',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Detroit',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Simferopol',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Simferopol',
+   'DATA'),
+  ('pytz\\zoneinfo\\ROC',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\ROC',
+   'DATA'),
+  ('pytz\\zoneinfo\\Brazil\\West',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Brazil\\West',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Menominee',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Menominee',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Chungking',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Chungking',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Kosrae',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Kosrae',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-8',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-8',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\Universal',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\Universal',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Chicago',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Chicago',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT+1',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT+1',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Bangui',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Bangui',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Tortola',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Tortola',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Argentina\\Salta',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Argentina\\Salta',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Mariehamn',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Mariehamn',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-13',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-13',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Asmara',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Asmara',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\New_York',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\New_York',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\St_Vincent',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\St_Vincent',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Palau',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Palau',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Noronha',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Noronha',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Algiers',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Algiers',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Irkutsk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Irkutsk',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Glace_Bay',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Glace_Bay',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Libreville',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Libreville',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Casablanca',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Casablanca',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Jamaica',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Jamaica',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Danmarkshavn',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Danmarkshavn',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\St_Kitts',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\St_Kitts',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Kuala_Lumpur',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Kuala_Lumpur',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Gibraltar',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Gibraltar',
+   'DATA'),
+  ('pytz\\zoneinfo\\US\\Alaska',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\US\\Alaska',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Funafuti',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Funafuti',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Kentucky\\Monticello',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Kentucky\\Monticello',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Yap',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Yap',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Havana',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Havana',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT+4',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT+4',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Lisbon',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Lisbon',
+   'DATA'),
+  ('pytz\\zoneinfo\\CET',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\CET',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\North_Dakota\\Center',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\North_Dakota\\Center',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Macau',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Macau',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Enderbury',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Enderbury',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Miquelon',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Miquelon',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Godthab',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Godthab',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\South',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\South',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\North_Dakota\\New_Salem',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\North_Dakota\\New_Salem',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Guyana',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Guyana',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Atyrau',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Atyrau',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Indiana\\Tell_City',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Indiana\\Tell_City',
+   'DATA'),
+  ('pytz\\zoneinfo\\GMT0',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\GMT0',
+   'DATA'),
+  ('pytz\\zoneinfo\\Indian\\Antananarivo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Indian\\Antananarivo',
+   'DATA'),
+  ('pytz\\zoneinfo\\US\\Indiana-Starke',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\US\\Indiana-Starke',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Conakry',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Conakry',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Malta',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Malta',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Marigot',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Marigot',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Kuwait',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Kuwait',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Khandyga',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Khandyga',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Kashgar',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Kashgar',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Vaduz',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Vaduz',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Vatican',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Vatican',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Kuching',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Kuching',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Bahia_Banderas',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Bahia_Banderas',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Guadalcanal',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Guadalcanal',
+   'DATA'),
+  ('pytz\\zoneinfo\\US\\Hawaii',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\US\\Hawaii',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Cancun',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Cancun',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Bucharest',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Bucharest',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Kirov',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Kirov',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Sitka',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Sitka',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Addis_Ababa',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Addis_Ababa',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-4',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-4',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Novosibirsk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Novosibirsk',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Lagos',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Lagos',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Yancowinna',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Yancowinna',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Khartoum',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Khartoum',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Rosario',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Rosario',
+   'DATA'),
+  ('pytz\\zoneinfo\\ROK',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\ROK',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Karachi',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Karachi',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Ulaanbaatar',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Ulaanbaatar',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Lome',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Lome',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Guatemala',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Guatemala',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Tegucigalpa',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Tegucigalpa',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Qatar',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Qatar',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-10',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-10',
+   'DATA'),
+  ('pytz\\zoneinfo\\US\\Arizona',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\US\\Arizona',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Jakarta',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Jakarta',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Argentina\\Mendoza',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Argentina\\Mendoza',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Dawson_Creek',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Dawson_Creek',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Manila',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Manila',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Ho_Chi_Minh',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Ho_Chi_Minh',
+   'DATA'),
+  ('pytz\\zoneinfo\\Canada\\Saskatchewan',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Canada\\Saskatchewan',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Tirane',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Tirane',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Knox_IN',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Knox_IN',
+   'DATA'),
+  ('pytz\\zoneinfo\\Indian\\Mayotte',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Indian\\Mayotte',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Banjul',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Banjul',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Wallis',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Wallis',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Indiana\\Petersburg',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Indiana\\Petersburg',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Djibouti',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Djibouti',
+   'DATA'),
+  ('pytz\\zoneinfo\\Indian\\Cocos',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Indian\\Cocos',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Windhoek',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Windhoek',
+   'DATA'),
+  ('pytz\\zoneinfo\\NZ',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\NZ',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Goose_Bay',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Goose_Bay',
+   'DATA'),
+  ('pytz\\zoneinfo\\Singapore',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Singapore',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Vladivostok',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Vladivostok',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Mexico_City',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Mexico_City',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Katmandu',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Katmandu',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Tripoli',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Tripoli',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Majuro',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Majuro',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Inuvik',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Inuvik',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Copenhagen',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Copenhagen',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Dar_es_Salaam',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Dar_es_Salaam',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Tel_Aviv',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Tel_Aviv',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Tarawa',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Tarawa',
+   'DATA'),
+  ('pytz\\zoneinfo\\Atlantic\\Reykjavik',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Atlantic\\Reykjavik',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Andorra',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Andorra',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Aqtau',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Aqtau',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-0',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-0',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Mazatlan',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Mazatlan',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Thimbu',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Thimbu',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Maputo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Maputo',
+   'DATA'),
+  ('pytz\\zoneinfo\\Canada\\Atlantic',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Canada\\Atlantic',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Tiraspol',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Tiraspol',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Resolute',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Resolute',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Mogadishu',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Mogadishu',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Easter',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Easter',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\North_Dakota\\Beulah',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\North_Dakota\\Beulah',
+   'DATA'),
+  ('pytz\\zoneinfo\\GB-Eire',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\GB-Eire',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Samara',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Samara',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT+0',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT+0',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Johannesburg',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Johannesburg',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Bahrain',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Bahrain',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Panama',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Panama',
+   'DATA'),
+  ('pytz\\zoneinfo\\Arctic\\Longyearbyen',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Arctic\\Longyearbyen',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Santarem',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Santarem',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Aruba',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Aruba',
+   'DATA'),
+  ('pytz\\zoneinfo\\zonenow.tab',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\zonenow.tab',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Fort_Nelson',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Fort_Nelson',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Yellowknife',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Yellowknife',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Paris',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Paris',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Pontianak',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Pontianak',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Martinique',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Martinique',
+   'DATA'),
+  ('pytz\\zoneinfo\\Portugal',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Portugal',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Lubumbashi',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Lubumbashi',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Krasnoyarsk',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Krasnoyarsk',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Shanghai',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Shanghai',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Tijuana',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Tijuana',
+   'DATA'),
+  ('pytz\\zoneinfo\\PRC',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\PRC',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Ciudad_Juarez',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Ciudad_Juarez',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Zurich',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Zurich',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Ashkhabad',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Ashkhabad',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Monterrey',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Monterrey',
+   'DATA'),
+  ('pytz\\zoneinfo\\Canada\\Newfoundland',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Canada\\Newfoundland',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Indiana\\Vincennes',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Indiana\\Vincennes',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Ashgabat',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Ashgabat',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Canberra',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Canberra',
+   'DATA'),
+  ('pytz\\zoneinfo\\Australia\\Sydney',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Australia\\Sydney',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Dacca',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Dacca',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Maceio',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Maceio',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-12',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-12',
+   'DATA'),
+  ('pytz\\zoneinfo\\Atlantic\\Madeira',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Atlantic\\Madeira',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Macao',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Macao',
+   'DATA'),
+  ('pytz\\zoneinfo\\Antarctica\\Davis',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Antarctica\\Davis',
+   'DATA'),
+  ('pytz\\zoneinfo\\Eire',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Eire',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\Zulu',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\Zulu',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Yerevan',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Yerevan',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Argentina\\San_Juan',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Argentina\\San_Juan',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-3',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-3',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Seoul',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Seoul',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Saipan',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Saipan',
+   'DATA'),
+  ('pytz\\zoneinfo\\MST7MDT',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\MST7MDT',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Creston',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Creston',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Thule',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Thule',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Lower_Princes',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Lower_Princes',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Thimphu',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Thimphu',
+   'DATA'),
+  ('pytz\\zoneinfo\\tzdata.zi',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\tzdata.zi',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT-11',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT-11',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Sao_Tome',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Sao_Tome',
+   'DATA'),
+  ('pytz\\zoneinfo\\Factory',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Factory',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Bishkek',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Bishkek',
+   'DATA'),
+  ('pytz\\zoneinfo\\Etc\\GMT+8',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Etc\\GMT+8',
+   'DATA'),
+  ('pytz\\zoneinfo\\Navajo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Navajo',
+   'DATA'),
+  ('pytz\\zoneinfo\\Asia\\Tokyo',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Asia\\Tokyo',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Madrid',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Madrid',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Belize',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Belize',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Caracas',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Caracas',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Cayenne',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Cayenne',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Argentina\\Catamarca',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Argentina\\Catamarca',
+   'DATA'),
+  ('pytz\\zoneinfo\\Europe\\Bratislava',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Europe\\Bratislava',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Recife',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Recife',
+   'DATA'),
+  ('pytz\\zoneinfo\\Pacific\\Niue',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Pacific\\Niue',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Dawson',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Dawson',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\Mendoza',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\Mendoza',
+   'DATA'),
+  ('pytz\\zoneinfo\\America\\St_Johns',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\America\\St_Johns',
+   'DATA'),
+  ('pytz\\zoneinfo\\Africa\\Nairobi',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\pytz\\zoneinfo\\Africa\\Nairobi',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\flutter_assets\\shaders\\ink_sparkle.frag',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\flutter_assets\\shaders\\ink_sparkle.frag',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\flutter_assets\\AssetManifest.json',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\flutter_assets\\AssetManifest.json',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\flutter_assets\\packages\\wakelock_plus\\assets\\no_sleep.js',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\flutter_assets\\packages\\wakelock_plus\\assets\\no_sleep.js',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\flutter_assets\\packages\\record_web\\assets\\js\\record.fixwebmduration.js',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\flutter_assets\\packages\\record_web\\assets\\js\\record.fixwebmduration.js',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\flutter_assets\\AssetManifest.bin',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\flutter_assets\\AssetManifest.bin',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\icudtl.dat',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\icudtl.dat',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\flutter_assets\\fonts\\MaterialIcons-Regular.otf',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\flutter_assets\\fonts\\MaterialIcons-Regular.otf',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\flutter_assets\\packages\\cupertino_icons\\assets\\CupertinoIcons.ttf',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\flutter_assets\\packages\\cupertino_icons\\assets\\CupertinoIcons.ttf',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\flutter_assets\\NativeAssetsManifest.json',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\flutter_assets\\NativeAssetsManifest.json',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\flutter_assets\\packages\\media_kit\\assets\\web\\hls1.4.10.js',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\flutter_assets\\packages\\media_kit\\assets\\web\\hls1.4.10.js',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\flutter_assets\\FontManifest.json',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\flutter_assets\\FontManifest.json',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\flutter_assets\\NOTICES.Z',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\flutter_assets\\NOTICES.Z',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\app.so',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\app.so',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\flutter_assets\\packages\\record_web\\assets\\js\\record.worklet.js',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\flutter_assets\\packages\\record_web\\assets\\js\\record.worklet.js',
+   'DATA'),
+  ('flet_desktop\\app\\flet\\data\\flutter_assets\\packages\\flutter_map\\lib\\assets\\flutter_map_logo.png',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\flet_desktop\\app\\flet\\data\\flutter_assets\\packages\\flutter_map\\lib\\assets\\flutter_map_logo.png',
+   'DATA'),
+  ('certifi\\cacert.pem',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\certifi\\cacert.pem',
+   'DATA'),
+  ('certifi\\py.typed',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\certifi\\py.typed',
+   'DATA'),
+  ('numpy-2.3.1.dist-info\\METADATA',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy-2.3.1.dist-info\\METADATA',
+   'DATA'),
+  ('MarkupSafe-3.0.2.dist-info\\INSTALLER',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\MarkupSafe-3.0.2.dist-info\\INSTALLER',
+   'DATA'),
+  ('click-8.2.1.dist-info\\INSTALLER',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\click-8.2.1.dist-info\\INSTALLER',
+   'DATA'),
+  ('click-8.2.1.dist-info\\METADATA',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\click-8.2.1.dist-info\\METADATA',
+   'DATA'),
+  ('click-8.2.1.dist-info\\WHEEL',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\click-8.2.1.dist-info\\WHEEL',
+   'DATA'),
+  ('numpy-2.3.1.dist-info\\RECORD',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy-2.3.1.dist-info\\RECORD',
+   'DATA'),
+  ('numpy-2.3.1.dist-info\\DELVEWHEEL',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy-2.3.1.dist-info\\DELVEWHEEL',
+   'DATA'),
+  ('MarkupSafe-3.0.2.dist-info\\WHEEL',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\MarkupSafe-3.0.2.dist-info\\WHEEL',
+   'DATA'),
+  ('click-8.2.1.dist-info\\licenses\\LICENSE.txt',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\click-8.2.1.dist-info\\licenses\\LICENSE.txt',
+   'DATA'),
+  ('MarkupSafe-3.0.2.dist-info\\METADATA',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\MarkupSafe-3.0.2.dist-info\\METADATA',
+   'DATA'),
+  ('numpy-2.3.1.dist-info\\LICENSE.txt',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy-2.3.1.dist-info\\LICENSE.txt',
+   'DATA'),
+  ('numpy-2.3.1.dist-info\\entry_points.txt',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy-2.3.1.dist-info\\entry_points.txt',
+   'DATA'),
+  ('numpy-2.3.1.dist-info\\WHEEL',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy-2.3.1.dist-info\\WHEEL',
+   'DATA'),
+  ('MarkupSafe-3.0.2.dist-info\\LICENSE.txt',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\MarkupSafe-3.0.2.dist-info\\LICENSE.txt',
+   'DATA'),
+  ('MarkupSafe-3.0.2.dist-info\\top_level.txt',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\MarkupSafe-3.0.2.dist-info\\top_level.txt',
+   'DATA'),
+  ('numpy-2.3.1.dist-info\\INSTALLER',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\numpy-2.3.1.dist-info\\INSTALLER',
+   'DATA'),
+  ('MarkupSafe-3.0.2.dist-info\\RECORD',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\MarkupSafe-3.0.2.dist-info\\RECORD',
+   'DATA'),
+  ('click-8.2.1.dist-info\\RECORD',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\click-8.2.1.dist-info\\RECORD',
+   'DATA'),
+  ('base_library.zip',
+   'Y:\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\build\\app_aval_RH_v1.0\\base_library.zip',
+   'DATA')],
+ [],
+ False,
+ False,
+ 1753984013,
+ [('run.exe',
+   '\\\\eni-tag-1899\\Publico\\Wagner\\Programações\\RH\\Questionário '
+   'ENIND\\App\\.venv\\Lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\run.exe',
+   'EXECUTABLE')],
+ 'C:\\Users\\Wagner '
+ 'Barreiro\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll')
