@@ -1195,8 +1195,10 @@ def main(page: ft.Page):
         opacity=0.95,
         visible=False
     )
-
     
+    
+
+
     imagem_fundo = ft.Container(
         content=ft.Image(
             src=caminho_recurso("Imagem_Quest.png"),

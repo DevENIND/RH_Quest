@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: flet-app
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python app_aval_RH_v1.0.py"
+    plan: free

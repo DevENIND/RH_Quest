@@ -1,19 +1,21 @@
 import flet as ft
-import asyncio
-import time
-
-IDLE_TIMEOUT = 60  # segundos
+import base64
 
 def main(page: ft.Page):
+    with open("Imagem_Quest.png", "rb") as img_file:
+        img_base64 = base64.b64encode(img_file.read()).decode('utf-8')
 
-    
-    page.add(
-        ft.ElevatedButton(
-            "Abrir PDF no navegador",
-            on_click=lambda e: page.launch_url("https://enindengenharia.sharepoint.com/:b:/s/TesteSiteInterno/Ed9WO1N9KplHkD5g14-sGdgBEmFhlYzcSEbyrz4kW0LoVw?e=99i7OG")
-        )
+    imagem_fundo = ft.Image(
+        src=f"data:image/png;base64,{img_base64}",
+        fit=ft.ImageFit.COVER,
+        expand=True
     )
 
-ft.app(target=main)
+    conteudo = ft.Text("Conteúdo sobre a imagem", color=ft.Colors.BLACK)
 
+    page.add(ft.Stack([
+        imagem_fundo,
+        conteudo
+    ]))
 
+ft.app(target=main, view=ft.WEB_BROWSER)

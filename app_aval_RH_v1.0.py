@@ -10,6 +10,7 @@ import os
 import platform
 import pandas as pd
 import asyncio
+import base64
 
 
 import sys
@@ -392,7 +393,7 @@ def main(page: ft.Page):
     nome_logado = ""
     page.title = "Sistema de Avaliação ENIND"
     page.scroll = ft.ScrollMode.AUTO
-    page.bgcolor = ft.Colors.WHITE
+    page.bgcolor = ft.Colors.TRANSPARENT
     page.window.maximized = True
     data_limite = '2025/09/30 23:59:59'
     #data_limite = '2025/07/21 23:59:59'
@@ -530,12 +531,12 @@ def main(page: ft.Page):
     texto_ola3 = ft.Text("", size=15, weight=ft.FontWeight.BOLD)
     texto_ola4 = ft.Text("", size=15, weight=ft.FontWeight.BOLD)
 
-    lista_view = ft.ListView(expand=True, auto_scroll=False)
-    lista_pend_view = ft.ListView(expand=True, auto_scroll=False)
+    lista_view = ft.ListView(expand=True, auto_scroll=False,  spacing=10, padding=10)
+    lista_pend_view = ft.ListView(expand=True, auto_scroll=False, spacing=10, padding=10,visible=False)
 
-    lista_reultados_auto_view = ft.ListView(expand=True, auto_scroll=False)
-    lista_reultados_av1_view = ft.ListView(expand=True, auto_scroll=False)
-    lista_reultados_av2_view = ft.ListView(expand=True, auto_scroll=False)
+    lista_reultados_auto_view = ft.ListView(expand=True, auto_scroll=False, spacing=10, padding=10,visible=False)
+    lista_reultados_av1_view = ft.ListView(expand=True, auto_scroll=False, spacing=10, padding=10,visible=False)
+    lista_reultados_av2_view = ft.ListView(expand=True, auto_scroll=False, spacing=10, padding=10,visible=False)
 
     txt_auto = ft.Text("", size=20, weight=ft.FontWeight.BOLD)
     txt_av1 = ft.Text("", size=20, weight=ft.FontWeight.BOLD)
@@ -637,13 +638,13 @@ def main(page: ft.Page):
     def atualizar_altura_container(e):
         altura_tela = page.window.height
 
-        container_obs_auto.height = altura_tela * 0.3
-        container_obs_av1.height = altura_tela * 0.3
-        container_obs_av1.height = altura_tela * 0.3
+        #container_obs_auto.height = altura_tela * 0.3
+        #container_obs_av1.height = altura_tela * 0.3
+        #container_obs_av1.height = altura_tela * 0.3
 
-        corpo_tabela_pend.height = altura_tela * 0.6
-        corpo_tabela.height = altura_tela * 0.6
-        container_perguntas.height = altura_tela * 0.6 
+        #corpo_tabela_pend.height = altura_tela * 0.6
+        #corpo_tabela.height = altura_tela * 0.6
+        #container_perguntas.height = altura_tela * 0.6 
         page.update()
     
     
@@ -850,10 +851,14 @@ def main(page: ft.Page):
             )
             
             lista_view.controls.append(linha)
+
             
         if data_atual >=data_fechamento:
             expiracao_txt.visible = True
-            page.update()
+
+        lista_pend_view.visible = True
+        lista_view.update()
+        page.update()
 
     #Função para criar a tabela de visualização - Painel de controle - PENDENCIAS
     def montar_tabela_pendencias(questionarios):
@@ -939,9 +944,14 @@ def main(page: ft.Page):
             
             lista_pend_view.controls.append(linha)
         
+        
+
         if data_atual >=data_fechamento:
             expiracao_txt.visible = True
-            page.update()
+
+        lista_pend_view.visible = True
+        lista_pend_view.update()
+        page.update()
     
     
 
@@ -1026,6 +1036,7 @@ def main(page: ft.Page):
                     container_desempenho_auto.visible =False
 
                 lista_reultados_auto_view.controls.append(container_pilar)
+                lista_reultados_auto_view.visible = True
                 container_respostas_auto.visible = True
                 container_obs_auto.visible = True
 
@@ -1043,6 +1054,7 @@ def main(page: ft.Page):
                     container_desempenho_av1.visible =False
 
                 lista_reultados_av1_view.controls.append(container_pilar)
+                lista_reultados_av1_view.visible = True
                 container_respostas_av1.visible = True
                 container_obs_av1.visible = True
             else:
@@ -1059,6 +1071,7 @@ def main(page: ft.Page):
                     container_desempenho_av2.visible =False
         
                 lista_reultados_av2_view.controls.append(container_pilar)
+                lista_reultados_av2_view.visible = True
                 container_respostas_av2.visible = True
                 container_obs_av2.visible = True
 
@@ -1127,6 +1140,11 @@ def main(page: ft.Page):
         painel_pend_view.visible = False
         painel_view.visible = False
         painel_resposta_view.visible = True
+
+        lista_reultados_auto_view.update()
+        lista_reultados_av1_view.update()
+        lista_reultados_av2_view.update()   
+        
         page.update()
 
     def muda_cor_dropdown(e: ft.ControlEvent):
@@ -1587,10 +1605,10 @@ def main(page: ft.Page):
     )
 
 
-        # Corpo com rolagem (apenas as linhas rolam)
+    # Corpo com rolagem (apenas as linhas rolam)
     corpo_tabela = ft.Container(
         content=lista_view,
-        height=page.window.width * 0.7,
+        expand=True,
         bgcolor=ft.Colors.translate,
         border_radius=ft.border_radius.only(bottom_left=10, bottom_right=10)
     )
@@ -1636,7 +1654,7 @@ def main(page: ft.Page):
     # Corpo com rolagem (apenas as linhas rolam)
     corpo_tabela_pend = ft.Container(
         content=lista_pend_view,
-        height=page.window.width * 0.7,
+        expand=True,
         bgcolor=ft.Colors.translate,
         border_radius=ft.border_radius.only(bottom_left=10, bottom_right=10)
     )
@@ -1668,7 +1686,7 @@ def main(page: ft.Page):
 
     container_perguntas = ft.Container(
         content=form_content,
-        height=page.window.width * 0.7,
+        expand=True,
         bgcolor=ft.Colors.WHITE,
         border_radius=10,
         padding=20,
@@ -1730,7 +1748,7 @@ def main(page: ft.Page):
 
     container_respostas_auto = ft.Container(
         content=lista_reultados_auto_view,
-        height=page.window.width * 0.3,
+        height= 300,
         bgcolor=ft.Colors.WHITE,
         border_radius=10,
         padding=20,
@@ -1739,7 +1757,7 @@ def main(page: ft.Page):
     )
     container_respostas_av1 = ft.Container(
         content=lista_reultados_av1_view,
-        height=page.window.width * 0.3,
+        height= 300,
         bgcolor=ft.Colors.WHITE,
         border_radius=10,
         padding=20,
@@ -1749,7 +1767,7 @@ def main(page: ft.Page):
 
     container_respostas_av2 = ft.Container(
         content=lista_reultados_av2_view,
-        height=page.window.width * 0.3,
+        height= 300,
         bgcolor=ft.Colors.WHITE,
         border_radius=10,
         padding=20,
@@ -1819,17 +1837,20 @@ def main(page: ft.Page):
         opacity=0.95,
         visible=False
     )
-
     
+    with open("Imagem_Quest.png", "rb") as img_file:
+            img_base64 = base64.b64encode(img_file.read()).decode('utf-8')
+
     imagem_fundo = ft.Container(
         content=ft.Image(
-            src=caminho_recurso("Imagem_Quest.png"),
+            src=f"data:image/png;base64,{img_base64}",
             fit=ft.ImageFit.COVER,
+            expand=True,
             gapless_playback=True
         ),
-        alignment=ft.alignment.center
+        alignment=ft.alignment.center,
+        expand=True
     )
-
 
     conteudo_central = ft.Container(
         content=ft.Column([
@@ -1845,7 +1866,7 @@ def main(page: ft.Page):
         spacing=30),
         alignment=ft.alignment.center,
     )
-
+    
     overlay = ft.Column([
         alerta_container,
         conteudo_central,
@@ -1864,10 +1885,9 @@ def main(page: ft.Page):
     ])
 
    
+    page.add(stack) 
     
-    page.add(stack)
-    
-
-ft.app(target=main, view=ft.WEB_BROWSER)
+#ft.app(target=main)
+ft.app(target=main, view=ft.WEB_BROWSER,  port=int(os.environ.get("PORT", 8080)))
 
 
