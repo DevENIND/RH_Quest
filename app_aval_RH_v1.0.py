@@ -1880,7 +1880,7 @@ def main(page: ft.Page):
     page.on_resized = atualizar_altura_container
 
     stack = ft.Stack([
-        imagem_fundo,
+        #imagem_fundo,
         overlay
     ])
 
