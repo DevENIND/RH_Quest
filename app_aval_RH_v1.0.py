@@ -24,6 +24,10 @@ Comandos de atulização:
 
 Atualização do git hub
 ssh root@191.252.219.242
+
+ativar o ambiente virtual
+source venv/bin/activate
+
 cd RH_Quest
 git pull origin main
 cd
@@ -55,6 +59,9 @@ Atualização do deploy:
 sudo systemctl daemon-reload
 sudo systemctl enable fletapp.service
 sudo systemctl start fletapp.service
+
+teste da aplicação:
+sudo systemctl status fletapp.service
 '''
 
 # Descobre o diretório onde o script está
@@ -433,7 +440,7 @@ def obter_questionarios(Pessoa):
 IDLE_TIMEOUT = 300  # segundos -> 5*60 - 5 Minutos
 
 def main(page: ft.Page):
-    print('Aguarde, abrindo aplicativo, isso pode demorar até 60 segundos')
+    print(f'🚀 Iniciando aplicação... a imagem está no diretório:{image_path}')
     codigo_enviado = ""
     nome_logado = ""
     page.title = "Sistema de Avaliação ENIND"
