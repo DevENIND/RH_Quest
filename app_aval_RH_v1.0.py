@@ -1838,6 +1838,7 @@ def main(page: ft.Page):
         visible=False
     )
     
+    '''
     with open("Imagem_Quest.png", "rb") as img_file:
             img_base64 = base64.b64encode(img_file.read()).decode('utf-8')
 
@@ -1851,7 +1852,8 @@ def main(page: ft.Page):
         alignment=ft.alignment.center,
         expand=True
     )
-
+    '''
+    
     conteudo_central = ft.Container(
         content=ft.Column([
             login_view,
