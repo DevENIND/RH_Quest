@@ -11,7 +11,7 @@ import platform
 import pandas as pd
 import asyncio
 import base64
-
+from pathlib import Path
 
 import sys
 import os
@@ -56,6 +56,7 @@ WantedBy=multi-user.target
 ##############################################################
 
 Atualização do deploy:
+sudo systemctl stop fletapp.service
 sudo systemctl daemon-reload
 sudo systemctl enable fletapp.service
 sudo systemctl start fletapp.service
