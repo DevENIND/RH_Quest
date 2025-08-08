@@ -1888,6 +1888,6 @@ def main(page: ft.Page):
     page.add(stack) 
     
 #ft.app(target=main)
-ft.app(target=main, view=ft.WEB_BROWSER,  port=int(os.environ.get("PORT", 8080)))
+ft.app(target=main, view=ft.WEB_BROWSER,  port=int(os.environ.get("PORT", 8080), host='0.0.0.0'))
 
 

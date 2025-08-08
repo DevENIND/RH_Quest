@@ -1,2 +1,4 @@
 # Ignorar ambiente virtual
 .venv/
+dist/
+build/
