@@ -18,6 +18,51 @@ import os
 #Instalando aplicativo para local Windows
 #pyinstaller --noconfirm --onefile --add-data "Imagem_Quest.png;." --icon=enind.ico  app_aval_RH.py
 
+
+'''
+Comandos de atulização:
+
+Atualização do git hub
+ssh root@191.252.219.242
+cd RH_Quest
+git pull origin main
+cd
+
+#################################################################
+
+criação de um ambiente flet:
+sudo nano /etc/systemd/system/fletapp.service
+
+colocar no script:
+
+[Unit]
+Description=Flet App RH Quest
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=root/RH_Quest
+ExecStart=/root/venv/bin/python /root/RH_Quest/app_aval_RH_v1.0.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+##############################################################
+
+Atualização do deploy:
+sudo systemctl daemon-reload
+sudo systemctl enable fletapp.service
+sudo systemctl start fletapp.service
+'''
+
+# Descobre o diretório onde o script está
+BASE_DIR = Path(__file__).parent
+
+# Caminho absoluto para a imagem
+image_path = BASE_DIR / "Imagem_Quest.png"
+
 def caminho_recurso(rel_path):
     """Retorna o caminho absoluto de arquivos mesmo no executável PyInstaller"""
     try:
@@ -1838,8 +1883,7 @@ def main(page: ft.Page):
         visible=False
     )
     
-    '''
-    with open("Imagem_Quest.png", "rb") as img_file:
+    with open(image_path, "rb") as img_file:
             img_base64 = base64.b64encode(img_file.read()).decode('utf-8')
 
     imagem_fundo = ft.Container(
@@ -1852,7 +1896,6 @@ def main(page: ft.Page):
         alignment=ft.alignment.center,
         expand=True
     )
-    '''
     
     conteudo_central = ft.Container(
         content=ft.Column([
@@ -1882,7 +1925,7 @@ def main(page: ft.Page):
     page.on_resized = atualizar_altura_container
 
     stack = ft.Stack([
-        #imagem_fundo,
+        imagem_fundo,
         overlay
     ])
 
