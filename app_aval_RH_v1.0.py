@@ -1888,5 +1888,8 @@ def main(page: ft.Page):
     page.add(stack) 
     
 #ft.app(target=main)
-ft.app(target=main, view=ft.WEB_BROWSER,  port=8000, host='0.0.0.0')
+ft.app(target=main, 
+        view=ft.WEB_BROWSER,  
+        port=8000,
+        host="0.0.0.0")
 
