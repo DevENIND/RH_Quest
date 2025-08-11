@@ -12,6 +12,7 @@ import pandas as pd
 import asyncio
 import base64
 from pathlib import Path
+import io
 
 import sys
 import os
@@ -1455,28 +1456,41 @@ def main(page: ft.Page):
         aguarde_overlay.visible = False
         page.update()
     
-    def exportar_para_excel(pasta):
-        # Simulação de dados para exportar
-        conn = mysql_connection()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-        scrp_sql = f"SELECT * FROM QuestRH_Respostas"
-        cursor.execute(scrp_sql)
-        consulta = cursor.fetchall()
-        cursor.close()
-        conn.close()
-
-        df = pd.DataFrame(consulta)
-
-        nome_arquivo = f"exportacao_respostas_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
-        caminho_completo = os.path.join(pasta, nome_arquivo)
-
+    def exportar_para_excel(e=None):
         try:
-            df.to_excel(caminho_completo, index=False, engine='openpyxl')
-            mostrar_alerta_temporario('Exportação realizada com sucesso', ft.Colors.GREEN_400)
-        except Exception as e:
-            mostrar_alerta_temporario('Não foi possível salvar o arquivo', ft.Colors.RED_400)
+            # Conexão e consulta
+            conn = mysql_connection()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            scrp_sql = "SELECT * FROM QuestRH_Respostas"
+            cursor.execute(scrp_sql)
+            consulta = cursor.fetchall()
+            cursor.close()
+            conn.close()
 
-        page.update()
+            # Criar DataFrame
+            df = pd.DataFrame(consulta)
+
+            # Criar arquivo em memória
+            output = io.BytesIO()
+            df.to_excel(output, index=False, engine='openpyxl')
+            output.seek(0)
+
+            # Nome do arquivo
+            nome_arquivo = f"exportacao_respostas_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
+             
+            # Codificar para base64
+            b64 = base64.b64encode(output.read()).decode()
+
+            # Criar link de download
+            link_download = f"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}"
+
+            # Abrir o link no navegador (força o download)
+            page.launch_url(link_download, web_window_name=nome_arquivo)
+
+            mostrar_alerta_temporario('Exportação realizada com sucesso', ft.Colors.GREEN_400)
+        except Exception as ex:
+            mostrar_alerta_temporario(f'Erro ao exportar: {ex}', ft.Colors.RED_400)
+
 
     def escolher_pasta(e):
         file_picker.get_directory_path()
@@ -1620,7 +1634,7 @@ def main(page: ft.Page):
 
     exportar_btn = ft.ElevatedButton(
         "Exportar para Excel",
-        on_click=escolher_pasta,
+        on_click=lambda _: exportar_para_excel(),
         width=250,
         height=50
     )
