@@ -1251,6 +1251,9 @@ def main(page: ft.Page):
             ft.dropdown.Option("5 - Excelente - Supera os padrões esperados")
         ]
 
+        alerta_container_form.visible = False
+        alerta_container_form.content.value = ''
+
         # Agrupar perguntas por Pilar
         pilares_dict = {}
         for row in perguntas_formulario:
