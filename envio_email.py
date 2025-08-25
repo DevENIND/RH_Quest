@@ -66,10 +66,8 @@ def prepara_corpo_email(lista_pendentes, log_avaliador, senha_avaliador):
     corpo += f"<br><br>Segue abaixo listagem de acessos referente a Avaliação de Desempenho da ENIND <b>essa é uma informação confidencial, não repasse esse e-mail ou responda.</b> "
     corpo += f"<br><br>Você é o responsável pela segurança e acesso das credenciais fornecidas na listagem abaixo."
     corpo += f'<br><br>🔐 <b>Segue abaixo sua credencial de acesso:</b> <br>Login: {log_avaliador} <br> Senha: {senha_avaliador}'
-    corpo += f"<br><br><b>⚠️ ** ATENÇÃO **</b> Acesse a área remota (acesso a rede da sede) abra o aplicativo constante na área de trabalho para realizar as avaliações."
-    corpo += f"<br><br><b>❓ Possui dúvidas ou problemas contate:</b>"
-    corpo += f"<br>sobre o <b>aplicativo:</b> larissa.schons@enind.com.br"
-    corpo += f"<br>sobre o acesso a <b>area de trabalho remota:</b> arthur.magno@enind.com.br"
+    corpo += f"<br><br><b>⚠️ Clique no link abaixo para realizar a avaliação </b><br><a href='http://191.252.219.242:8000/'>link de acesso ao site de avaliação ENIND</a>"
+    corpo += f"<br><br><b>❓ Para dúvidas ou problemas contate o RH</b>"
     corpo += f"<br><br>{lista_pendentes}<br><br>"
     corpo += f"<b>E-mail automático, por gentileza, não responda.</b>"
     corpo += f"<br> Atenciosamente,"
@@ -248,6 +246,7 @@ for index, row in resultados.iterrows():
                     </tr> 
             '''
 
+#Envio do último e-mail
 if bol_enviar == True:             
     scrp_tabela += '</table>'
     corpo_email = f'email a enviar para: <b>{email_enviar}</b><br><br>'

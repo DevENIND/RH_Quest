@@ -47,7 +47,7 @@ After=network.target
 [Service]
 User=root
 Group=root
-WorkingDirectory=root/RH_Quest
+WorkingDirectory=/root/RH_Quest
 ExecStart=/root/venv/bin/python /root/RH_Quest/app_aval_RH_v1.0.py
 Restart=always
 
@@ -457,6 +457,16 @@ def main(page: ft.Page):
 
     # Container de alerta
     alerta_container = ft.Container(
+        content=ft.Text("", color=ft.Colors.WHITE),
+        bgcolor=ft.Colors.RED_400,
+        height=40,
+        padding=10,
+        alignment=ft.alignment.center,
+        visible=False
+    )
+
+    # Container de alerta
+    alerta_container_form = ft.Container(
         content=ft.Text("", color=ft.Colors.WHITE),
         bgcolor=ft.Colors.RED_400,
         height=40,
@@ -1348,6 +1358,8 @@ def main(page: ft.Page):
         for i, grupo in enumerate(form_inputs):
             if not grupo.value:
                 mostrar_alerta_temporario("Preencha todos os campos antes de enviar o furmulário...", ft.Colors.RED_400)
+                alerta_container_form.visible = True
+                alerta_container_form.content.value = 'Preencha todos os campos antes de enviar o furmulário...'
                 aguarde_overlay.visible = False
                 page.update()
                 return  # Interrompe envio
@@ -1359,6 +1371,8 @@ def main(page: ft.Page):
         
         if not dropdown_desempenho.value or dropdown_desempenho.value == 0 :
             mostrar_alerta_temporario("Coloque antes o valor do desempenho da pessoa.", ft.Colors.RED_400)
+            alerta_container_form.visible = True
+            alerta_container_form.content.value = 'Coloque antes o valor do desempenho da pessoa.'
             aguarde_overlay.visible = False
             page.update()
             return  # Interrompe envio
@@ -1367,7 +1381,9 @@ def main(page: ft.Page):
 
         obs_us = txt_observacoes.value
         if valida_texto(obs_us) == False:
-            mostrar_alerta_temporario('Campo de obsevações constem palavaras não permitidas, por gentileza, analise o texto', ft.Colors.RED_400)
+            mostrar_alerta_temporario('Campo de obsevações contem palavras não permitidas, por gentileza, analise o texto', ft.Colors.RED_400)
+            alerta_container_form.visible = True
+            alerta_container_form.content.value = 'Campo de obsevações contem palavras não permitidas, por gentileza, analise o texto'
             aguarde_overlay.visible = False
             page.update()
             return
@@ -1766,7 +1782,7 @@ def main(page: ft.Page):
                 ft.Row([ ft.TextButton("Voltar", on_click=voltar_painel, icon=ft.Icons.ARROW_BACK),texto_ola3]),
                 nome_em_avaliacao,
                 container_perguntas,
-                alerta_container,
+                alerta_container_form,
                 ft.Row(
                     controls=[
                         ft.ElevatedButton(
@@ -1954,10 +1970,12 @@ def main(page: ft.Page):
    
     page.add(stack) 
     
-#ft.app(target=main)
+ft.app(target=main,view=ft.WEB_BROWSER)
+'''
 ft.app(target=main, 
         view=ft.WEB_BROWSER,  
         port=8000,
         host="0.0.0.0"
     )
 
+'''
