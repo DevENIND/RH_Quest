@@ -440,7 +440,7 @@ def obter_questionarios(Pessoa):
 IDLE_TIMEOUT = 300  # segundos -> 5*60 - 5 Minutos
 
 def main(page: ft.Page):
-    print(f'🚀 Iniciando aplicação... a imagem está no diretório:{image_path}')
+    #print(f'🚀 Iniciando aplicação... a imagem está no diretório:{image_path}')
     codigo_enviado = ""
     nome_logado = ""
     page.title = "Sistema de Avaliação ENIND"
@@ -698,15 +698,15 @@ def main(page: ft.Page):
             page.launch_url("https://enindengenharia-my.sharepoint.com/:b:/g/personal/wagner_barreiro_enind_com_br/EVTZZEKppENKtxKjAVAmZZcBFQtA84M_e-hGFLQp4EHYYQ?e=YjJhPO")
     
     def atualizar_altura_container(e):
-        altura_tela = page.window.height
+        altura_tela = e.height
+    
+        container_obs_auto.height = altura_tela * 0.3
+        container_obs_av1.height = altura_tela * 0.3
+        container_obs_av1.height = altura_tela * 0.3
 
-        #container_obs_auto.height = altura_tela * 0.3
-        #container_obs_av1.height = altura_tela * 0.3
-        #container_obs_av1.height = altura_tela * 0.3
-
-        #corpo_tabela_pend.height = altura_tela * 0.6
-        #corpo_tabela.height = altura_tela * 0.6
-        #container_perguntas.height = altura_tela * 0.6 
+        corpo_tabela_pend.height = altura_tela * 0.7
+        corpo_tabela.height = altura_tela * 0.7
+        container_perguntas.height = altura_tela * 0.7
         page.update()
     
     
@@ -1692,7 +1692,7 @@ def main(page: ft.Page):
     # Corpo com rolagem (apenas as linhas rolam)
     corpo_tabela = ft.Container(
         content=lista_view,
-        height=400,
+        height = page.height * 0.7,
         bgcolor=ft.Colors.translate,
         border_radius=ft.border_radius.only(bottom_left=10, bottom_right=10)
     )
@@ -1740,7 +1740,8 @@ def main(page: ft.Page):
         content=lista_pend_view,
         expand=True,
         bgcolor=ft.Colors.translate,
-        border_radius=ft.border_radius.only(bottom_left=10, bottom_right=10)
+        border_radius=ft.border_radius.only(bottom_left=10, bottom_right=10),
+        height = page.height * 0.7
     )
 
     painel_pend_view = ft.Container(
@@ -1832,7 +1833,7 @@ def main(page: ft.Page):
 
     container_respostas_auto = ft.Container(
         content=lista_reultados_auto_view,
-        height= 300,
+        height= page.height * 0.3,
         bgcolor=ft.Colors.WHITE,
         border_radius=10,
         padding=20,
@@ -1841,7 +1842,7 @@ def main(page: ft.Page):
     )
     container_respostas_av1 = ft.Container(
         content=lista_reultados_av1_view,
-        height= 300,
+        height= page.height * 0.3,
         bgcolor=ft.Colors.WHITE,
         border_radius=10,
         padding=20,
@@ -1851,7 +1852,7 @@ def main(page: ft.Page):
 
     container_respostas_av2 = ft.Container(
         content=lista_reultados_av2_view,
-        height= 300,
+        height= page.height * 0.3,
         bgcolor=ft.Colors.WHITE,
         border_radius=10,
         padding=20,
@@ -1968,7 +1969,7 @@ def main(page: ft.Page):
         overlay
     ])
 
-   
+    #print('✔️ tamanho da tela: ', page.width, 'x', page.height)
     page.add(stack) 
     
 #ft.app(target=main,view=ft.WEB_BROWSER)
