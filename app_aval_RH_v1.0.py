@@ -1,7 +1,5 @@
 import flet as ft
 import pymysql
-import random
-import string
 from datetime import datetime
 from pytz import timezone
 import time
@@ -1694,7 +1692,7 @@ def main(page: ft.Page):
     # Corpo com rolagem (apenas as linhas rolam)
     corpo_tabela = ft.Container(
         content=lista_view,
-        expand=True,
+        height=400,
         bgcolor=ft.Colors.translate,
         border_radius=ft.border_radius.only(bottom_left=10, bottom_right=10)
     )
@@ -1973,10 +1971,6 @@ def main(page: ft.Page):
    
     page.add(stack) 
     
-#ft.app(target=main,view=ft.WEB_BROWSER)
+ft.app(target=main,view=ft.WEB_BROWSER)
 
-ft.app(target=main, 
-        view=ft.WEB_BROWSER,  
-        port=8000,
-        host="0.0.0.0"
-    )
+#ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
