@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-import pymysql
+import pymysqlgi
 import io
 import base64
 import matplotlib
@@ -187,6 +187,7 @@ def gera_ninebox(pilar = '', competencia = '', participante = ''):
         return img64,''
 
     except Exception as e:
+        print(f'❌ Erro ao gerar gráfico Ninebox: {e}')
         return None,e
 
 
