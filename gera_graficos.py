@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-import pymysqlgi
+import pymysql
 import io
 import base64
 import matplotlib
