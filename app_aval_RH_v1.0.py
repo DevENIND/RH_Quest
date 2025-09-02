@@ -12,6 +12,7 @@ import base64
 from pathlib import Path
 import io
 import gera_graficos
+import pytz
 
 
 import sys
@@ -208,24 +209,30 @@ def inserir_banco(tabela, dados, campos):
 
 def registra_login(Pessoa):
     try:
-        usuario = os.getlogin()
-    except:
-        return os.environ.get("USERNAME")
-    computador = platform.node()
+    # Horário Brasil
+        fuso = pytz.timezone("America/Sao_Paulo")
+        data_login = datetime.datetime.now(fuso)
+        data_login_formatado = data_login.strftime("%Y-%m-%d %H:%M:%S")
 
-    data_login = datetime.datetime.now()
-    data_login_formatado = data_login.strftime("%Y/%m/%d %H:%M:%S")
+        conn = mysql_connection()
+        if not conn:
+            return False
 
-    Campos = '(Nome, Data_Acesso, Usuario_Acesso, Maquina_Acesso) VALUES (%s, %s, %s, %s)'
+        query = """
+            INSERT INTO QuestRH_Acessos (Nome, Data_Acesso, Usuario_Acesso, Maquina_Acesso)
+            VALUES (%s, %s, %s, %s)
+        """
 
-    dados = (
-        Pessoa,
-        data_login_formatado,
-        usuario,
-        computador
-    )
+        cursor = conn.cursor()
+        cursor.execute(query, (Pessoa, data_login_formatado, '', ''))
+        conn.commit()
 
-    return inserir_banco('QuestRH_Acessos', dados , Campos)
+        cursor.close()
+        conn.close()
+        return True
+    except Exception as e:
+        return False
+  
         
 def captura_valor_nota(Participante, Avaliador):
     try:
