@@ -198,9 +198,10 @@ for index, row in resultados.iterrows():
 
     if email_enviar != email and index > 0 and bol_enviar == True and start == True: 
         scrp_tabela += '</table>'
-        corpo_email = f'email a enviar para: <b>{email_enviar}</b><br><br>'
+        corpo_email= ''
+        #corpo_email = f'email a enviar para: <b>{email_enviar}</b><br><br>'
         corpo_email += prepara_corpo_email(scrp_tabela, log_avaliador, senha_avaliador)
-        boll_env = enviar_email('wagner.barreiro@enind.com.br, larissa.schons@enind.com.br','Avaliação de Desempenho ENIND', corpo_email)
+        boll_env = enviar_email(email_enviar,'Avaliação de Desempenho ENIND', corpo_email)
 
         if boll_env == False:
             print(f'❌ Erro ao enviar email para:{email_enviar} referente a {nome_enviar}')
@@ -249,9 +250,10 @@ for index, row in resultados.iterrows():
 #Envio do último e-mail
 if bol_enviar == True:             
     scrp_tabela += '</table>'
-    corpo_email = f'email a enviar para: <b>{email_enviar}</b><br><br>'
+    corpo_email = ''
+    #corpo_email = f'email a enviar para: <b>{email_enviar}</b><br><br>'
     corpo_email += prepara_corpo_email(scrp_tabela, log_avaliador, senha_avaliador)
-    boll_env = enviar_email('wagner.barreiro@enind.com.br, larissa.schons@enind.com.br','Avaliação de Desempenho ENIND', corpo_email)
+    boll_env = enviar_email(email_enviar,'Avaliação de Desempenho ENIND', corpo_email)
 
     if boll_env == False:
         print(f'❌ Erro ao enviar email para:{email_enviar} referente a {nome_enviar}')

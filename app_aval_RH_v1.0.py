@@ -11,6 +11,8 @@ import asyncio
 import base64
 from pathlib import Path
 import io
+import gera_graficos
+
 
 import sys
 import os
@@ -592,6 +594,7 @@ def main(page: ft.Page):
     texto_ola2 = ft.Text("", size=15, weight=ft.FontWeight.BOLD)
     texto_ola3 = ft.Text("", size=15, weight=ft.FontWeight.BOLD)
     texto_ola4 = ft.Text("", size=15, weight=ft.FontWeight.BOLD)
+    texto_ola5 = ft.Text("", size=15, weight=ft.FontWeight.BOLD)
 
     lista_view = ft.ListView(expand=True, auto_scroll=False,  spacing=10, padding=10)
     lista_pend_view = ft.ListView(expand=True, auto_scroll=False, spacing=10, padding=10,visible=False)
@@ -642,11 +645,299 @@ def main(page: ft.Page):
                             )
 
     participante_realizado = ft.Text("", size=15, weight=ft.FontWeight.BOLD, text_align=ft.TextAlign.CENTER, color=ft.Colors.GREY_800)
+    
+
+    cboxPessoa = ft.Dropdown(label="Pessoa", expand=3)
+    cboxPilar = ft.Dropdown(label="Pilar", expand=2)
+    cboxCompetencia = ft.Dropdown(label="Competência", expand=2)
+
+    btn_limpar_campos = ft.ElevatedButton("Limpar", on_click=lambda e: limpar_campos(e), width=100 )
+  
+    img_Ninebox = ft.Image(src_base64= '', fit=ft.ImageFit.CONTAIN, expand=3)
+    img_Pilar= ft.Image(src_base64= '', fit=ft.ImageFit.CONTAIN, expand=3)
+    img_Comp= ft.Image(src_base64= '', fit=ft.ImageFit.CONTAIN, expand=True)
+    img_Compar= ft.Image(src_base64= '', fit=ft.ImageFit.CONTAIN, expand=True)
+   
 
     ####################################################################################################################################### 
     ######################################################## Funções dos Objetos ##########################################################
     #######################################################################################################################################
     
+    #-------------------------------------------------------------------------------------------------------------------------------------------
+    #---------------------------------------------------------------- Gráficos -----------------------------------------------------------------
+    #-------------------------------------------------------------------------------------------------------------------------------------------
+
+    def alimenta_pilares():
+        scpr_pilar = "Select Distinct(Pilar) from QuestRH_Perguntas"
+        conn = mysql_connection()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute(scpr_pilar)
+        resultados = cursor.fetchall()
+
+        cboxPilar.options.clear()
+
+        for pilar in resultados:
+            cboxPilar.options.append(ft.dropdown.Option(pilar['Pilar']))
+        conn.close()
+
+    def alimenta_competencias(Pilar = ""):
+
+        if Pilar == "": 
+            scpr_pilar = "Select Distinct(Competencia) from QuestRH_Perguntas"
+        else:
+            scpr_pilar = "Select Distinct(Competencia) from QuestRH_Perguntas where Pilar = '" + Pilar + "'"
+
+        conn = mysql_connection()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute(scpr_pilar)
+        resultados = cursor.fetchall() 
+
+        cboxCompetencia.options.clear()
+
+        for competencia in resultados:
+            cboxCompetencia.options.append(ft.dropdown.Option(competencia['Competencia']))
+
+        conn.close()
+
+    def alimenta_pessoas():
+        scpr_pilar = "Select Distinct(Participante) from QuestRH_Respostas where id_rel > 0 group by Participante HAVING COUNT(DISTINCT id_rel) = 2"
+        conn = mysql_connection()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute(scpr_pilar)
+        resultados = cursor.fetchall() 
+
+        cboxPessoa.options.clear()
+        
+        for competencia in resultados:
+            cboxPessoa.options.append(ft.dropdown.Option(competencia['Participante']))
+
+        conn.close()
+    
+    def limpar_campos(e=None):
+        cboxPessoa.value = None
+        cboxPilar.value = None
+        cboxCompetencia.value = None
+
+        cboxPessoa.update()
+        cboxPilar.update()
+        cboxCompetencia.update()
+
+        alimenta_competencias()
+        alimenta_pessoas()
+        atualiza_dados()
+    
+    def inicializa_grafico():
+        alimenta_pessoas()
+        alimenta_pilares()
+        alimenta_competencias()
+        atualiza_dados()
+
+        container_grafico.visible = True
+        painel_pend_view.visible = False
+        page.update()
+
+
+    def atualiza_dados(e=None):
+        mensagem_aguarde.value = 'Aguarde, realizando montagem dos gráficos...'
+        aguarde_overlay.visible = True
+        page.update()
+
+        participante = cboxPessoa.value
+        alimenta_pessoas()
+
+        if participante != None:
+            participante = cboxPessoa.value
+        else:
+            participante = ''
+
+
+        if cboxPilar.value != None :
+            pilar = cboxPilar.value
+            alimenta_competencias(pilar)
+        else:
+            pilar = ''
+
+        if cboxCompetencia.value != None :
+            competencia = cboxCompetencia.value
+        else:
+            competencia = ''
+
+        grafico64, msgerro = gera_graficos.gera_ninebox(pilar=pilar, competencia=competencia, participante=participante)
+        if grafico64 == None:
+            img_Ninebox.visible = False
+        else:
+            img_Ninebox.visible = True
+
+
+        grafico_pilar64, msgerro = gera_graficos.gera_gráfico_pilar(pilar=pilar, competencia=competencia, participante=participante)
+        if grafico_pilar64 == None:
+            img_Pilar.visible = False
+        else:
+            img_Pilar.visible = True    
+
+
+        grafico_comp64, msgerro = gera_graficos.gera_gráfico_Competencia(pilar=pilar, competencia=competencia, participante=participante)
+        if grafico_comp64 == None:
+            img_Comp.visible = False
+        else:
+            img_Comp.visible = True
+
+        grafico_compar64, msgerro_compar = gera_graficos.gera_gráfico_Comparativo(pilar=pilar, competencia=competencia, participante=participante)
+        if grafico_compar64 == None:
+            img_Compar.visible = False
+        else:  
+            img_Compar.visible = True
+
+        img_Ninebox.src_base64 = grafico64
+        img_Pilar.src_base64 = grafico_pilar64
+        img_Comp.src_base64 = grafico_comp64
+        img_Compar.src_base64 = grafico_compar64
+
+        alimenta_tabela_graficos(Participante=participante)
+        aguarde_overlay.visible = False
+        page.update()
+    
+    def exportar_grafico_excel(e=None):
+        try:
+            # Conexão e consulta
+            conn = mysql_connection()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            scrp_sql ="""
+                    Select Participante,
+                            Avaliacao,
+                                ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
+                                ROUND(AVG(CASE WHEN id_rel IN (1,2)  THEN Resposta END), 0) AS Media_Avaliadores,
+                                ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
+                                ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
+                                CASE When (Count(DISTINCT id_rel) = 2 and Avaliacao = 'A3') or (Count(DISTINCT id_rel) = 3 and Avaliacao <> 'A3') then 'Finalizado' else 'Pendente' END as Status_Av
+                        from QuestRH_Respostas group by Participante;
+            """
+            cursor.execute(scrp_sql)
+            consulta = cursor.fetchall()
+            cursor.close()
+            conn.close()
+
+            # Criar DataFrame
+            df = pd.DataFrame(consulta)
+
+            # Criar arquivo em memória
+            output = io.BytesIO()
+            df.to_excel(output, index=False, engine='openpyxl')
+            output.seek(0)
+
+            # Nome do arquivo
+            nome_arquivo = f"exportacao_grafico_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
+             
+            # Codificar para base64
+            b64 = base64.b64encode(output.read()).decode()
+
+            # Criar link de download
+            link_download = f"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}"
+
+            # Abrir o link no navegador (força o download)
+            page.launch_url(link_download, web_window_name=nome_arquivo)
+
+            mostrar_alerta_temporario('Exportação realizada com sucesso', ft.Colors.GREEN_400)
+        except Exception as ex:
+            mostrar_alerta_temporario(f'Erro ao exportar: {ex}', ft.Colors.RED_400)
+
+
+    def alimenta_tabela_graficos(Participante = ''):
+        mensagem_aguarde.value = 'Aguarde, realizando montagem da tabela de dados...'
+        aguarde_overlay.visible = True
+        page.update()
+        
+        lista_grafico.controls.clear()
+
+        if Participante == '':
+            scrp_sql ="""
+                    Select Participante,
+                            Avaliacao,
+                                ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
+                                ROUND(AVG(CASE WHEN id_rel IN (1,2)  THEN Resposta END), 0) AS Media_Avaliadores,
+                                ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
+                                ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
+                                CASE When (Count(DISTINCT id_rel) = 2 and Avaliacao = 'A3') or (Count(DISTINCT id_rel) = 3 and Avaliacao <> 'A3') then 'Finalizado' else 'Pendente' END as Status_Av
+                        from QuestRH_Respostas group by Participante;
+            """
+        else:
+            scrp_sql =f"""
+                    Select Participante,
+                            Avaliacao,
+                                ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
+                                ROUND(AVG(CASE WHEN id_rel IN (1,2)  THEN Resposta END), 0) AS Media_Avaliadores,
+                                ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
+                                ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
+                                CASE When (Count(DISTINCT id_rel) = 2 and Avaliacao = 'A3') or (Count(DISTINCT id_rel) = 3 and Avaliacao <> 'A3') then 'Finalizado' else 'Pendente' END as Status_Av
+                        from QuestRH_Respostas where Participante = '{Participante}' group by Participante;
+            """
+
+
+        conn = mysql_connection()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute(scrp_sql)
+        resultados = cursor.fetchall() 
+        conn.close
+
+        for r in resultados:
+            if r["Status_Av"] == 'Pendente':
+                bg_cor = ft.Colors.RED
+            else:
+                bg_cor = ft.Colors.GREEN
+            
+            if not r['Media_Auto'] and r['Status_Av'] == 'Pendente':
+                r['Media_Auto'] = ''
+            elif r['Status_Av'] == 'Finalizado' and not r['Media_Auto']:
+                r['Media_Auto'] = 'N/A'
+
+            if not r['Media_Avaliadores'] and r['Status_Av'] == 'Pendente':
+                r['Media_Avaliadores'] = ''
+            elif r['Status_Av'] == 'Finalizado' and not r['Media_Avaliadores']:
+                r['Media_Avaliadores'] = 'N/A'
+
+            if not r['Media_Auto_Desemp'] and r['Status_Av'] == 'Pendente':
+                r['Media_Auto_Desemp'] = ''
+            elif r['Status_Av'] == 'Finalizado' and not r['Media_Auto_Desemp']:
+                r['Media_Auto_Desemp'] = 'N/A'
+
+            if not r['Media_Aval_Desemp'] and r['Status_Av'] == 'Pendente':
+                r['Media_Aval_Desemp'] = ''
+            elif r['Status_Av'] == 'Finalizado' and not r['Media_Aval_Desemp']:
+                r['Media_Aval_Desemp'] = 'N/A'
+
+            linha = ft.Container(
+                content=ft.Row([
+                        ft.Container(ft.Text(r["Participante"]), expand=3),
+                        ft.Container(ft.Text(r["Avaliacao"]), expand=1),
+                        ft.Container(ft.Text(r["Media_Auto"]), expand=1),
+                        ft.Container(ft.Text(r["Media_Avaliadores"]), expand=1),
+                        ft.Container(ft.Text(r["Media_Auto_Desemp"]), expand=1),
+                        ft.Container(ft.Text(r["Media_Aval_Desemp"]), expand=1),
+                        ft.Container(
+                            content=ft.Text(r["Status_Av"]),
+                            bgcolor=bg_cor,
+                            padding=ft.padding.symmetric(horizontal=6, vertical=2),
+                            border_radius=5,
+                            alignment=ft.alignment.center,
+                            expand=1
+                        ),
+                    ], spacing=10),
+                padding=10,
+                bgcolor=ft.Colors.TRANSPARENT,
+                border_radius=8,
+                margin=ft.margin.only(bottom=4)
+            )
+            
+            lista_grafico.controls.append(linha)
+
+        lista_grafico.update()
+        aguarde_overlay.visible = False
+        page.update()
+    
+    #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------- Inicio Demais Funcoes --------------------------------------------------------------------------
+    #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     last_interaction = {"time": time.monotonic()}
  
     def reset_idle_time(e=None):
@@ -742,6 +1033,7 @@ def main(page: ft.Page):
         if nome_pessoa == 'Administrador':
             painel_pend_view.visible = True
             painel_view.visible = False
+            container_grafico.visible = False
             if atualizar == True:
                 questionarios = lista_pendencias()
                 montar_tabela_pendencias(questionarios)
@@ -755,6 +1047,7 @@ def main(page: ft.Page):
         Gestor_tempo_formulario.visible = False
         formulario_Envio.visible = False
         painel_resposta_view.visible= False
+
     
         aguarde_overlay.visible = False
         page.update()
@@ -826,6 +1119,7 @@ def main(page: ft.Page):
                 texto_ola2.value = f"Olá, {resultados['Nome']}"
                 texto_ola3.value = f"Olá, {resultados['Nome']}"
                 texto_ola4.value = f"Olá, {resultados['Nome']}"
+                texto_ola5.value = f"Olá, {resultados['Nome']}"
                 aguarde_overlay.visible = True
                 page.update()
                 
@@ -1651,11 +1945,27 @@ def main(page: ft.Page):
 
     exportar_btn = ft.ElevatedButton(
         "Exportar para Excel",
+        icon= ft.Icons.DOWNLOAD_ROUNDED,
         on_click=lambda _: exportar_para_excel(),
         width=250,
         height=50
     )
 
+    exportar_grafico_btn = ft.ElevatedButton(
+        "Exportar para Excel",
+        icon= ft.Icons.DOWNLOAD_ROUNDED,
+        on_click=lambda _: exportar_grafico_excel(),
+        width=250,
+        height=50
+    )
+
+    grafico_btn = ft.ElevatedButton(
+        "Gráficos",
+        icon=ft.Icons.BAR_CHART_ROUNDED,
+        on_click=lambda _: inicializa_grafico(),
+        width=250,
+        height=50
+    )
 
     atualizar_btn = ft.ElevatedButton(
         content=ft.Row(
@@ -1749,7 +2059,7 @@ def main(page: ft.Page):
             ft.Row([ft.TextButton("Deslogar", icon=ft.Icons.ARROW_BACK, on_click=voltar_login),texto_ola2], spacing= 10),
             expiracao_txt,
             ft.Text("Painel de Controle", size=25, weight=ft.FontWeight.BOLD),
-            ft.Row([atualizar_btn,exportar_btn],spacing=10),
+            ft.Row([atualizar_btn,exportar_btn, grafico_btn],spacing=10),
             cabecalho_pend,
             corpo_tabela_pend
         ]),
@@ -1922,6 +2232,64 @@ def main(page: ft.Page):
         opacity=0.95,
         visible=False
     )
+
+    # Cabeçalho fixo
+    cabecalho_grafico = ft.Container(
+        content=ft.Row([
+            ft.Container(ft.Text("Participante", weight=ft.FontWeight.BOLD), expand=3),
+            ft.Container(ft.Text("Tipo_av", weight=ft.FontWeight.BOLD), expand=1),
+            ft.Container(ft.Text("Media_auto", weight=ft.FontWeight.BOLD), expand=1),
+            ft.Container(ft.Text("Media_Avs", weight=ft.FontWeight.BOLD), expand=1),
+            ft.Container(ft.Text("Desemp_auto", weight=ft.FontWeight.BOLD), expand=1),
+            ft.Container(ft.Text("Desemp_Avs", weight=ft.FontWeight.BOLD), expand=1),
+            ft.Container(ft.Text("Status_Av", weight=ft.FontWeight.BOLD), expand=1)
+        ],alignment=ft.MainAxisAlignment.CENTER),
+        padding=10,
+        bgcolor=ft.Colors.BLUE_100,
+        border_radius=ft.border_radius.only(top_left=10, top_right=10),
+        
+    )
+
+    lista_grafico = ft.ListView(expand=True, auto_scroll=False, spacing=10, padding=10)
+
+    container_grafico = ft.Container(
+        content=lista_grafico,
+        height= page.height * 0.7,
+        bgcolor=ft.Colors.WHITE,
+        border_radius=10,
+        padding=20,
+        opacity=0.92,
+        visible=True
+    )
+
+    cboxPessoa.on_change = atualiza_dados
+    cboxPilar.on_change = atualiza_dados
+    cboxCompetencia.on_change = atualiza_dados
+    
+    container_grafico = ft.Column(
+            [   ft.Row([ft.TextButton("Voltar", icon=ft.Icons.ARROW_BACK, on_click=voltar_painel), texto_ola5], spacing= 10),
+                ft.Row([ft.Text("📊 Análise Gráfica - Avaliação de Desempenho", size=20, weight="bold"), exportar_grafico_btn], spacing= 10),
+                ft.Divider(),
+                ft.Row(
+                    [
+                        ft.Container(cboxPessoa,expand=3),
+                        ft.Container(cboxPilar,expand=2),
+                        ft.Container(cboxCompetencia,expand=2),
+                        btn_limpar_campos
+                    ],
+                    spacing=5
+                ),
+                ft.Divider(),
+                ft.Row([ft.Container(img_Ninebox,expand=3), ft.Container(img_Pilar, expand=3)], alignment=ft.MainAxisAlignment.CENTER, spacing=5),
+                img_Comp,
+                img_Compar,
+                cabecalho_grafico,
+                container_grafico
+            ],
+            expand=True,
+            visible=False
+        )
+
     
     with open(image_path, "rb") as img_file:
             img_base64 = base64.b64encode(img_file.read()).decode('utf-8')
@@ -1944,7 +2312,8 @@ def main(page: ft.Page):
             painel_pend_view,
             painel_resposta_view,
             Gestor_tempo_formulario,
-            formulario_Envio
+            formulario_Envio,
+            container_grafico
         ],
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -1972,6 +2341,7 @@ def main(page: ft.Page):
     #print('✔️ tamanho da tela: ', page.width, 'x', page.height)
     page.add(stack) 
     
-#ft.app(target=main,view=ft.WEB_BROWSER)
+    
+ft.app(target=main,view=ft.WEB_BROWSER)
 
-ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
+#ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
