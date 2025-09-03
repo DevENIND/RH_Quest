@@ -660,10 +660,25 @@ def main(page: ft.Page):
 
     btn_limpar_campos = ft.ElevatedButton("Limpar", on_click=lambda e: limpar_campos(e), width=100 )
   
-    img_Ninebox = ft.Image(src_base64= '', fit=ft.ImageFit.CONTAIN, expand=3)
-    img_Pilar= ft.Image(src_base64= '', fit=ft.ImageFit.CONTAIN, expand=3)
+    img_Ninebox = ft.Image(src_base64= '', fit=ft.ImageFit.CONTAIN, expand=True)
+    img_Pilar= ft.Image(src_base64= '', fit=ft.ImageFit.CONTAIN, expand=True)
     img_Comp= ft.Image(src_base64= '', fit=ft.ImageFit.CONTAIN, expand=True)
     img_Compar= ft.Image(src_base64= '', fit=ft.ImageFit.CONTAIN, expand=True)
+    img_BellCurve = ft.Image(src_base64= '', fit=ft.ImageFit.CONTAIN, expand=True)
+
+     # Containers com ListView rolável
+    dropdown_empresa = ft.Column([ft.ListView(expand=True, spacing=5, auto_scroll=False)])
+    dropdown_c_custo = ft.Column([ft.ListView(expand=True, spacing=5, auto_scroll=False)])
+    dropdown_cargo = ft.Column([ft.ListView(expand=True, spacing=5, auto_scroll=False)])
+
+    # Botões para abrir os dialogs
+    botoes = ft.Row([
+        ft.ElevatedButton("Selecionar Empresas", on_click=lambda e: abrir_dialogo("Empresas", dropdown_empresa)),
+        ft.ElevatedButton("Selecionar Centro de Custo", on_click=lambda e: abrir_dialogo("C_Custo", dropdown_c_custo)),
+        ft.ElevatedButton("Selecionar Cargos", on_click=lambda e: abrir_dialogo("Cargos", dropdown_cargo)),
+    ])
+
+    txt_outro_query = ft.Text("", size=15, weight=ft.FontWeight.BOLD,visible=False)
    
 
     ####################################################################################################################################### 
@@ -729,6 +744,18 @@ def main(page: ft.Page):
         cboxPilar.update()
         cboxCompetencia.update()
 
+        for chk in dropdown_c_custo.controls[0].controls:
+            chk.selected = False
+
+        for chk in dropdown_empresa.controls[0].controls: 
+            chk.selected = False
+         
+        for chk in dropdown_cargo.controls[0].controls:
+            chk.selected = False
+
+        txt_outro_query.value = ''
+        page.update()
+        
         alimenta_competencias()
         alimenta_pessoas()
         atualiza_dados()
@@ -737,6 +764,7 @@ def main(page: ft.Page):
         alimenta_pessoas()
         alimenta_pilares()
         alimenta_competencias()
+        alimenta_chkbox()
         atualiza_dados()
 
         container_grafico.visible = True
@@ -756,8 +784,6 @@ def main(page: ft.Page):
             participante = cboxPessoa.value
         else:
             participante = ''
-
-
         if cboxPilar.value != None :
             pilar = cboxPilar.value
             alimenta_competencias(pilar)
@@ -769,38 +795,47 @@ def main(page: ft.Page):
         else:
             competencia = ''
 
-        grafico64, msgerro = gera_graficos.gera_ninebox(pilar=pilar, competencia=competencia, participante=participante)
+
+        grafico64, msgerro = gera_graficos.gera_ninebox(pilar=pilar, competencia=competencia, participante=participante,outras_condicoes=txt_outro_query.value)
         if grafico64 == None:
             img_Ninebox.visible = False
         else:
             img_Ninebox.visible = True
 
 
-        grafico_pilar64, msgerro = gera_graficos.gera_gráfico_pilar(pilar=pilar, competencia=competencia, participante=participante)
+        grafico_pilar64, msgerro = gera_graficos.gera_gráfico_pilar(pilar=pilar, competencia=competencia, participante=participante,outras_condicoes=txt_outro_query.value)
         if grafico_pilar64 == None:
             img_Pilar.visible = False
         else:
             img_Pilar.visible = True    
 
 
-        grafico_comp64, msgerro = gera_graficos.gera_gráfico_Competencia(pilar=pilar, competencia=competencia, participante=participante)
+        grafico_comp64, msgerro = gera_graficos.gera_gráfico_Competencia(pilar=pilar, competencia=competencia, participante=participante,outras_condicoes=txt_outro_query.value)
         if grafico_comp64 == None:
             img_Comp.visible = False
         else:
             img_Comp.visible = True
 
-        grafico_compar64, msgerro_compar = gera_graficos.gera_gráfico_Comparativo(pilar=pilar, competencia=competencia, participante=participante)
+        grafico_compar64, msgerro_compar = gera_graficos.gera_gráfico_Comparativo(pilar=pilar, competencia=competencia, participante=participante,outras_condicoes=txt_outro_query.value)
         if grafico_compar64 == None:
             img_Compar.visible = False
         else:  
             img_Compar.visible = True
+        
+        grafico_bell64, msgerro_compar = gera_graficos.gera_bell_curve()
+        if grafico_bell64 == None:
+            img_BellCurve.visible = False
+        else:  
+            img_BellCurve.visible = True 
 
         img_Ninebox.src_base64 = grafico64
         img_Pilar.src_base64 = grafico_pilar64
         img_Comp.src_base64 = grafico_comp64
         img_Compar.src_base64 = grafico_compar64
+        img_BellCurve.src_base64 = grafico_bell64
 
-        alimenta_tabela_graficos(Participante=participante)
+        alimenta_tabela_graficos(Participante=participante, outras_condicoes=txt_outro_query.value)
+        
         aguarde_overlay.visible = False
         page.update()
     
@@ -812,6 +847,7 @@ def main(page: ft.Page):
             scrp_sql ="""
                     Select Participante,
                             Avaliacao,
+                            Sigla_Emp
                                 ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
                                 ROUND(AVG(CASE WHEN id_rel IN (1,2)  THEN Resposta END), 0) AS Media_Avaliadores,
                                 ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
@@ -849,36 +885,35 @@ def main(page: ft.Page):
             mostrar_alerta_temporario(f'Erro ao exportar: {ex}', ft.Colors.RED_400)
 
 
-    def alimenta_tabela_graficos(Participante = ''):
+    def alimenta_tabela_graficos(Participante = '', outras_condicoes = ''):
         mensagem_aguarde.value = 'Aguarde, realizando montagem da tabela de dados...'
         aguarde_overlay.visible = True
         page.update()
         
         lista_grafico.controls.clear()
 
-        if Participante == '':
-            scrp_sql ="""
-                    Select Participante,
-                            Avaliacao,
-                                ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
-                                ROUND(AVG(CASE WHEN id_rel IN (1,2)  THEN Resposta END), 0) AS Media_Avaliadores,
-                                ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
-                                ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
-                                CASE When (Count(DISTINCT id_rel) = 2 and Avaliacao = 'A3') or (Count(DISTINCT id_rel) = 3 and Avaliacao <> 'A3') then 'Finalizado' else 'Pendente' END as Status_Av
-                        from QuestRH_Respostas group by Participante;
-            """
+        if outras_condicoes != '' :
+            sql_condicao = f" where {outras_condicoes}"
+            if Participante != '':
+                sql_condicao += f" and Participante = '{Participante}'"
+        elif Participante != '':
+            sql_condicao = f" where Participante = '{Participante}' "
         else:
-            scrp_sql =f"""
-                    Select Participante,
-                            Avaliacao,
-                                ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
-                                ROUND(AVG(CASE WHEN id_rel IN (1,2)  THEN Resposta END), 0) AS Media_Avaliadores,
-                                ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
-                                ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
-                                CASE When (Count(DISTINCT id_rel) = 2 and Avaliacao = 'A3') or (Count(DISTINCT id_rel) = 3 and Avaliacao <> 'A3') then 'Finalizado' else 'Pendente' END as Status_Av
-                        from QuestRH_Respostas where Participante = '{Participante}' group by Participante;
-            """
+            sql_condicao = ''
 
+
+        scrp_sql =f"""
+                Select Participante,
+                        Avaliacao,
+                        Sigla_Emp,
+                            ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
+                            ROUND(AVG(CASE WHEN id_rel IN (1,2)  THEN Resposta END), 0) AS Media_Avaliadores,
+                            ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
+                            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
+                            CASE When (Count(DISTINCT id_rel) = 2 and Avaliacao = 'A3') or (Count(DISTINCT id_rel) = 3 and Avaliacao <> 'A3') then 'Finalizado' else 'Pendente' END as Status_Av
+                    from QuestRH_Respostas {sql_condicao} group by Participante;
+        """
+    
 
         conn = mysql_connection()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -915,6 +950,7 @@ def main(page: ft.Page):
             linha = ft.Container(
                 content=ft.Row([
                         ft.Container(ft.Text(r["Participante"]), expand=3),
+                        ft.Container(ft.Text(r["Sigla_Emp"]), expand=1),
                         ft.Container(ft.Text(r["Avaliacao"]), expand=1),
                         ft.Container(ft.Text(r["Media_Auto"]), expand=1),
                         ft.Container(ft.Text(r["Media_Avaliadores"]), expand=1),
@@ -941,6 +977,196 @@ def main(page: ft.Page):
         aguarde_overlay.visible = False
         page.update()
     
+    empresas_selecionadas = []
+    c_custos_selecionados = []
+    cargos_selecionados = []
+
+   
+
+    # Função para atualizar query
+    def atualizar_query(e=None):
+        query_parts = []
+
+        empresas_selecionadas.clear()
+        c_custos_selecionados.clear()
+        cargos_selecionados.clear()
+
+        query_cargo = ''
+        query_emp = ''
+        query_ccusto = ''
+
+        for chk in dropdown_c_custo.controls[0].controls:
+            if chk.value:
+                c_custos_selecionados.append(chk.label)
+
+        for chk in dropdown_empresa.controls[0].controls:  # ListView
+            if chk.value:
+                empresas_selecionadas.append(chk.label)
+         
+        for chk in dropdown_cargo.controls[0].controls:
+            if chk.value:
+                cargos_selecionados.append(chk.label)
+        
+        if empresas_selecionadas:
+            query_emp = "Sigla_Emp in ('" + "', '".join(empresas_selecionadas) + "')"
+            query_parts.append(query_emp)
+
+        if c_custos_selecionados:
+            query_ccusto = "C_Custo in ('" + "', '".join(c_custos_selecionados) + "')"
+            query_parts.append( query_ccusto)
+
+        if cargos_selecionados:
+            query_cargo = "Cargo in ('" + "', '".join(cargos_selecionados) + "')"
+            query_parts.append(query_cargo)
+
+    
+        #Atualiza o filtro de centro de custos
+        if query_emp != '':
+            conn = mysql_connection()
+            cursor = conn.cursor()
+            query_cons = query_emp
+            cursor.execute(f"SELECT DISTINCT C_Custo FROM QuestRH_Pessoas where not isnull(C_Custo) and {query_cons} and C_Custo <> '' order by C_Custo")
+            resultados = cursor.fetchall()
+            conn.close()
+
+            dropdown_c_custo.controls[0].controls.clear()
+
+            for res in resultados:
+                 dropdown_c_custo.controls[0].controls.append(ft.Checkbox(label=res[0]))
+                 if res[0] in query_ccusto:
+                     dropdown_c_custo.controls[0].controls[-1].value = True
+        else:
+            conn = mysql_connection()
+            cursor = conn.cursor()
+            cursor.execute(f"SELECT DISTINCT C_Custo FROM QuestRH_Pessoas where not isnull(C_Custo) and C_Custo <> ''  order by C_Custo")
+            resultados = cursor.fetchall()
+            conn.close()
+
+            dropdown_c_custo.controls[0].controls.clear()
+
+            for res in resultados:
+                 dropdown_c_custo.controls[0].controls.append(ft.Checkbox(label=res[0]))
+                 if res[0] in query_ccusto:
+                     dropdown_c_custo.controls[0].controls[-1].value = True
+        
+        #Atualiza o filtro de cargos
+        if query_ccusto != '':
+            conn = mysql_connection()
+            cursor = conn.cursor()
+            query_cons = query_ccusto
+            cursor.execute(f"SELECT DISTINCT Cargo FROM QuestRH_Pessoas where not isnull(Cargo) and {query_cons} and Cargo <> '' order by Cargo")
+            resultados = cursor.fetchall()
+            conn.close()
+
+            dropdown_cargo.controls[0].controls.clear()
+
+            for res in resultados:
+                 dropdown_cargo.controls[0].controls.append(ft.Checkbox(label=res[0]))
+                 if res[0] in query_cargo:
+                     dropdown_cargo.controls[0].controls[-1].value = True
+        else:
+            conn = mysql_connection()
+            cursor = conn.cursor()
+            cursor.execute(f"SELECT DISTINCT Cargo FROM QuestRH_Pessoas where not isnull(Cargo) and Cargo <> '' order by Cargo")
+            resultados = cursor.fetchall()
+            conn.close()
+
+            dropdown_cargo.controls[0].controls.clear()
+
+            for res in resultados:
+                 dropdown_cargo.controls[0].controls.append(ft.Checkbox(label=res[0]))
+                 if res[0] in query_cargo:
+                     dropdown_cargo.controls[0].controls[-1].value = True
+
+        txt_outro_query.value = " and ".join(query_parts) if query_parts else ''
+        
+        atualiza_dados()
+        #return
+
+    #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------- Inicio Função De Diálogo --------------------------------------------------------------------------
+    #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    def alimenta_chkbox(e=None):
+            conn = mysql_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT DISTINCT Sigla_Emp FROM QuestRH_Pessoas where not isnull(Sigla_Emp) order by Sigla_Emp")
+            empresas = cursor.fetchall()
+            conn.close()
+
+            dropdown_empresa.controls[0].controls.clear()
+            dropdown_c_custo.controls[0].controls.clear()
+            dropdown_cargo.controls[0].controls.clear()
+
+            for emp in empresas:
+                dropdown_empresa.controls[0].controls.append(ft.Checkbox(label=emp[0]))
+                
+
+            conn = mysql_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT DISTINCT C_Custo FROM QuestRH_Pessoas where not isnull(C_Custo) and C_Custo <> ''  order by C_Custo")
+            custos = cursor.fetchall()
+            conn.close()
+
+            for c in custos:
+                dropdown_c_custo.controls[0].controls.append(ft.Checkbox(label=c[0]))
+               
+
+            conn = mysql_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT DISTINCT Cargo FROM QuestRH_Pessoas where not isnull(Cargo) and Cargo <> '' order by Cargo")
+            cargos = cursor.fetchall()
+            conn.close()
+            for cg in cargos:
+                dropdown_cargo.controls[0].controls.append(ft.Checkbox(label=cg[0]))
+                
+
+            page.update()
+
+
+
+    def abrir_dialogo(titulo, container_dropdown):
+            def confirmar(e):
+                dlg.open = False
+                atualizar_query()
+                page.update()
+            
+            def cancelar(e):
+                dlg.open = False
+                page.update()
+
+            def selecionar_todos(e):
+                for chk in container_dropdown.controls[0].controls:
+                    chk.value = True
+                page.update()
+
+            def limpar_todos(e):
+                for chk in container_dropdown.controls[0].controls:
+                    chk.value = False
+                page.update()
+
+            dlg = ft.AlertDialog(
+                modal=True,
+                title=ft.Text(f"Selecione {titulo}"),
+                content=ft.Container(
+                    content=container_dropdown,
+                    width=400,
+                    height=300,  # altura fixa com rolagem
+                    padding=10,
+                    bgcolor=ft.Colors.WHITE,
+                ),
+                actions=[
+                    ft.TextButton("Cancelar", on_click=cancelar),
+                    ft.TextButton("Selecionar todos", on_click=selecionar_todos),
+                    ft.TextButton("Limpar todos", on_click=limpar_todos),
+                    ft.TextButton("Confirmar", on_click=confirmar),
+                ],
+                actions_alignment="spaceBetween",
+            )
+
+            page.open(dlg)
+
+
+
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #-------------------------------------------------------------------------- Inicio Demais Funcoes --------------------------------------------------------------------------
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1738,8 +1964,8 @@ def main(page: ft.Page):
         #Inserindo informações no banco de dados
         for row in respostas:
 
-            campos = '''(Participante, Cargo, C_Custo,  Local, Avaliacao, Nome_Avaliador, ID_Rel, ID_Pergunta, Pilar, Competencia, Pergunta, Resposta,Desempenho_tecnico, Observacao, Data_Resp, Computador, Login) 
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
+            campos = '''(Participante, Cargo, C_Custo,  Local, Avaliacao, Nome_Avaliador, ID_Rel, ID_Pergunta, Pilar, Competencia, Pergunta, Resposta,Desempenho_tecnico, Observacao, Data_Resp, Computador, Login, Empresa, Sigla_Emp) 
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
             valores = (
                 participante,
                 consulta_pessoa['Cargo'],
@@ -1757,7 +1983,9 @@ def main(page: ft.Page):
                 obs_us,
                 data_envio_formatado,
                 computador,
-                usuario
+                usuario,
+                consulta_pessoa['Empresa'],
+                consulta_pessoa['Sigla_Emp']
             )
 
             validacao = inserir_banco('QuestRH_Respostas',valores, campos)
@@ -2244,6 +2472,7 @@ def main(page: ft.Page):
     cabecalho_grafico = ft.Container(
         content=ft.Row([
             ft.Container(ft.Text("Participante", weight=ft.FontWeight.BOLD), expand=3),
+            ft.Container(ft.Text("Sigla_Emp", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text("Tipo_av", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text("Media_auto", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text("Media_Avs", weight=ft.FontWeight.BOLD), expand=1),
@@ -2286,8 +2515,9 @@ def main(page: ft.Page):
                     ],
                     spacing=5
                 ),
+                botoes,
                 ft.Divider(),
-                ft.Row([ft.Container(img_Ninebox,expand=3), ft.Container(img_Pilar, expand=3)], alignment=ft.MainAxisAlignment.CENTER, spacing=5),
+                ft.Row([ft.Container(img_Ninebox,expand=2), ft.Container(img_Pilar, expand=3), ft.Container(img_BellCurve,expand=3)], alignment=ft.MainAxisAlignment.CENTER, spacing=5),
                 img_Comp,
                 img_Compar,
                 cabecalho_grafico,
@@ -2349,6 +2579,6 @@ def main(page: ft.Page):
     page.add(stack) 
     
     
-#ft.app(target=main,view=ft.WEB_BROWSER)
+ft.app(target=main,view=ft.WEB_BROWSER)
 
-ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
+#ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
