@@ -956,7 +956,7 @@ def main(page: ft.Page):
         
 
         scrp_sql =f"""
-                SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+        SELECT  * From (SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
                     Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
                     Media_Avaliadores, 
                     Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
@@ -992,11 +992,12 @@ def main(page: ft.Page):
                         END as Status_Av
                     FROM QuestRH_Respostas {sql_condicao}
                     GROUP BY Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo
-                ) as t
+                ) t
+            ) x
         """
 
         if performance != '':
-            scrp_sql += f" Where Performance = '{performance}'"
+            scrp_sql += f" Where x.Performance = '{performance}'"
     
 
         conn = mysql_connection()
