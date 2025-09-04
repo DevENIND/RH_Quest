@@ -756,10 +756,12 @@ def main(page: ft.Page):
         cboxPessoa.value = None
         cboxPilar.value = None
         cboxCompetencia.value = None
+        dropdown_Performance.value = None
 
         cboxPessoa.update()
         cboxPilar.update()
         cboxCompetencia.update()
+        dropdown_Performance.update()
 
         for chk in dropdown_c_custo.controls[0].controls:
             chk.selected = False
