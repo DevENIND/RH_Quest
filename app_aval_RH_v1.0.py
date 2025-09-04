@@ -638,6 +638,23 @@ def main(page: ft.Page):
                     hint_text="Avaliação",
                     expand= True
                 )
+    
+    dropdown_Performance = ft.Dropdown(
+                    label='Performance',
+                    options=[
+                        ft.dropdown.Option("Baixa Performance"),
+                        ft.dropdown.Option("Inconsistente"),
+                        ft.dropdown.Option("Especialista"),
+                        ft.dropdown.Option("Dilema"),
+                        ft.dropdown.Option("Competente"),
+                        ft.dropdown.Option("Forte Entrega"),
+                        ft.dropdown.Option("Desafio"),
+                        ft.dropdown.Option("Forte Cultura"),
+                        ft.dropdown.Option("Alto Potencial"),
+                    ],
+                    hint_text="Avaliação",
+                    expand= True
+                )
 
     txt_media_final = ft.Text("", size=20, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900)
 
@@ -795,6 +812,11 @@ def main(page: ft.Page):
         else:
             competencia = ''
 
+        if dropdown_Performance.value != None:
+            performance = dropdown_Performance.value
+        else:
+            performance = ''
+
 
         grafico64, msgerro = gera_graficos.gera_ninebox(pilar=pilar, competencia=competencia, participante=participante,outras_condicoes=txt_outro_query.value)
         if grafico64 == None:
@@ -834,7 +856,7 @@ def main(page: ft.Page):
         img_Compar.src_base64 = grafico_compar64
         img_BellCurve.src_base64 = grafico_bell64
 
-        alimenta_tabela_graficos(Participante=participante, outras_condicoes=txt_outro_query.value)
+        alimenta_tabela_graficos(Participante=participante, outras_condicoes=txt_outro_query.value, performance=performance)
         
         aguarde_overlay.visible = False
         page.update()
@@ -845,15 +867,43 @@ def main(page: ft.Page):
             conn = mysql_connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             scrp_sql ="""
-                    Select Participante,
-                            Avaliacao,
-                            Sigla_Emp
-                                ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
-                                ROUND(AVG(CASE WHEN id_rel IN (1,2)  THEN Resposta END), 0) AS Media_Avaliadores,
-                                ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
-                                ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
-                                CASE When (Count(DISTINCT id_rel) = 2 and Avaliacao = 'A3') or (Count(DISTINCT id_rel) = 3 and Avaliacao <> 'A3') then 'Finalizado' else 'Pendente' END as Status_Av
-                        from QuestRH_Respostas group by Participante;
+                    SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+                        Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
+                        Media_Avaliadores, 
+                        Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
+                        Media_Aval_Desemp,
+                        CASE 
+                            WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'Baixa Performance'
+                            WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'Inconsistente'
+                            WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'Especialista'
+
+                            WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'Dilema'
+                            WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'Competente'
+                            WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'Forte Entrega'
+
+                            WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'Desafio'
+                            WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'Forte Cultura'
+                            WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'Alto Potencial'
+
+                            ELSE ''
+                        END as Performance,
+                        Status_Av
+                    FROM (
+                        SELECT 
+                            Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo,
+                            ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
+                            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 0) AS Media_Avaliadores,
+                            ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
+                            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
+                            CASE 
+                                WHEN (COUNT(DISTINCT id_rel) = 2 AND Avaliacao = 'A3') 
+                                OR (COUNT(DISTINCT id_rel) = 3 AND Avaliacao <> 'A3') 
+                                THEN 'Finalizado' 
+                                ELSE 'Pendente' 
+                            END as Status_Av
+                        FROM QuestRH_Respostas 
+                        GROUP BY Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo
+                    ) as t;
             """
             cursor.execute(scrp_sql)
             consulta = cursor.fetchall()
@@ -885,7 +935,7 @@ def main(page: ft.Page):
             mostrar_alerta_temporario(f'Erro ao exportar: {ex}', ft.Colors.RED_400)
 
 
-    def alimenta_tabela_graficos(Participante = '', outras_condicoes = ''):
+    def alimenta_tabela_graficos(Participante = '', outras_condicoes = '', performance = ''):
         mensagem_aguarde.value = 'Aguarde, realizando montagem da tabela de dados...'
         aguarde_overlay.visible = True
         page.update()
@@ -901,17 +951,49 @@ def main(page: ft.Page):
         else:
             sql_condicao = ''
 
+        if sql_condicao == '' and performance != '':
+            sql_condicao = f" where Performance = '{performance}' "
+        elif performance != '':
+            sql_condicao += f" and Performance = '{performance}'"
 
         scrp_sql =f"""
-                Select Participante,
-                        Avaliacao,
-                        Sigla_Emp,
-                            ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
-                            ROUND(AVG(CASE WHEN id_rel IN (1,2)  THEN Resposta END), 0) AS Media_Avaliadores,
-                            ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
-                            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
-                            CASE When (Count(DISTINCT id_rel) = 2 and Avaliacao = 'A3') or (Count(DISTINCT id_rel) = 3 and Avaliacao <> 'A3') then 'Finalizado' else 'Pendente' END as Status_Av
-                    from QuestRH_Respostas {sql_condicao} group by Participante;
+                SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+                    Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
+                    Media_Avaliadores, 
+                    Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
+                    Media_Aval_Desemp,
+                    CASE 
+                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'Baixa Performance'
+                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'Inconsistente'
+                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'Especialista'
+
+                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'Dilema'
+                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'Competente'
+                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'Forte Entrega'
+
+                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'Desafio'
+                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'Forte Cultura'
+                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'Alto Potencial'
+
+                        ELSE ''
+                    END as Performance,
+                    Status_Av
+                FROM (
+                    SELECT 
+                        Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo,
+                        ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
+                        ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 0) AS Media_Avaliadores,
+                        ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
+                        ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
+                        CASE 
+                            WHEN (COUNT(DISTINCT id_rel) = 2 AND Avaliacao = 'A3') 
+                            OR (COUNT(DISTINCT id_rel) = 3 AND Avaliacao <> 'A3') 
+                            THEN 'Finalizado' 
+                            ELSE 'Pendente' 
+                        END as Status_Av
+                    FROM QuestRH_Respostas {sql_condicao}
+                    GROUP BY Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo
+                ) as t;
         """
     
 
@@ -2472,12 +2554,15 @@ def main(page: ft.Page):
     cabecalho_grafico = ft.Container(
         content=ft.Row([
             ft.Container(ft.Text("Participante", weight=ft.FontWeight.BOLD), expand=3),
-            ft.Container(ft.Text("Sigla_Emp", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text("Tipo_av", weight=ft.FontWeight.BOLD), expand=1),
+            ft.Container(ft.Text("Sigla_Emp", weight=ft.FontWeight.BOLD), expand=1),
+            ft.Container(ft.Text("C_Custo", weight=ft.FontWeight.BOLD), expand=1),
+            ft.Container(ft.Text("Cargo", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text("Media_auto", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text("Media_Avs", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text("Desemp_auto", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text("Desemp_Avs", weight=ft.FontWeight.BOLD), expand=1),
+            ft.Container(ft.Text("Performance", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text("Status_Av", weight=ft.FontWeight.BOLD), expand=1)
         ],alignment=ft.MainAxisAlignment.CENTER),
         padding=10,
@@ -2511,6 +2596,7 @@ def main(page: ft.Page):
                         ft.Container(cboxPessoa,expand=3),
                         ft.Container(cboxPilar,expand=2),
                         ft.Container(cboxCompetencia,expand=2),
+                        ft.Container(dropdown_Performance, expand=2),
                         btn_limpar_campos
                     ],
                     spacing=5
@@ -2581,4 +2667,4 @@ def main(page: ft.Page):
     
 #ft.app(target=main,view=ft.WEB_BROWSER)
 
-ft.app(target=main,view=ft.WEB_BROWSER, port=1000, host="0.0.0.0")
+ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
