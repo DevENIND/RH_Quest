@@ -953,10 +953,7 @@ def main(page: ft.Page):
         else:
             sql_condicao = ''
 
-        if sql_condicao == '' and performance != '':
-            sql_condicao = f" where Performance = '{performance}' "
-        elif performance != '':
-            sql_condicao += f" and Performance = '{performance}'"
+        
 
         scrp_sql =f"""
                 SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
@@ -995,8 +992,11 @@ def main(page: ft.Page):
                         END as Status_Av
                     FROM QuestRH_Respostas {sql_condicao}
                     GROUP BY Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo
-                ) as t;
+                ) as t
         """
+
+        if performance != '':
+            scrp_sql += f" Where Performance = '{performance}'"
     
 
         conn = mysql_connection()
