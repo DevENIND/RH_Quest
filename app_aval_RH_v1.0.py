@@ -1032,7 +1032,10 @@ def main(page: ft.Page):
             linha = ft.Container(
                 content=ft.Row([
                         ft.Container(ft.Text(r["Participante"]), expand=3),
+                        ft.Container(ft.Text(r["Avaliacao"]), expand=1),
                         ft.Container(ft.Text(r["Sigla_Emp"]), expand=1),
+                        ft.Container(ft.Text(r["C_Custo"]), expand=1),
+                        ft.Container(ft.Text(r["Cargo"]), expand=1),
                         ft.Container(ft.Text(r["Avaliacao"]), expand=1),
                         ft.Container(ft.Text(r["Media_Auto"]), expand=1),
                         ft.Container(ft.Text(r["Media_Avaliadores"]), expand=1),
