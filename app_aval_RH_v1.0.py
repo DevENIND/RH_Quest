@@ -1044,6 +1044,7 @@ def main(page: ft.Page):
                         ft.Container(ft.Text(r["Media_Avaliadores"]), expand=1),
                         ft.Container(ft.Text(r["Media_Auto_Desemp"]), expand=1),
                         ft.Container(ft.Text(r["Media_Aval_Desemp"]), expand=1),
+                        ft.Container(ft.Text(r["Performance"]), expand=1),
                         ft.Container(
                             content=ft.Text(r["Status_Av"]),
                             bgcolor=bg_cor,
