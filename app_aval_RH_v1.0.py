@@ -602,6 +602,7 @@ def main(page: ft.Page):
     texto_ola3 = ft.Text("", size=15, weight=ft.FontWeight.BOLD)
     texto_ola4 = ft.Text("", size=15, weight=ft.FontWeight.BOLD)
     texto_ola5 = ft.Text("", size=15, weight=ft.FontWeight.BOLD)
+    texto_ola6 = ft.Text("", size=15, weight=ft.FontWeight.BOLD)
 
     lista_view = ft.ListView(expand=True, auto_scroll=False,  spacing=10, padding=10)
     lista_pend_view = ft.ListView(expand=True, auto_scroll=False, spacing=10, padding=10,visible=False)
@@ -696,6 +697,21 @@ def main(page: ft.Page):
     ])
 
     txt_outro_query = ft.Text("", size=15, weight=ft.FontWeight.BOLD,visible=False)
+
+
+     # imagens
+    img_Potencial = ft.Image(fit=ft.ImageFit.COVER, expand=True,gapless_playback=True)
+    img_Potencial_nao_finalizados = ft.Image(fit=ft.ImageFit.COVER, expand=True,gapless_playback=True)
+    img_Concluidos = ft.Image(fit=ft.ImageFit.COVER, expand=True,gapless_playback=True)
+    img_Finalizados = ft.Image(fit=ft.ImageFit.COVER, expand=True,gapless_playback=True)
+    img_Barra_Empresa = ft.Image(fit=ft.ImageFit.COVER, expand=True,gapless_playback=True)
+    
+    # textos -> Referencia de tamanhos de fontes =https://flet.dev/docs/controls/text/#font_family
+    txt_Realizados = ft.Text('', size=40, weight='w200', font_family='roboto',text_align="center", color=ft.Colors.GREEN)
+    txt_Finalizados = ft.Text('', size=40, weight='w200', font_family='roboto',text_align="center",color=ft.Colors.BLUE)
+    txt_Pendentes = ft.Text('', size=40, weight='w200', font_family='roboto',text_align="center",color=ft.Colors.RED)
+    txt_Pendentes_participantes = ft.Text('', size=40, weight='w200', font_family='roboto',text_align="center",color=ft.Colors.AMBER)
+
    
 
     ####################################################################################################################################### 
@@ -705,6 +721,100 @@ def main(page: ft.Page):
     #-------------------------------------------------------------------------------------------------------------------------------------------
     #---------------------------------------------------------------- Gráficos -----------------------------------------------------------------
     #-------------------------------------------------------------------------------------------------------------------------------------------
+    def atualiza_tabela_bellcurve(e=None):
+        Media = dropdown_bellcurve_nota.value
+
+        if Media:
+            float(Media)
+
+        try:
+            if not Media is None and Media != '':
+                query_sql = f"""
+                SELECT Participante, Media from(
+                    SELECT Participante, ROUND(AVG(Resposta),0) as Media
+                    FROM QuestRH_Respostas
+                    WHERE id_rel > 0
+                    GROUP BY Participante
+                    HAVING COUNT(DISTINCT id_rel) = 2
+                    ORDER BY Participante) x
+                Where Media = {Media}
+            """
+            else:
+                query_sql =f"""
+                SELECT Participante, Media from(
+                    SELECT Participante, ROUND(AVG(Resposta),0) as Media
+                    FROM QuestRH_Respostas
+                    WHERE id_rel > 0
+                    GROUP BY Participante
+                    HAVING COUNT(DISTINCT id_rel) = 2
+                    ORDER BY Participante) x
+            """
+                
+
+            conn = mysql_connection()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute(query_sql)
+            pessoas = cursor.fetchall()
+            conn.close()
+
+            lista_grafico_bellcurve.controls.clear()
+
+            for pessoa in pessoas:
+                lista_grafico_bellcurve.controls.append(
+                    ft.Row([
+                        ft.Container(ft.Text(pessoa['Participante'], size=15, weight='w200'),expand=3),
+                        ft.Container(ft.Text(str(pessoa['Media']), size=15, weight='w200'), expand=1)
+                    ])
+                )
+                
+            lista_grafico_bellcurve.update()
+            page.update()
+            return
+        except Exception as e:
+            print(f'Erro ao atualizar tabela: {e}')
+            return
+    
+    def limpar_filtros_bellcurve(e=None):
+        dropdown_bellcurve_nota.value = None
+        atualiza_tabela_bellcurve()
+        return
+
+    def atualizar_painel_status(e=None):
+        aguarde_overlay.visible = True
+        mensagem_aguarde = 'Aguarde, realizando montagem dos status...'
+        page.update()
+        grafico64_potencial, erro = gera_graficos.gera_gráfico_potencial(finalizados=True)
+        grafico64_potencial_nao_finalizados, erro = gera_graficos.gera_gráfico_potencial()
+        grafico64_concluidos, erro, realizado, nao_concluidos = gera_graficos.gera_grafico_conclusao()
+        grafico64_finalizados, erro, finalizados, nao_finalizados = gera_graficos.gera_grafico_conclusao(finalizados=True)
+        grafico64_empresas, erro = gera_graficos.gera_grafico_empresas()
+
+        if grafico64_potencial:
+            img_Potencial.src_base64 = grafico64_potencial
+        if grafico64_potencial_nao_finalizados:
+            img_Potencial_nao_finalizados.src_base64 = grafico64_potencial_nao_finalizados
+        if grafico64_concluidos:
+            img_Concluidos.src_base64 = grafico64_concluidos
+        if grafico64_finalizados:
+            img_Finalizados.src_base64 = grafico64_finalizados
+        if grafico64_empresas:
+            img_Barra_Empresa.src_base64 = grafico64_empresas
+
+        txt_Finalizados.value = str(finalizados or 0)
+        txt_Realizados.value = str(realizado or 0)
+        txt_Pendentes.value = str(nao_concluidos or 0)
+        txt_Pendentes_participantes.value = str(nao_finalizados or 0)
+
+
+        container_painel_grafico.visible = True
+        painel_pend_view.visible = False
+        imagem_fundo.visible = False
+
+        aguarde_overlay.visible = False
+        page.update()
+    
+
+
 
     def alimenta_pilares():
         scpr_pilar = "Select Distinct(Pilar) from QuestRH_Perguntas"
@@ -785,6 +895,7 @@ def main(page: ft.Page):
         alimenta_competencias()
         alimenta_chkbox()
         atualiza_dados()
+        atualiza_tabela_bellcurve()
 
         container_grafico.visible = True
         painel_pend_view.visible = False
@@ -793,6 +904,7 @@ def main(page: ft.Page):
 
     def atualiza_dados(e=None):
         mensagem_aguarde.value = 'Aguarde, realizando montagem dos gráficos...'
+        imagem_fundo.visible = False
         aguarde_overlay.visible = True
         page.update()
 
@@ -1331,24 +1443,14 @@ def main(page: ft.Page):
         formulario_Envio.visible = False
         painel_view.visible = False
         painel_pend_view.visible = False
+        imagem_fundo.visible = True
         page.update()
-
-    def voltar_login(e):
-        nome_cb.value =''
-        senha_txt.value =''
-        login_view.visible =True
-        Gestor_tempo_formulario.visible = False
-        formulario_Envio.visible = False
-        painel_view.visible = False
-        painel_pend_view.visible = False
-        page.update()
-
-
 
     def voltar_painel(e=None, atualizar = False):
         mensagem_aguarde.value = 'Aguarde, atualizando o relatório...'
         aguarde_overlay.visible = True
-
+        imagem_fundo.visible = True
+        container_painel_grafico.visible = False
         page.update()
         nome_pessoa = texto_ola.value.replace("Olá, ","")
 
@@ -1442,6 +1544,7 @@ def main(page: ft.Page):
                 texto_ola3.value = f"Olá, {resultados['Nome']}"
                 texto_ola4.value = f"Olá, {resultados['Nome']}"
                 texto_ola5.value = f"Olá, {resultados['Nome']}"
+                texto_ola6.value = f"Olá, {resultados['Nome']}"
                 aguarde_overlay.visible = True
                 page.update()
                 
@@ -2291,6 +2394,14 @@ def main(page: ft.Page):
         height=50
     )
 
+    grafico_status_btn = ft.ElevatedButton(
+        "Status",
+        icon=ft.Icons.SPEED_OUTLINED,
+        on_click=lambda e: atualizar_painel_status(e),
+        width=250,
+        height=50
+    )
+
     atualizar_btn = ft.ElevatedButton(
         content=ft.Row(
                 [
@@ -2383,7 +2494,7 @@ def main(page: ft.Page):
             ft.Row([ft.TextButton("Deslogar", icon=ft.Icons.ARROW_BACK, on_click=voltar_login),texto_ola2], spacing= 10),
             expiracao_txt,
             ft.Text("Painel de Controle", size=25, weight=ft.FontWeight.BOLD),
-            ft.Row([atualizar_btn,exportar_btn, grafico_btn],spacing=10),
+            ft.Row([atualizar_btn,exportar_btn, grafico_btn, grafico_status_btn],spacing=10),
             cabecalho_pend,
             corpo_tabela_pend
         ]),
@@ -2575,7 +2686,6 @@ def main(page: ft.Page):
         padding=10,
         bgcolor=ft.Colors.BLUE_100,
         border_radius=ft.border_radius.only(top_left=10, top_right=10),
-        
     )
 
     lista_grafico = ft.ListView(expand=True, auto_scroll=False, spacing=10, padding=10)
@@ -2588,6 +2698,53 @@ def main(page: ft.Page):
         padding=20,
         opacity=0.92,
         visible=True
+    )
+
+
+     # Cabeçalho fixo
+    cabecalho_dados_bellcurve = ft.Container(
+        content=ft.Row([
+            ft.Container(ft.Text("Participante", weight=ft.FontWeight.BOLD), expand=3),
+            ft.Container(ft.Text("Média Final", weight=ft.FontWeight.BOLD), expand=1)
+        ],alignment=ft.MainAxisAlignment.CENTER),
+        padding=10,
+        border_radius=ft.border_radius.only(top_left=10, top_right=10),
+    )
+
+    lista_grafico_bellcurve = ft.ListView(expand=True, auto_scroll=False, spacing=10, padding=10)
+
+    dropdown_bellcurve_nota = ft.Dropdown(
+        label="Notas",
+        options=[ft.dropdown.Option("1"), ft.dropdown.Option("2"), ft.dropdown.Option("3"), ft.dropdown.Option("4"), ft.dropdown.Option("5")],
+        on_change=lambda e:atualiza_tabela_bellcurve(e),
+        expand=True
+    )
+
+    container_dados_bellcurve = ft.Container(
+        content=lista_grafico_bellcurve,
+        bgcolor=ft.Colors.WHITE,
+        border_radius=10,
+        padding=20,
+        opacity=0.92,
+        visible=True,
+        expand=True
+    )
+
+    btn_limpar_filtros_bellcurve = ft.TextButton(
+        "Limpar Filtros",
+        on_click=lambda e:limpar_filtros_bellcurve(e),
+        style=ft.ButtonStyle(
+            shape=ft.RoundedRectangleBorder(radius=10),
+            bgcolor=ft.Colors.BLUE_600,
+            color=ft.Colors.WHITE
+        )
+    )
+
+    # Cabeçalho fixo
+    container_bellcurve = ft.Column([
+        ft.Row([dropdown_bellcurve_nota, btn_limpar_filtros_bellcurve],spacing=10),
+        cabecalho_dados_bellcurve, container_dados_bellcurve],
+        expand=3
     )
 
     cboxPessoa.on_change = atualiza_dados
@@ -2611,15 +2768,107 @@ def main(page: ft.Page):
                 ),
                 botoes,
                 ft.Divider(),
-                ft.Row([ft.Container(img_Ninebox,expand=2), ft.Container(img_Pilar, expand=3), ft.Container(img_BellCurve,expand=3)], alignment=ft.MainAxisAlignment.CENTER, spacing=5),
-                img_Comp,
-                img_Compar,
+                ft.Row([ft.Container(img_Ninebox,expand=2), ft.Container(img_Pilar, expand=3) ], alignment=ft.MainAxisAlignment.CENTER, spacing=5),
+                ft.Container(img_Comp),
+                ft.Container(img_Compar),
+                ft.Row([ft.Container(img_BellCurve,expand=3),container_bellcurve], alignment='top', spacing=5),
                 cabecalho_grafico,
                 container_grafico
             ],
             expand=True,
             visible=False
         )
+    
+    # containers
+    container_realizados = ft.Container(
+        content=ft.Column([
+            txt_Realizados,
+            ft.Text('Avaliações Realizadas',weight='w200', size=15, font_family='roboto', color=ft.Colors.GREEN)
+        ],alignment="center", horizontal_alignment="center", spacing=5),
+        expand=3,
+        padding=20,
+        border_radius=12,
+        border=ft.border.all(1, "green"),
+        shadow=ft.BoxShadow(blur_radius=8, color=ft.Colors.GREEN_100, offset=ft.Offset(0,2)),
+        width=200
+    )
+
+    container_pendentes = ft.Container(
+        content=ft.Column([
+            txt_Pendentes,
+            ft.Text('Avaliações Pendentes',weight='w200', size=15, font_family='roboto', color=ft.Colors.RED)
+        ], alignment="center", horizontal_alignment="center", spacing=5),
+        expand=3,
+        padding=20,
+        border_radius=12,
+        border=ft.border.all(1, "red"),
+        shadow=ft.BoxShadow(blur_radius=8, color=ft.Colors.RED_100, offset=ft.Offset(0,2)),
+        width=200
+    )
+    
+    container_finalizados = ft.Container(
+        content=ft.Column([
+            txt_Finalizados,
+            ft.Text('Participantes Finalizados',weight='w200', size=15, font_family='roboto', color=ft.Colors.BLUE)
+        ], alignment="center", horizontal_alignment="center", spacing=5),
+        expand=3,
+        padding=20,
+        border_radius=12,
+        border=ft.border.all(1, "blue"),
+        shadow=ft.BoxShadow(blur_radius=8, color=ft.Colors.BLUE_100, offset=ft.Offset(0,2)),
+        width=200
+    )
+    
+    container_pendentes_participantes = ft.Container(
+        content=ft.Column([
+            txt_Pendentes_participantes,
+            ft.Text('Participantes Pendentes',weight='w200', size=15, font_family='roboto', color=ft.Colors.AMBER),
+        ], alignment="center", horizontal_alignment="center", spacing=5),
+        expand=3,
+        padding=20,
+        border_radius=12,
+        border=ft.border.all(1, "amber"),
+        shadow=ft.BoxShadow(blur_radius=8, color=ft.Colors.AMBER_100, offset=ft.Offset(0,2)),
+        width=200
+    )
+
+    # agrupando os cards
+    container_texto_grafico = ft.Row([
+        container_realizados,
+        container_pendentes,
+        container_finalizados,
+        container_pendentes_participantes,
+        
+    ])
+
+    # painel principal
+    container_painel_grafico = ft.Column([
+        ft.Row([ft.TextButton("Voltar", icon=ft.Icons.ARROW_BACK, on_click=voltar_painel), texto_ola6], spacing= 10),
+        ft.Row([ft.Text("📊 Análise Gráfica - Status das Avaliações", size=20, weight="bold")], spacing= 10),
+        ft.Divider(),
+        container_texto_grafico,
+        ft.Row([
+            # coluna da esquerda (2 linhas)
+            ft.Column([
+                ft.Row([
+                    ft.Container(img_Concluidos, expand=1),
+                    ft.Container(img_Potencial_nao_finalizados, expand=2)
+                ]),
+                ft.Row([
+                    ft.Container(img_Finalizados, expand=1),
+                    ft.Container(img_Potencial, expand=2),
+                ])
+            ],expand=2),
+
+             # coluna da direita (um único gráfico maior)
+            ft.Column([
+                ft.Row([
+                    ft.Container(img_Barra_Empresa, expand=2)
+                ])
+            ],expand=2)
+        ])
+    ],
+    visible=False)
 
     
     with open(image_path, "rb") as img_file:
@@ -2644,7 +2893,8 @@ def main(page: ft.Page):
             painel_resposta_view,
             Gestor_tempo_formulario,
             formulario_Envio,
-            container_grafico
+            container_grafico,
+            container_painel_grafico
         ],
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
