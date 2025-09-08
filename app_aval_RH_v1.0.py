@@ -14,9 +14,12 @@ import io
 import gera_graficos
 import pytz
 
-
-import sys
 import os
+import tempfile
+import secrets
+import json
+import sys
+
 #Instalando aplicativo para local Windows
 #pyinstaller --noconfirm --onefile --add-data "Imagem_Quest.png;." --icon=enind.ico  app_aval_RH.py
 
@@ -69,6 +72,7 @@ sudo systemctl status fletapp.service
 
 # Descobre o diretório onde o script está
 BASE_DIR = Path(__file__).parent
+TOKEN_FILE = BASE_DIR / "session_token.json"
 
 # Caminho absoluto para a imagem
 image_path = BASE_DIR / "Imagem_Quest.png"
@@ -442,6 +446,37 @@ def obter_questionarios(Pessoa):
     except Exception as e:
         print("Erro ao conectar ao banco de dados:", e)
         return []
+
+##########################################################################################################################################
+############################################################ SEGURANÇA DA INFORMAÇÃO #####################################################
+##########################################################################################################################################
+import string
+
+
+def gera_token(usuario, size=30, chars=string.ascii_uppercase + string.digits + string.ascii_lowercase,):
+    strtoken = ''.join(random.choice(chars) for _ in range(size))
+    dados = {"token": strtoken, "usuario": usuario}
+    with open(TOKEN_FILE, "w") as f:
+        json.dump(dados, f)
+    return strtoken
+
+
+def validar_token(token, pessoa):
+    scrp_sql = f"SELECT * FROM QuestRH_Pessoas Where Pessoa = '{pessoa}'"
+    conn = mysql_connection()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    cursor.execute(scrp_sql)
+    resultados = cursor.fetchone()
+    conn.close()
+
+    if token != resultados['Token']:
+        return False
+    else:
+        return True
+    
+
+
+
 
 ###########################################################################################################################################      
 ############################################################ Inicio da Aplicação ##########################################################
@@ -1438,12 +1473,34 @@ def main(page: ft.Page):
     def voltar_login(e):
         nome_cb.value =''
         senha_txt.value =''
+        
+        page.clean()
+        conteudo_central = ft.Container(
+            content=ft.Column([
+                    login_view,
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                spacing=30),
+                alignment=ft.alignment.center,
+            )
+        
+        overlay = ft.Column([
+            alerta_container,
+            conteudo_central,
+            alerta_container
+            ], 
+        expand=True,
+        alignment=ft.alignment.bottom_center 
+        )
+
+        stack = ft.Stack([
+            imagem_fundo,
+            overlay
+        ])
+        page.add(stack)
+
         login_view.visible =True
-        Gestor_tempo_formulario.visible = False
-        formulario_Envio.visible = False
-        painel_view.visible = False
-        painel_pend_view.visible = False
-        imagem_fundo.visible = True
         page.update()
 
     def voltar_painel(e=None, atualizar = False):
@@ -1538,6 +1595,7 @@ def main(page: ft.Page):
             mostrar_alerta_temporario('login não encontrado na base', ft.Colors.RED_400)
         else:
             if senha_txt.value == resultados['Senha']:
+                #token = gera_token(resultados['Nome'])
                 texto_ola.value = f"Olá, {resultados['Nome']}"
                 texto_ola1.value = f"Olá, {resultados['Nome']}"
                 texto_ola2.value = f"Olá, {resultados['Nome']}"
@@ -1545,22 +1603,91 @@ def main(page: ft.Page):
                 texto_ola4.value = f"Olá, {resultados['Nome']}"
                 texto_ola5.value = f"Olá, {resultados['Nome']}"
                 texto_ola6.value = f"Olá, {resultados['Nome']}"
+                mensagem_aguarde.value = 'Aguarde, verificando seu perfil...'
                 aguarde_overlay.visible = True
                 page.update()
-                
+
+                conn = mysql_connection()
+                cursor = conn.cursor(pymysql.cursors.DictCursor)
+                scrp_sql = f"Select * from QuestRH_Relacoes Where Avaliador1 = '{resultados['Nome']}'"
+                cursor.execute(scrp_sql)
+                avaliador1 = cursor.fetchall()
+                conn.close()
+            
                 registra_login(nome_cb.value)
 
                 if texto_ola.value == 'Olá, Administrador':
+                    page.clean()
+
+                    overlay = ft.Column([
+                        alerta_container,
+                        painel_admin,
+                        alerta_container
+                        ], 
+                    expand=True,
+                    alignment=ft.alignment.bottom_center 
+                    )
+                    stack = ft.Stack([
+                        imagem_fundo,
+                        overlay
+                    ])
+                    page.add(stack)
+
+                    page.update()
+
                     questionarios = lista_pendencias()
                     montar_tabela_pendencias(questionarios)
                     painel_pend_view.visible = True
+                    painel_resposta_view.visible= False 
+                    
+                elif avaliador1:
+                    page.clean()
+
+                    overlay = ft.Column([
+                        alerta_container,
+                        painel_av1,
+                        alerta_container
+                        ], 
+                    expand=True,
+                    alignment=ft.alignment.bottom_center 
+                    )
+                    stack = ft.Stack([
+                        imagem_fundo,
+                        overlay
+                    ])
+                    page.add(stack)
+
+                    page.update()
+
+                    questionarios = obter_questionarios(resultados['Nome'])
+                    montar_tabela(questionarios)
+                    painel_view.visible = True
+                    painel_resposta_view.visible= False 
                 else:
+                    page.clean()
+
+                    overlay = ft.Column([
+                        alerta_container,
+                        painel_comum,
+                        alerta_container
+                        ], 
+                    expand=True,
+                    alignment=ft.alignment.bottom_center 
+                    )
+                    stack = ft.Stack([
+                        imagem_fundo,
+                        overlay
+                    ])
+                    page.add(stack)
+
+                    page.update()
+
                     questionarios = obter_questionarios(resultados['Nome'])
                     montar_tabela(questionarios)
                     login_view.visible = False
                     painel_view.visible = True
                 
-                painel_resposta_view.visible= False    
+                   
                 login_view.visible = False
                 aguarde_overlay.visible = False
                 page.update()
@@ -2884,17 +3011,48 @@ def main(page: ft.Page):
         alignment=ft.alignment.center,
         expand=True
     )
+
+    painel_comum = ft.Container(
+        content=ft.Column([
+            login_view,
+            painel_view,
+            Gestor_tempo_formulario,
+            formulario_Envio,
+        ], alignment=ft.MainAxisAlignment.CENTER,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        spacing=30),
+        alignment=ft.alignment.center,
+    )
+
+    painel_av1 = ft.Container(
+        content=ft.Column([
+            login_view,
+            painel_view,
+            painel_resposta_view,
+            Gestor_tempo_formulario,
+            formulario_Envio,
+        ], alignment=ft.MainAxisAlignment.CENTER,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        spacing=30),
+        alignment=ft.alignment.center,
+    )
+
+    painel_admin = ft.Container(
+        content=ft.Column([
+            login_view,
+            painel_pend_view,
+            painel_resposta_view,
+            container_grafico,
+            container_painel_grafico
+        ], alignment=ft.MainAxisAlignment.CENTER,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        spacing=30),
+        alignment=ft.alignment.center,
+    )
     
     conteudo_central = ft.Container(
         content=ft.Column([
             login_view,
-            painel_view,
-            painel_pend_view,
-            painel_resposta_view,
-            Gestor_tempo_formulario,
-            formulario_Envio,
-            container_grafico,
-            container_painel_grafico
         ],
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -2911,19 +3069,21 @@ def main(page: ft.Page):
     alignment=ft.alignment.bottom_center 
     )
 
-    page.theme_mode = ft.ThemeMode.LIGHT
-    page.on_resized = atualizar_altura_container
-
     stack = ft.Stack([
         imagem_fundo,
         overlay
     ])
 
+    page.theme_mode = ft.ThemeMode.LIGHT
+    page.on_resized = atualizar_altura_container
+
+
+
     #print('✔️ tamanho da tela: ', page.width, 'x', page.height)
     page.add(stack) 
     
     
-#ft.app(target=main,view=ft.WEB_BROWSER)
+ft.app(target=main,view=ft.WEB_BROWSER)
 
 #Colocar sempre porta 8000
-ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
+#ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
