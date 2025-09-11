@@ -544,7 +544,7 @@ def main(page: ft.Page):
 
 
     erro_login = ft.Text("", color=ft.Colors.RED)
-    txt_observacoes = ft.TextField(label="Observações", expand=True, multiline=True,max_length=1000)
+    txt_observacoes = ft.TextField(label="Observações", expand=True, multiline=True,max_length=20000)
     nome_cb = ft.TextField(label="Login", expand=True, visible=True)
     form_inputs = []
 
