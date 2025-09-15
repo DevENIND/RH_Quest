@@ -181,7 +181,8 @@ scrp_tabela = ''
 email_enviar = ''
 
 bol_enviar = False
-start = True
+start = False
+
 for index, row in resultados.iterrows():
     if index == 0:
         scrp_tabela = scrp_cabec_tabela
@@ -189,12 +190,13 @@ for index, row in resultados.iterrows():
     email = row['email_repres']
     status = define_status(row['Participante'],row['Avaliador'])
    
-    '''
-    if email_enviar == 'wilson.fernandes@enind.com.br':
+    
+    if email_enviar == 'ewerton.siqueira@enind.com.br':
         start = True
-    else:
+    elif start == False:
         scrp_tabela = scrp_cabec_tabela
-    '''
+
+   
 
     if email_enviar != email and index > 0 and bol_enviar == True and start == True: 
         scrp_tabela += '</table>'

@@ -544,7 +544,15 @@ def main(page: ft.Page):
 
 
     erro_login = ft.Text("", color=ft.Colors.RED)
-    txt_observacoes = ft.TextField(label="Observações", expand=True, multiline=True,max_length=20000)
+    txt_observacoes = ft.TextField(label="Observações", expand=True, multiline=True,max_length=20000, 
+                                   on_change=lambda e: reset_idle_time(e), 
+                                   on_click=lambda e: reset_idle_time(e),
+                                   on_blur=lambda e: reset_idle_time(e),
+                                   on_focus=lambda e: reset_idle_time(e),
+                                   on_submit=lambda e: reset_idle_time(e),
+                                   on_tap_outside=lambda e: reset_idle_time(e),
+                                   on_animation_end=lambda e: reset_idle_time(e),
+                                    visible=True)
     nome_cb = ft.TextField(label="Login", expand=True, visible=True)
     form_inputs = []
 
@@ -1410,9 +1418,10 @@ def main(page: ft.Page):
     last_interaction = {"time": time.monotonic()}
  
     def reset_idle_time(e=None):
+        print('timer resetado')
         last_interaction["time"] = time.monotonic()
-        deslog_overlay.visible = False
-        page.update()
+        #deslog_overlay.visible = False
+        #page.update()
 
     async def check_idle():
         while True:
@@ -1561,7 +1570,7 @@ def main(page: ft.Page):
         if resposta:
             enviar_formulario(e)
         else:
-            mostrar_alerta_temporario('Cancelamento de resposta realizado com sucess', ft.Colors.GREEN_400)
+            mostrar_alerta_temporario('Cancelamento de resposta realizado com sucesso!', ft.Colors.GREEN_400)
         page.update()
 
     # Botão principal para exibir o overlay
@@ -2056,6 +2065,7 @@ def main(page: ft.Page):
         page.update()
 
     def muda_cor_dropdown(e: ft.ControlEvent):
+        reset_idle_time()
         dropdown = e.control
         valor = dropdown.value
         container = dropdown.meu_container 
@@ -2143,6 +2153,14 @@ def main(page: ft.Page):
                     content=dropdown
                 )
                 
+                container1.on_click = reset_idle_time
+                container1.on_hover =reset_idle_time
+                container1.on_long_press=reset_idle_time
+
+                dropdown.on_change=muda_cor_dropdown
+                dropdown.on_focus=reset_idle_time
+                dropdown.on_blur=reset_idle_time
+                
                 dropdown.meu_container = container1
 
                 form_inputs.append(dropdown)
@@ -2176,7 +2194,15 @@ def main(page: ft.Page):
             content=dropdown_desempenho
         )
         
+        container_desempenho.on_click = reset_idle_time
+        container_desempenho.on_hover =reset_idle_time
+        container_desempenho.on_long_press=reset_idle_time
+
         dropdown_desempenho.on_change=muda_cor_dropdown
+        dropdown_desempenho.on_focus=reset_idle_time
+        dropdown_desempenho.on_blur=reset_idle_time
+
+
         dropdown_desempenho.meu_container = container_desempenho
 
         form_content.controls.append(ft.Column(
