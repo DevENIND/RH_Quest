@@ -550,7 +550,6 @@ def main(page: ft.Page):
                                    on_blur=lambda e: reset_idle_time(e),
                                    on_focus=lambda e: reset_idle_time(e),
                                    on_submit=lambda e: reset_idle_time(e),
-                                   on_tap_outside=lambda e: reset_idle_time(e),
                                    on_animation_end=lambda e: reset_idle_time(e),
                                     visible=True)
     nome_cb = ft.TextField(label="Login", expand=True, visible=True)
