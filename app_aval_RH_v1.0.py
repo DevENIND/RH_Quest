@@ -483,7 +483,9 @@ def validar_token(token, pessoa):
 ########################################################################################################################################### 
 IDLE_TIMEOUT = 300  # segundos -> 5*60 - 5 Minutos
 
+
 def main(page: ft.Page):
+    
     #print(f'🚀 Iniciando aplicação... a imagem está no diretório:{image_path}')
     codigo_enviado = ""
     nome_logado = ""
@@ -1415,10 +1417,15 @@ def main(page: ft.Page):
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     last_interaction = {"time": time.monotonic()}
+    tempo_ociosidade = {'segundos': 0}
  
     def reset_idle_time(e=None):
-        print('timer resetado')
+        #print('timer resetado')
         last_interaction["time"] = time.monotonic()
+        txt_ociosidade.value = 'Tempo de inatividade: 0s (00:00:00)'
+        tempo_ociosidade['segundos'] = 0
+        txt_ociosidade.update()
+
         if deslog_overlay.visible == True:
             deslog_overlay.visible = False
             page.update()
@@ -1427,9 +1434,18 @@ def main(page: ft.Page):
         while True:
             if Gestor_tempo_formulario.visible == True:
                 await asyncio.sleep(1)
+                
                 now = time.monotonic()
                 elapsed = now - last_interaction["time"]
                 remaining = int(IDLE_TIMEOUT - elapsed)
+                tempo_ociosidade['segundos'] += 1 
+                tempo_delta = datetime.timedelta(seconds=tempo_ociosidade['segundos'])
+                tempo_formatado = str(tempo_delta)
+
+                txt_ociosidade.value = f'Tempo de inatividade: {tempo_ociosidade['segundos']}s ({tempo_formatado})'
+                txt_ociosidade.update()
+             
+
 
                 if remaining > 0:
                     if remaining <= 40:
@@ -1655,7 +1671,8 @@ def main(page: ft.Page):
                     overlay = ft.Column([
                         alerta_container,
                         painel_av1,
-                        alerta_container
+                        alerta_container,
+                        ft.Row([txt_assinatura], alignment=ft.MainAxisAlignment.CENTER),
                         ], 
                     expand=True,
                     alignment=ft.alignment.bottom_center 
@@ -1678,7 +1695,8 @@ def main(page: ft.Page):
                     overlay = ft.Column([
                         alerta_container,
                         painel_comum,
-                        alerta_container
+                        alerta_container,
+                        ft.Row([txt_assinatura], alignment=ft.MainAxisAlignment.CENTER),
                         ], 
                     expand=True,
                     alignment=ft.alignment.bottom_center 
@@ -2669,7 +2687,7 @@ def main(page: ft.Page):
 
     container_perguntas = ft.Container(
         content=form_content,
-        expand=True,
+        height=page.height * 0.7,
         bgcolor=ft.Colors.WHITE,
         border_radius=10,
         padding=20,
@@ -2677,10 +2695,11 @@ def main(page: ft.Page):
         visible=True
     )
 
+    txt_ociosidade = ft.Text("", size=10, weight=ft.FontWeight.BOLD)
     formulario_view =  ft.Container(
             content=ft.Column([
                 ft.Row([ ft.TextButton("Voltar", on_click=voltar_painel, icon=ft.Icons.ARROW_BACK),texto_ola3]),
-                nome_em_avaliacao,
+                ft.Row([nome_em_avaliacao,txt_ociosidade],spacing=10, alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                 container_perguntas,
                 alerta_container_form,
                 ft.Row(
@@ -2710,6 +2729,7 @@ def main(page: ft.Page):
         on_pan_start= reset_idle_time,     # movimento de mouse ou dedo
         on_pan_update= reset_idle_time,    # movimento contínuo
         on_tap= reset_idle_time,
+        on_hover=reset_idle_time,
         content= formulario_view,
         visible=False
     )
@@ -2932,6 +2952,8 @@ def main(page: ft.Page):
             visible=False
         )
     
+    txt_assinatura = ft.Text('Powered by ENIND Engenharia - Wagner Barreiro all rights reserved', size=10, font_family='roboto', color=ft.Colors.GREY_600)
+
     # containers
     container_realizados = ft.Container(
         content=ft.Column([
@@ -3084,15 +3106,18 @@ def main(page: ft.Page):
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         spacing=30),
         alignment=ft.alignment.center,
+        expand=True,
     )
     
     overlay = ft.Column([
         alerta_container,
         conteudo_central,
-        alerta_container
+        alerta_container,
+        ft.Row([txt_assinatura], alignment=ft.MainAxisAlignment.CENTER),
         ], 
     expand=True,
-    alignment=ft.alignment.bottom_center 
+    alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+    horizontal_alignment=ft.CrossAxisAlignment.CENTER
     )
 
     stack = ft.Stack([
