@@ -1419,8 +1419,9 @@ def main(page: ft.Page):
     def reset_idle_time(e=None):
         print('timer resetado')
         last_interaction["time"] = time.monotonic()
-        #deslog_overlay.visible = False
-        #page.update()
+        if deslog_overlay.visible == True:
+            deslog_overlay.visible = False
+            page.update()
 
     async def check_idle():
         while True:
