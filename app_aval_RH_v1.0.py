@@ -1417,13 +1417,13 @@ def main(page: ft.Page):
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     last_interaction = {"time": time.monotonic()}
-    tempo_ociosidade = {'segundos': 0}
+    tempo_ociosidade = {"segundos": 0}
  
     def reset_idle_time(e=None):
         #print('timer resetado')
         last_interaction["time"] = time.monotonic()
         txt_ociosidade.value = 'Tempo de inatividade: 0s (00:00:00)'
-        tempo_ociosidade['segundos'] = 0
+        tempo_ociosidade["segundos"] = 0
         txt_ociosidade.update()
 
         if deslog_overlay.visible == True:
@@ -1438,11 +1438,11 @@ def main(page: ft.Page):
                 now = time.monotonic()
                 elapsed = now - last_interaction["time"]
                 remaining = int(IDLE_TIMEOUT - elapsed)
-                tempo_ociosidade['segundos'] += 1 
-                tempo_delta = datetime.timedelta(seconds=tempo_ociosidade['segundos'])
+                tempo_ociosidade["segundos"] += 1 
+                tempo_delta = datetime.timedelta(seconds=tempo_ociosidade["segundos"])
                 tempo_formatado = str(tempo_delta)
 
-                txt_ociosidade.value = f'Tempo de inatividade: {tempo_ociosidade['segundos']}s ({tempo_formatado})'
+                txt_ociosidade.value = f'Tempo de inatividade: {tempo_ociosidade["segundos"]}s ({tempo_formatado})'
                 txt_ociosidade.update()
              
 
