@@ -683,7 +683,7 @@ def gera_grafico_conclusao(finalizados = False):
         if finalizados == False:
             agrupar = 'x.Participante, x.Nome_Avaliador'
             texto_grafico = 'Avaliações Finalizadas'
-            qtd_participantes = 391 #Quantidade constante na tabela Lista_Emails
+            qtd_participantes = 410 #Quantidade constante na tabela Lista_Emails
         else:
             sql_condicao = "Where Status_Av = 'Finalizado'"
             agrupar = 'x.Participante'

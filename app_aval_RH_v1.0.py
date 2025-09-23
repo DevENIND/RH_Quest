@@ -1117,6 +1117,24 @@ def main(page: ft.Page):
                                 linha.append("")  # Se não houver texto, coloca vazio
                     # Mapeia os dados extraídos para colunas
                     if len(linha) == 9:
+                        qtd_pend = 0
+                        if linha[1] == 'Pendente':
+                            qtd_pend += 1
+                        if linha[4] == 'Pendente':
+                            qtd_pend += 1
+                        if linha[7] == 'Pendente':
+                            qtd_pend += 1
+
+                        if linha[4] == 'Realizado' and linha[7] == 'Realizado':
+                            status_avaliadores = 'Realizado'
+                        else:
+                            status_avaliadores = 'Pendente'
+                        
+                        if qtd_pend > 0:
+                            status = 'Pendente'
+                        else:
+                            status = 'Finalizado'
+
                         dados_extraidos.append({
                             "Participante": linha[0],
                             "Status": linha[1],
@@ -1126,12 +1144,15 @@ def main(page: ft.Page):
                             "Avaliacao1": linha[5],
                             "Avaliador2": linha[6],
                             "Status2": linha[7],
-                            "Avaliacao2": linha[8]
+                            "Avaliacao2": linha[8],
+                            "Qtd Pendente": qtd_pend,
+                            "Status Global": status,
+                            "Status Avaliadores": status_avaliadores
                         })
 
             # Cria o DataFrame
             df = pd.DataFrame(dados_extraidos)
-            
+
             # Criar arquivo em memória
             output = io.BytesIO()
             df.to_excel(output, index=False, engine='openpyxl')
@@ -2720,7 +2741,7 @@ def main(page: ft.Page):
         height = page.height * 0.7
     )
 
-    btn_exportar_tabela = ft.ElevatedButton('Exportar Tabela', on_click=lambda e:exportar_dados_painel_adm(e), width=150, height=50, icon=ft.Icons.DOWNLOAD_ROUNDED)
+    btn_exportar_tabela = ft.ElevatedButton('Exportar Tabela', on_click=lambda e:exportar_dados_painel_adm(e), width=250, height=50, icon=ft.Icons.DOWNLOAD_ROUNDED)
 
     painel_pend_view = ft.Container(
         content=ft.Column([
@@ -3196,7 +3217,7 @@ def main(page: ft.Page):
     page.add(stack) 
     
     
-ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
+#ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-#ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
+ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
