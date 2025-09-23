@@ -3195,7 +3195,6 @@ def main(page: ft.Page):
     overlay = ft.Column([
         alerta_container,
         conteudo_central,
-        alerta_container,
         ft.Row([txt_assinatura], alignment=ft.MainAxisAlignment.CENTER),
         ], 
     expand=True,
