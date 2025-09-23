@@ -181,7 +181,7 @@ scrp_tabela = ''
 email_enviar = ''
 
 bol_enviar = False
-start = False
+start = True
 
 for index, row in resultados.iterrows():
     if index == 0:
@@ -232,14 +232,15 @@ for index, row in resultados.iterrows():
                     </tr> 
             '''
         elif row['Resp_Part'] == 'Sim':
-            scrp_tabela += f'''
-                    <tr>            
-                        <td>{row['Participante']}</td>
-                        <td>{row['Tipo_aval']}</td>
-                        <td>{row['login_part']}</td>
-                        <td>{row['senha_part']}</td>
-                    </tr> 
-            '''
+            if define_status(row['Participante'], row['Participante']) == 'Pendente':
+                scrp_tabela += f'''
+                        <tr>            
+                            <td>{row['Participante']}</td>
+                            <td>{row['Tipo_aval']}</td>
+                            <td>{row['login_part']}</td>
+                            <td>{row['senha_part']}</td>
+                        </tr> 
+                '''
         else:
             scrp_tabela += f'''
                         <td>{row['Participante']}</td>

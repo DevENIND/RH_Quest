@@ -1092,6 +1092,66 @@ def main(page: ft.Page):
         except Exception as ex:
             mostrar_alerta_temporario(f'Erro ao exportar: {ex}', ft.Colors.RED_400)
 
+    def exportar_dados_painel_adm(e=None):
+        try:
+            dados_extraidos = []
+            for item in lista_pend_view.controls:
+                if isinstance(item, ft.Container) and isinstance(item.content, ft.Row):
+                    linha = []
+                    for i, subitem in enumerate(item.content.controls):
+                        # Ignora o último item (botão de visualização)
+                        if i == 9:
+                            continue
+                        # Garante que subitem é um Container
+                        if isinstance(subitem, ft.Container):
+                            content = subitem.content
+                            # Pode ser um Text direto
+                            if isinstance(content, ft.Text):
+                                linha.append(content.value)
+                            # Ou pode estar aninhado (ex: conteúdo do status)
+                            elif hasattr(content, "controls"):
+                                # Procura o primeiro ft.Text dentro do container
+                                texto = next((ctrl.value for ctrl in content.controls if isinstance(ctrl, ft.Text)), "")
+                                linha.append(texto)
+                            else:
+                                linha.append("")  # Se não houver texto, coloca vazio
+                    # Mapeia os dados extraídos para colunas
+                    if len(linha) == 9:
+                        dados_extraidos.append({
+                            "Participante": linha[0],
+                            "Status": linha[1],
+                            "Avaliacao": linha[2],
+                            "Avaliador1": linha[3],
+                            "Status1": linha[4],
+                            "Avaliacao1": linha[5],
+                            "Avaliador2": linha[6],
+                            "Status2": linha[7],
+                            "Avaliacao2": linha[8]
+                        })
+
+            # Cria o DataFrame
+            df = pd.DataFrame(dados_extraidos)
+            
+            # Criar arquivo em memória
+            output = io.BytesIO()
+            df.to_excel(output, index=False, engine='openpyxl')
+            output.seek(0)
+
+            # Nome do arquivo
+            nome_arquivo = f"exportacao_grafico_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
+             
+            # Codificar para base64
+            b64 = base64.b64encode(output.read()).decode()
+
+            # Criar link de download
+            link_download = f"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}"
+
+            # Abrir o link no navegador (força o download)
+            page.launch_url(link_download, web_window_name=nome_arquivo)
+
+            mostrar_alerta_temporario('Exportação realizada com sucesso', ft.Colors.GREEN_400)
+        except Exception as ex:
+            mostrar_alerta_temporario(f'Erro ao exportar: {ex}', ft.Colors.RED_400)
 
     def alimenta_tabela_graficos(Participante = '', outras_condicoes = '', performance = ''):
         mensagem_aguarde.value = 'Aguarde, realizando montagem da tabela de dados...'
@@ -2542,7 +2602,7 @@ def main(page: ft.Page):
     )
 
     exportar_btn = ft.ElevatedButton(
-        "Exportar para Excel",
+        "Exportar Respostas",
         icon= ft.Icons.DOWNLOAD_ROUNDED,
         on_click=lambda _: exportar_para_excel(),
         width=250,
@@ -2660,12 +2720,14 @@ def main(page: ft.Page):
         height = page.height * 0.7
     )
 
+    btn_exportar_tabela = ft.ElevatedButton('Exportar Tabela', on_click=lambda e:exportar_dados_painel_adm(e), width=150, height=50, icon=ft.Icons.DOWNLOAD_ROUNDED)
+
     painel_pend_view = ft.Container(
         content=ft.Column([
             ft.Row([ft.TextButton("Deslogar", icon=ft.Icons.ARROW_BACK, on_click=voltar_login),texto_ola2], spacing= 10),
             expiracao_txt,
             ft.Text("Painel de Controle", size=25, weight=ft.FontWeight.BOLD),
-            ft.Row([atualizar_btn,exportar_btn, grafico_btn, grafico_status_btn],spacing=10),
+            ft.Row([atualizar_btn,exportar_btn, grafico_btn, grafico_status_btn, btn_exportar_tabela],spacing=10),
             cabecalho_pend,
             corpo_tabela_pend
         ]),
@@ -3134,7 +3196,7 @@ def main(page: ft.Page):
     page.add(stack) 
     
     
-#ft.app(target=main,view=ft.WEB_BROWSER)
+ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
+#ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")

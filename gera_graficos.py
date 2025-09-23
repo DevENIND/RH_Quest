@@ -696,49 +696,57 @@ def gera_grafico_conclusao(finalizados = False):
             connection.close()
 
 
-        scrp_sql = f"""
-                Select Sum(Grupo) as Realizado from
-                (SELECT count(concat(Participante, ' - ', Nome_Avaliador)) as Grupo 
-                    From (SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, Nome_Avaliador,
-                                    Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
-                                    Media_Avaliadores, 
-                                    Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
-                                    Media_Aval_Desemp,
-                                    CASE 
-                                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'Baixa Performance'
-                                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'Inconsistente'
-                                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'Especialista'
-
-                                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'Dilema'
-                                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'Competente'
-                                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'Forte Entrega'
-
-                                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'Desafio'
-                                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'Forte Cultura'
-                                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'Alto Potencial'
-
-                                        ELSE ''
-                                    END as Performance,
-                                    Status_Av
-                                FROM (
-                                    SELECT 
-                                        Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, Nome_Avaliador,
-                                        ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
-                                        ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 0) AS Media_Avaliadores,
-                                        ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
-                                        ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
+        if finalizados == True:
+            scrp_sql = f"""
+                    Select Sum(Grupo) as Realizado from
+                    (SELECT count(concat(Participante, ' - ', Nome_Avaliador)) as Grupo 
+                        From (SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, Nome_Avaliador,
+                                        Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
+                                        Media_Avaliadores, 
+                                        Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
+                                        Media_Aval_Desemp,
                                         CASE 
-                                            WHEN (COUNT(DISTINCT id_rel) = 2 AND Avaliacao = 'A3') 
-                                            OR (COUNT(DISTINCT id_rel) = 2 AND Avaliacao <> 'A3') 
-                                            THEN 'Finalizado' 
-                                            ELSE 'Pendente' 
-                                        END as Status_Av
-                                    FROM QuestRH_Respostas where id_rel in (1,2)
-                                    GROUP BY Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo
-                                ) t
-                            ) x {sql_condicao} group by {agrupar}
+                                            WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'Baixa Performance'
+                                            WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'Inconsistente'
+                                            WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'Especialista'
+
+                                            WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'Dilema'
+                                            WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'Competente'
+                                            WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'Forte Entrega'
+
+                                            WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'Desafio'
+                                            WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'Forte Cultura'
+                                            WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'Alto Potencial'
+
+                                            ELSE ''
+                                        END as Performance,
+                                        Status_Av
+                                    FROM (
+                                        SELECT 
+                                            Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, Nome_Avaliador,
+                                            ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
+                                            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 0) AS Media_Avaliadores,
+                                            ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
+                                            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
+                                            CASE 
+                                                WHEN (COUNT(DISTINCT id_rel) = 2 AND Avaliacao = 'A3') 
+                                                OR (COUNT(DISTINCT id_rel) = 2 AND Avaliacao <> 'A3') 
+                                                THEN 'Finalizado' 
+                                                ELSE 'Pendente' 
+                                            END as Status_Av
+                                        FROM QuestRH_Respostas where id_rel in (1,2)
+                                        GROUP BY Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo
+                                    ) t
+                                ) x {sql_condicao} group by {agrupar}
+                    )y;
+            """
+        else:
+            scrp_sql = f"""
+                Select Sum(Grupo) as Realizado from
+                    (SELECT count(concat(Participante, ' - ', Nome_Avaliador)) as Grupo 
+                        From (SELECT Distinct Participante, Nome_Avaliador FROM QuestRH_Respostas) t
                 )y;
-        """
+            """
 
         connection = mysql_connection()
         cursor = connection.cursor()
