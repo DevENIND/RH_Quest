@@ -52,37 +52,26 @@ def gera_ninebox(pilar = '', competencia = '', participante = '', outras_condico
         if outras_condicoes != '' and outras_condicoes != None:
             sql_condicao += f" and {outras_condicoes}"
 
-        scrp_sql = f'Select Participante, ROUND(AVG(Resposta)) as Media from QuestRH_Respostas where {sql_condicao} group by Participante HAVING COUNT(DISTINCT id_rel) = 2'
-        scrp_desempenho =  f'Select Participante, ROUND(AVG(Desempenho_tecnico)) as Media from QuestRH_Respostas where {sql_condicao} group by Participante HAVING COUNT(DISTINCT id_rel) = 2'
-
+        scrp_sql = f"""
+        SELECT 
+            Participante,
+            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 0) AS Media_Avaliadores,
+            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp
+        FROM QuestRH_Respostas
+        WHERE {sql_condicao}
+        GROUP BY Participante
+        HAVING COUNT(DISTINCT id_rel) = 2
+        """
+        
         conn = mysql_connection()
 
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         cursor.execute(scrp_sql)
         resultados = cursor.fetchall()
-
-        cursor.execute(scrp_desempenho)
-        resultados_desempenho = cursor.fetchall()
-        conn.close()
-
-        if len(resultados) == 0 or len(resultados_desempenho) == 0:
-            return None, 'Não há dados para gerar o Nine-Box'
-
+ 
         # === Converter para DataFrame ===
-        df_potencial = pd.DataFrame(resultados).rename(columns={"Media": "Potencial"})
-        df_desempenho = pd.DataFrame(resultados_desempenho).rename(columns={"Media": "Performance"})
-
-        # Juntar os dois dataframes
-        df = pd.merge(df_potencial, df_desempenho, on="Participante", how="inner")
-
-        # Map note to category
-        def classificar(n):
-            if n <= 2:
-                return 'Baixo'
-            elif n <= 4:
-                return 'Médio'
-            else:
-                return 'Alto'
+        df = pd.DataFrame(resultados)
+       
         # Exemplo de dados (simulação)
         '''
         data = {
@@ -93,41 +82,59 @@ def gera_ninebox(pilar = '', competencia = '', participante = '', outras_condico
         df = pd.DataFrame(data)
         '''
         # Função de classificação
-        def classificar(n):
-            if n <= 2:
-                return 'Baixo'
-            elif n <= 4:
-                return 'Médio'
-            else:
-                return 'Alto'
+        def classificar(row):
+            x = row["Media_Avaliadores"]
+            y = row["Media_Aval_Desemp"]
+            participante = row["Participante"]
 
-        df["Categoria_X"] = df["Potencial"].apply(classificar)
-        df["Categoria_Y"] = df["Performance"].apply(classificar)
+            if participante == 'Leandro Cabrini':
+                print(x, y)
+
+            if x in (1, 2) and y in (1, 2):
+                return 'BAIXA PERFORMANCE'
+            elif x in (1, 2) and y in (3, 4):
+                return 'INCONSISTENTE'
+            elif x in (1, 2) and y == 5:
+                return 'ESPECIALISTA'
+            elif x in (3, 4) and y in (1, 2):
+                return 'DILEMA'
+            elif x in (3, 4) and y in (3, 4):
+                return 'COMPETENTE'
+            elif x in (3, 4) and y == 5:
+                return 'FORTE ENTREGA'
+            elif x == 5 and y in (1, 2):
+                return 'DESAFIO'
+            elif x == 5 and y in (3, 4):
+                return 'FORTE CULTURA'
+            elif x == 5 and y == 5:
+                return 'ALTO POTENCIAL'
+            else:
+                return 'N/A'
+
+        df["Categoria"] = df.apply(classificar, axis=1)
 
         # Percentual por quadrante
         n_total = len(df)
-        quadros = df.groupby(["Categoria_X", "Categoria_Y"]).size().reset_index(name="Qtd")
-        quadros["Perc"] = (quadros["Qtd"]/n_total*100).round(1)
+        categorias = df.groupby("Categoria").size().reset_index(name="Qtd")
+        categorias["Perc"] = (categorias["Qtd"] / n_total * 100).round(1)
 
-        # Limites dos quadrantes
-        boundaries = {
-            "Baixo": (0.5, 2.5),
-            "Médio": (2.5, 4.5),
-            "Alto":  (4.5, 6.5)
+        # Montar grid como imagem de Nine Box com base nas categorias
+        # Mapeia posições dos quadrantes
+        posicoes = {
+            'BAIXA PERFORMANCE': ('Baixo', 'Baixo'),
+            'INCONSISTENTE': ('Médio', 'Baixo'),
+            'ESPECIALISTA': ('Alto', 'Baixo'),
+            'DILEMA': ('Baixo', 'Médio'),
+            'COMPETENTE': ('Médio', 'Médio'),
+            'FORTE ENTREGA': ('Alto', 'Médio'),
+            'DESAFIO': ('Baixo', 'Alto'),
+            'FORTE CULTURA': ('Médio', 'Alto'),
+            'ALTO POTENCIAL': ('Alto', 'Alto')
         }
 
-        # Cores das células
-        cell_colors = {
-            ('Baixo','Baixo'): (1.0, 0.3, 0.3, 0.6),
-            ('Baixo','Médio'): (1.0, 0.7, 0.4, 0.6),
-            ('Baixo','Alto'):  (1.0, 0.75, 0.0, 0.6),
-            ('Médio','Baixo'): (1.0, 0.7, 0.4, 0.6),
-            ('Médio','Médio'): (1.0, 0.75, 0.0, 0.6),
-            ('Médio','Alto'):  (0.8, 1.0, 0.8, 0.6),
-            ('Alto','Baixo'):  (1.0, 0.75, 0.0, 0.6),
-            ('Alto','Médio'):  (0.8, 1.0, 0.8, 0.6),
-            ('Alto','Alto'):   (0.7, 0.8, 0.9, 0.6)
-        }
+        # Criar nova coluna com Categoria_X e Categoria_Y
+        df['Categoria_X'] = df['Categoria'].map(lambda c: posicoes.get(c, ('', ''))[0])
+        df['Categoria_Y'] = df['Categoria'].map(lambda c: posicoes.get(c, ('', ''))[1])
 
         # Títulos das células
         descricoes = {
@@ -141,6 +148,32 @@ def gera_ninebox(pilar = '', competencia = '', participante = '', outras_condico
             ('Baixo','Médio'): "INCONSISTENTE",
             ('Baixo','Alto'):  "ESPECIALISTA"
         }
+
+        # Percentual por quadrante
+        quadros = df.groupby(["Categoria_X", "Categoria_Y"]).size().reset_index(name="Qtd")
+        quadros["Perc"] = (quadros["Qtd"] / n_total * 100).round(1)
+
+        # Limites dos quadrantes
+        boundaries = {
+            "Baixo": (0.5, 2.5),
+            "Médio": (2.5, 4.5),
+            "Alto":  (4.5, 6.5)
+        }
+
+        
+        # Cores das células
+        cell_colors = {
+            ('Baixo','Baixo'): (1.0, 0.3, 0.3, 0.6),
+            ('Baixo','Médio'): (1.0, 0.7, 0.4, 0.6),
+            ('Baixo','Alto'):  (1.0, 0.75, 0.0, 0.6),
+            ('Médio','Baixo'): (1.0, 0.7, 0.4, 0.6),
+            ('Médio','Médio'): (1.0, 0.75, 0.0, 0.6),
+            ('Médio','Alto'):  (0.8, 1.0, 0.8, 0.6),
+            ('Alto','Baixo'):  (1.0, 0.75, 0.0, 0.6),
+            ('Alto','Médio'):  (0.8, 1.0, 0.8, 0.6),
+            ('Alto','Alto'):   (0.7, 0.8, 0.9, 0.6)
+        }
+
 
         # Criar figura
         fig, ax = plt.subplots(figsize=(8, 8))

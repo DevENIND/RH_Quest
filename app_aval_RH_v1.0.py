@@ -508,10 +508,17 @@ def main(page: ft.Page):
         alignment=ft.alignment.center,
         visible=False
     )
+    
+    def fechar_alerta(e= None):
+        alerta_container_form.visible = False
+        page.update()
+
+    btn_fechar_alerta = ft.TextButton(on_click=lambda _:fechar_alerta, icon=ft.Icons.CLOSE)
+    txt_msg_alerta = ft.Text("", color=ft.Colors.WHITE, expand=True) 
 
     # Container de alerta
     alerta_container_form = ft.Container(
-        content=ft.Text("", color=ft.Colors.WHITE),
+        content=ft.Row([txt_msg_alerta,btn_fechar_alerta], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
         bgcolor=ft.Colors.RED_400,
         height=40,
         padding=10,
@@ -781,7 +788,7 @@ def main(page: ft.Page):
                     GROUP BY Participante
                     HAVING COUNT(DISTINCT id_rel) = 2
                     ORDER BY Participante) x
-                Where Media = {Media}
+                Where Media = {Media} order by Participante
             """
             else:
                 query_sql =f"""
@@ -791,7 +798,7 @@ def main(page: ft.Page):
                     WHERE id_rel > 0
                     GROUP BY Participante
                     HAVING COUNT(DISTINCT id_rel) = 2
-                    ORDER BY Participante) x
+                    ORDER BY Participante) x order by Participante
             """
                 
 
@@ -1573,6 +1580,8 @@ def main(page: ft.Page):
         corpo_tabela_pend.height = altura_tela * 0.7
         corpo_tabela.height = altura_tela * 0.7
         container_perguntas.height = altura_tela * 0.7
+
+        container_dados_bellcurve.height = altura_tela * 0.4
         page.update()
     
     
@@ -1593,8 +1602,7 @@ def main(page: ft.Page):
         
         overlay = ft.Column([
             alerta_container,
-            conteudo_central,
-            alerta_container
+            conteudo_central
             ], 
         expand=True,
         alignment=ft.alignment.bottom_center 
@@ -1727,8 +1735,7 @@ def main(page: ft.Page):
 
                     overlay = ft.Column([
                         alerta_container,
-                        painel_admin,
-                        alerta_container
+                        painel_admin
                         ], 
                     expand=True,
                     alignment=ft.alignment.bottom_center 
@@ -1752,7 +1759,6 @@ def main(page: ft.Page):
                     overlay = ft.Column([
                         alerta_container,
                         painel_av1,
-                        alerta_container,
                         ft.Row([txt_assinatura], alignment=ft.MainAxisAlignment.CENTER),
                         ], 
                     expand=True,
@@ -1776,7 +1782,6 @@ def main(page: ft.Page):
                     overlay = ft.Column([
                         alerta_container,
                         painel_comum,
-                        alerta_container,
                         ft.Row([txt_assinatura], alignment=ft.MainAxisAlignment.CENTER),
                         ], 
                     expand=True,
@@ -2205,7 +2210,7 @@ def main(page: ft.Page):
         ]
 
         alerta_container_form.visible = False
-        alerta_container_form.content.value = ''
+        txt_msg_alerta.value = ''
 
         # Agrupar perguntas por Pilar
         pilares_dict = {}
@@ -2331,7 +2336,7 @@ def main(page: ft.Page):
             if not grupo.value:
                 mostrar_alerta_temporario("Preencha todos os campos antes de enviar o furmulário...", ft.Colors.RED_400)
                 alerta_container_form.visible = True
-                alerta_container_form.content.value = 'Preencha todos os campos antes de enviar o furmulário...'
+                txt_msg_alerta.value = 'Preencha todos os campos antes de enviar o furmulário...'
                 aguarde_overlay.visible = False
                 page.update()
                 return  # Interrompe envio
@@ -2344,7 +2349,7 @@ def main(page: ft.Page):
         if not dropdown_desempenho.value or dropdown_desempenho.value == 0 :
             mostrar_alerta_temporario("Coloque antes o valor do desempenho da pessoa.", ft.Colors.RED_400)
             alerta_container_form.visible = True
-            alerta_container_form.content.value = 'Coloque antes o valor do desempenho da pessoa.'
+            txt_msg_alerta.value = 'Coloque antes o valor do desempenho da pessoa.'
             aguarde_overlay.visible = False
             page.update()
             return  # Interrompe envio
@@ -2355,7 +2360,7 @@ def main(page: ft.Page):
         if valida_texto(obs_us) == False:
             mostrar_alerta_temporario('Campo de obsevações contem palavras não permitidas, por gentileza, analise o texto', ft.Colors.RED_400)
             alerta_container_form.visible = True
-            alerta_container_form.content.value = 'Campo de obsevações contem palavras não permitidas, por gentileza, analise o texto'
+            txt_msg_alerta.value = 'Campo de obsevações contem palavras não permitidas, por gentileza, analise o texto'
             aguarde_overlay.visible = False
             page.update()
             return
@@ -2983,7 +2988,7 @@ def main(page: ft.Page):
         padding=20,
         opacity=0.92,
         visible=True,
-        expand=True
+        height=page.height * 0.4
     )
 
     btn_limpar_filtros_bellcurve = ft.TextButton(
@@ -3216,7 +3221,7 @@ def main(page: ft.Page):
     page.add(stack) 
     
     
-#ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
+ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
+#ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
