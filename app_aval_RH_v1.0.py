@@ -315,40 +315,62 @@ def valida_texto(texto):
 
 
 def lista_pendencias():
-    scrp_sql = f"SELECT * FROM QuestRH_Relacoes order by Participante"
     conn = mysql_connection()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
-    cursor.execute(scrp_sql)
-    resultados = cursor.fetchall()
+
+    # Carrega tudo de uma vez
+    cursor.execute("SELECT * FROM QuestRH_Relacoes")
+    relacoes = cursor.fetchall()
+
+    cursor.execute("SELECT Participante, Nome_Avaliador, ROUND(AVG(Resposta)) as Media FROM QuestRH_Respostas GROUP BY Participante, Nome_Avaliador")
+    respostas_agrupadas = cursor.fetchall()
+
     conn.close()
+
+    # Indexa dados em dicionários para acesso rápido
+    respostas_dict = {
+        (r['Participante'], r['Nome_Avaliador']): r['Media']
+        for r in respostas_agrupadas
+    }
+
+    tipo_avaliacao_dict = {
+        (r['Participante']): r['Tipo_Avaliacao']
+        for r in relacoes
+    }
 
     lista = []
 
-    for row in resultados:
-        #Adicionando Auto Avaliação
-        Status = define_status(row['Participante'], row['Participante'])
-        Resp_aval = captura_valor_nota(row['Participante'],row['Participante'])
+    for row in relacoes:
+        participante = row['Participante']
+        avaliador1 = row['Avaliador1']
+        avaliador2 = row['Avaliador2']
+        tipo_avaliacao = tipo_avaliacao_dict.get(participante, '')
 
-        Status1 = define_status(row['Participante'], row['Avaliador1'])
-        Resp_aval1 = captura_valor_nota(row['Participante'],row['Avaliador1'])
+        def obter_status(p, a):
+            if (p, a) in respostas_dict:
+                return 'Realizado'
+            elif tipo_avaliacao == 'A3' and p == a:
+                return 'Realizado'
+            else:
+                return 'Pendente'
 
-        Status2 = define_status(row['Participante'], row['Avaliador2'])
-        Resp_aval2 = captura_valor_nota(row['Participante'],row['Avaliador2'])
+        def obter_media(p, a):
+            valor = respostas_dict.get((p, a), None)
+            return '' if valor == 0 or valor is None else valor
 
-        lista.append(
-                {"Participante": row['Participante'], 
-                "Status": Status,
-                "Avaliacao": Resp_aval,
-                "Avaliador1": row['Avaliador1'],
-                "Status1": Status1,
-                "Avaliacao1": Resp_aval1,
-                "Avaliador2": row['Avaliador2'],
-                "Status2": Status2,
-                "Avaliacao2": Resp_aval2,
-                "Questionário": row['Tipo_Avaliacao']
-                }
-            )
-        
+        lista.append({
+            "Participante": participante,
+            "Status": obter_status(participante, participante),
+            "Avaliacao": obter_media(participante, participante),
+            "Avaliador1": avaliador1,
+            "Status1": obter_status(participante, avaliador1),
+            "Avaliacao1": obter_media(participante, avaliador1),
+            "Avaliador2": avaliador2,
+            "Status2": obter_status(participante, avaliador2),
+            "Avaliacao2": obter_media(participante, avaliador2),
+            "Questionário": tipo_avaliacao
+        })
+
     return lista
 
 def define_avaliacao_final(Pessoa):
@@ -3221,7 +3243,7 @@ def main(page: ft.Page):
     page.add(stack) 
     
     
-ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
+#ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-#ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
+ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
