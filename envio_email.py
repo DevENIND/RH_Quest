@@ -146,6 +146,7 @@ def  define_status(Participante, Pessoa):
     cursor.execute(scrp_sql)
     resultados = cursor.fetchone()
     conn.close()
+
     if resultados:
         return 'Realizado'
     else:
@@ -175,10 +176,11 @@ scrp_cabec_tabela = '''<h3>📌Relatório de Acessos e Pendências</h3><table bo
             </tr>
     '''
 
-resultados = pd.read_excel('lista_emails.xlsx')
+resultados = pd.read_excel('lista_emails.xlsx', sheet_name='Lista_Email')
 resultados.columns = resultados.columns.str.strip()
 scrp_tabela = ''
 email_enviar = ''
+email_enviado = ''
 
 bol_enviar = False
 start = True
@@ -191,14 +193,12 @@ for index, row in resultados.iterrows():
     status = define_status(row['Participante'],row['Avaliador'])
    
     
-    if email_enviar == 'ewerton.siqueira@enind.com.br':
+    if email_enviar == 'everaldo.silva@enind.com.br':
         start = True
     elif start == False:
         scrp_tabela = scrp_cabec_tabela
 
-   
-
-    if email_enviar != email and index > 0 and bol_enviar == True and start == True: 
+    if email_enviar != email and index > 0 and bol_enviar == True and start == True and email_enviado.upper() == 'NÃO': 
         scrp_tabela += '</table>'
         corpo_email= ''
         #corpo_email = f'email a enviar para: <b>{email_enviar}</b><br><br>'
@@ -212,6 +212,9 @@ for index, row in resultados.iterrows():
         bol_enviar = False
 
         scrp_tabela = scrp_cabec_tabela
+        
+    if row['Resp_Part'] == 'Sim' and row['Tipo_aval'] != 'A3' and status != 'Pendente':
+        status = define_status(row['Participante'],row['Participante'])
 
     if status == 'Pendente':
 
@@ -220,38 +223,39 @@ for index, row in resultados.iterrows():
         nome_enviar = row['Avaliador']
         log_avaliador = row['login_aval']
         senha_avaliador = row['senha_aval']
+        email_enviado = row['Enviado?']
 
-
-        if row['Resp_Av1'] == 'Sim':
-             scrp_tabela += f'''
-                    <tr>            
-                        <td>{row['Avaliador']}</td>
-                        <td></td>
-                        <td>{row['login_aval']}</td>
-                        <td>{row['senha_aval']}</td>
-                    </tr> 
-            '''
-        elif row['Resp_Part'] == 'Sim':
-            if define_status(row['Participante'], row['Participante']) == 'Pendente':
+        if email_enviado.upper() == 'NÃO':
+            if row['Resp_Av1'] == 'Sim':
                 scrp_tabela += f'''
                         <tr>            
-                            <td>{row['Participante']}</td>
-                            <td>{row['Tipo_aval']}</td>
-                            <td>{row['login_part']}</td>
-                            <td>{row['senha_part']}</td>
+                            <td>{row['Avaliador']}</td>
+                            <td></td>
+                            <td>{row['login_aval']}</td>
+                            <td>{row['senha_aval']}</td>
                         </tr> 
                 '''
-        else:
-            scrp_tabela += f'''
-                        <td>{row['Participante']}</td>
-                        <td>{row['Tipo_aval']}</td>
-                        <td></td>
-                        <td></td>
-                    </tr> 
-            '''
+            elif row['Resp_Part'] == 'Sim':
+                if define_status(row['Participante'], row['Participante']) == 'Pendente':
+                    scrp_tabela += f'''
+                            <tr>            
+                                <td>{row['Participante']}</td>
+                                <td>{row['Tipo_aval']}</td>
+                                <td>{row['login_part']}</td>
+                                <td>{row['senha_part']}</td>
+                            </tr> 
+                    '''
+            else:
+                scrp_tabela += f'''
+                            <td>{row['Participante']}</td>
+                            <td>{row['Tipo_aval']}</td>
+                            <td></td>
+                            <td></td>
+                        </tr> 
+                '''
 
 #Envio do último e-mail
-if bol_enviar == True:             
+if bol_enviar == True and start == True and email_enviado.upper() == 'NÃO':             
     scrp_tabela += '</table>'
     corpo_email = ''
     #corpo_email = f'email a enviar para: <b>{email_enviar}</b><br><br>'

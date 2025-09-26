@@ -412,9 +412,44 @@ def obter_questionarios(Pessoa):
         lista = []
         cursor.execute(scrp_sql)
         resultados = cursor.fetchall()
+
+        # Carrega tudo de uma vez
+        cursor.execute("SELECT * FROM QuestRH_Relacoes")
+        relacoes = cursor.fetchall()
+
+        cursor.execute("SELECT Participante, Nome_Avaliador, ROUND(AVG(Resposta)) as Media FROM QuestRH_Respostas GROUP BY Participante, Nome_Avaliador")
+        respostas_agrupadas = cursor.fetchall()
+
         conn.close()
 
+        # Indexa dados em dicionários para acesso rápido
+        respostas_dict = {
+            (r['Participante'], r['Nome_Avaliador']): r['Media']
+            for r in respostas_agrupadas
+        }
+
+        tipo_avaliacao_dict = {
+            (r['Participante']): r['Tipo_Avaliacao']
+            for r in relacoes
+        }
+
+
         for row in resultados:
+            def obter_status(p, a):
+                participante = row['Participante']
+                tipo_avaliacao = tipo_avaliacao_dict.get(participante, '')
+
+                if (p, a) in respostas_dict:
+                    return 'Realizado'
+                elif tipo_avaliacao == 'A3' and p == a:
+                    return 'Realizado'
+                else:
+                    return 'Pendente'
+
+            def obter_media(p, a):
+                valor = respostas_dict.get((p, a), None)
+                return '' if valor == 0 or valor is None else valor
+
             if row['Participante'] == Pessoa:
                 Avaliador = 0
             elif row['Avaliador1'] == Pessoa:
@@ -425,24 +460,24 @@ def obter_questionarios(Pessoa):
                 Avaliador = ''
             
             if Avaliador == 2 or Avaliador == 0:
-                if define_status(row['Participante'],row['Participante']) == 'Realizado':
+                if obter_status(row['Participante'],row['Participante']) == 'Realizado':
                     Resp_auto = "Sim"
                 else:
                     Resp_auto = "Não"
 
-                if define_status(row['Participante'],row['Avaliador2']) == 'Realizado':
+                if obter_status(row['Participante'],row['Avaliador2']) == 'Realizado':
                     Resp_aval2 = "Sim"
                 else:
                     Resp_aval2 = "Não"
 
-                if define_status(row['Participante'],row['Avaliador1']) == 'Realizado':
+                if obter_status(row['Participante'],row['Avaliador1']) == 'Realizado':
                     Resp_aval1 = "Sim"
                 else:
                     Resp_aval1 = "Não"
             else:
-                Resp_auto = captura_valor_nota(row['Participante'],row['Participante'])
-                Resp_aval1 = captura_valor_nota(row['Participante'],row['Avaliador1']) 
-                Resp_aval2 = captura_valor_nota(row['Participante'],row['Avaliador2']) 
+                Resp_auto = obter_media(row['Participante'],row['Participante'])
+                Resp_aval1 = obter_media(row['Participante'],row['Avaliador1']) 
+                Resp_aval2 = obter_media(row['Participante'],row['Avaliador2']) 
 
             
             if Pessoa == 'Administrador':
@@ -452,7 +487,7 @@ def obter_questionarios(Pessoa):
                     Status = 'Realizado'
 
             else:
-                Status = define_status(row['Participante'], Pessoa)
+                Status = obter_status(row['Participante'], Pessoa)
 
             lista.append(
                 {"nome": row['Participante'], 
@@ -1083,8 +1118,7 @@ def main(page: ft.Page):
                             ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
                             ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
                             CASE 
-                                WHEN (COUNT(DISTINCT id_rel) = 2 AND Avaliacao = 'A3') 
-                                OR (COUNT(DISTINCT id_rel) = 3 AND Avaliacao <> 'A3') 
+                                WHEN (COUNT(DISTINCT CASE When id_rel in (1,2) then id_rel end) = 2)
                                 THEN 'Finalizado' 
                                 ELSE 'Pendente' 
                             END as Status_Av
@@ -1251,8 +1285,7 @@ def main(page: ft.Page):
                         ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
                         ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
                         CASE 
-                            WHEN (COUNT(DISTINCT id_rel) = 2 AND Avaliacao = 'A3') 
-                            OR (COUNT(DISTINCT id_rel) = 3 AND Avaliacao <> 'A3') 
+                            WHEN (COUNT(DISTINCT CASE When id_rel in (1,2) then id_rel end) = 2)
                             THEN 'Finalizado' 
                             ELSE 'Pendente' 
                         END as Status_Av
@@ -3243,7 +3276,7 @@ def main(page: ft.Page):
     page.add(stack) 
     
     
-#ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
+ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
+#ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")

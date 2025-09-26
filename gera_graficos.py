@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 from scipy.stats import norm
 
 
-
 def mysql_connection():
     host = 'bdnuvemwa.mysql.dbaas.com.br'
     database = 'bdnuvemwa'
@@ -31,10 +30,6 @@ def mysql_connection():
         print('❌ Erro ao conectar ao banco de dados:')
         return None
 
-import matplotlib.pyplot as plt
-import pandas as pd
-import io
-import base64
 
 def gera_ninebox(pilar = '', competencia = '', participante = '', outras_condicoes = ''):
     try:
@@ -762,8 +757,7 @@ def gera_grafico_conclusao(finalizados = False):
                                             ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
                                             ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
                                             CASE 
-                                                WHEN (COUNT(DISTINCT id_rel) = 2 AND Avaliacao = 'A3') 
-                                                OR (COUNT(DISTINCT id_rel) = 2 AND Avaliacao <> 'A3') 
+                                                WHEN (COUNT(DISTINCT id_rel) = 2)
                                                 THEN 'Finalizado' 
                                                 ELSE 'Pendente' 
                                             END as Status_Av
@@ -896,8 +890,7 @@ def gera_gráfico_potencial(finalizados = False):
                         ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
                         ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
                         CASE 
-                            WHEN (COUNT(DISTINCT id_rel) = 2 AND Avaliacao = 'A3') 
-                            OR (COUNT(DISTINCT id_rel) = 2 AND Avaliacao <> 'A3') 
+                            WHEN (COUNT(DISTINCT id_rel) = 2)
                             THEN 'Finalizado' 
                             ELSE 'Pendente' 
                         END as Status_Av
