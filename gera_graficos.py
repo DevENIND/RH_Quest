@@ -525,8 +525,8 @@ def gera_gráfico_Comparativo(participante = '', pilar= '', competencia='', outr
         scrp_sql = f"""
                     SELECT 
                         Competencia,
-                        ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 2) AS Media_Auto,
-                        ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 2) AS Media_Avaliadores
+                        ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
+                        ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 0) AS Media_Avaliadores
                     FROM QuestRH_Respostas
                     WHERE 
                         ({sql_condicao})
