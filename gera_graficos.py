@@ -566,15 +566,15 @@ def gera_gráfico_Comparativo(participante = '', pilar= '', competencia='', outr
         b2 = ax.bar(x, apurado, largura, label="Gestores", color="#0642C4")
 
         # Título
-        ax.set_title("Comparativo - Auto Avaliação x AvaliaçãoGestores", fontsize=14, fontweight="bold")
+        ax.set_title("Comparativo - Auto Avaliação x Avaliação Gestores", fontsize=14, fontweight="bold")
 
         # Eixo X
         ax.set_xticks(x)
         ax.set_xticklabels(labels_apurado, rotation=45, ha="right")
 
         # Eixo Y com margem para não cortar rótulos
-        y_min = min(min(desejado), min(apurado)) - 1.5
-        y_max = max(max(desejado), max(apurado)) + 1.5
+        y_min = min(min(desejado), min(apurado)) - 1
+        y_max = max(max(desejado), max(apurado)) + 1
         ax.set_ylim(y_min, y_max)
 
         # Linha zero

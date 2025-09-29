@@ -1298,8 +1298,8 @@ def main(page: ft.Page):
         """
 
         if performance != '':
-            scrp_sql += f" and x.Performance = '{performance}'"
-
+            scrp_sql += f" and x.Performance = '{performance}' order by Participante"
+            
         scrp_sql += f" order by Participante"
 
         conn = mysql_connection()
@@ -3279,7 +3279,7 @@ def main(page: ft.Page):
     page.add(stack) 
     
     
-#ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
+ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
+#ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
