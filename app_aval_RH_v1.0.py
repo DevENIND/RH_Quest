@@ -1299,7 +1299,8 @@ def main(page: ft.Page):
 
         if performance != '':
             scrp_sql += f" and x.Performance = '{performance}'"
-    
+
+        scrp_sql += f" order by Participante"
 
         conn = mysql_connection()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
