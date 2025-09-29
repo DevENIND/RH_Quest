@@ -1004,18 +1004,17 @@ def gera_grafico_empresas():
                         ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
                         ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
                         CASE 
-                            WHEN (COUNT(DISTINCT id_rel) = 2 AND Avaliacao = 'A3') 
-                            OR (COUNT(DISTINCT id_rel) = 2 AND Avaliacao <> 'A3') 
+                            WHEN ((COUNT(DISTINCT CASE When id_rel in (1,2) then id_rel END)) = 2)
                             THEN 'Finalizado' 
                             ELSE 'Pendente' 
                         END as Status_Av
                     FROM QuestRH_Respostas 
                     GROUP BY Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo
                 ) t
-            ) x group by Sigla_Emp order by Sigla_Emp
+            ) x where Status_Av = 'Finalizado' group by Sigla_Emp order by Sigla_Emp
         """
-        Valores = [0,0,0,0,0,0]
-        Textos=['0 de 250 (0%)','0 de 1 (0%)','0 de 3 (0%)','0 de 40 (0%)','0 de 23 (0%)','0 de 73 (0%)']
+        Valores = [0,0,0,0]
+        Textos=['0 de 96 (0%)','0 de 2 (0%)','0 de 15 (0%)','0 de 30 (0%)']
         Percentual = []
 
         conn = mysql_connection()
@@ -1028,21 +1027,17 @@ def gera_grafico_empresas():
         
 
         Listagem_Avaliacoes ={
-            'Construção': 250,
-            'Construtivo': 1,
-            'Locações': 3,
-            'Montagens Industriais': 40,
-            "Participações": 23,
-            'Serviços': 73,
+            'Construção': 96,
+            'Locações': 2,
+            'Montagens Industriais': 15,
+            'Serviços': 30,
         }
 
         # Dados
         labels = [
             "Construção",
-            "Construtivo",
             "Locações",
             "Montagens Industriais",
-            "Participações",
             "Serviços",
         ]
 
@@ -1057,18 +1052,15 @@ def gera_grafico_empresas():
                         Valores[i] = Percentual
                         Textos[i] = f"{res['Contagem']} de {Listagem_Avaliacoes[sigla_emp]} ({Percentual:.2f}%)"
 
-  
 
         #values = [2, 40, 40, 1, 0, None, 1964, 395]  # None usado porque "Normal" não é numérico
         #texts = ["2", "40%", "40%", "1", "0", "Normal", "1964", "395"]
 
         colors = [
-            "blue",      # Construção
-            "yellow",     # Construtivo
-            "orange",        # Locações
-            "green",       # Montagens Industriais
-            "purple",        # Participações
-            "red",        # Serviços
+            "blue",         # Construção
+            "orange",       # Locações
+            "green",        # Montagens Industriais
+            "red",          # Serviços
         ]
 
         # Plot
@@ -1079,10 +1071,8 @@ def gera_grafico_empresas():
         # Paleta mais suave (pastéis)
         colors = [
             "#6baed6",  # azul claro
-            "#ffd966",  # amarelo suave
             "#fdae6b",  # laranja suave
             "#74c476",  # verde suave
-            "#bcbddc",  # lilás
             "#fc9272",  # vermelho suave
         ]
 

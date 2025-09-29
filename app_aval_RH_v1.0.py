@@ -322,10 +322,10 @@ def lista_pendencias():
     cursor.execute("SELECT * FROM QuestRH_Relacoes")
     relacoes = cursor.fetchall()
 
-    cursor.execute("SELECT Participante, Nome_Avaliador, ROUND(AVG(Resposta)) as Media FROM QuestRH_Respostas GROUP BY Participante, Nome_Avaliador")
+    cursor.execute("SELECT Participante, Nome_Avaliador, ROUND(AVG(Resposta)) as Media FROM QuestRH_Respostas GROUP BY Participante, Nome_Avaliador order by Participante")
     respostas_agrupadas = cursor.fetchall()
 
-    conn.close()
+    conn.close()    
 
     # Indexa dados em dicionários para acesso rápido
     respostas_dict = {
@@ -370,6 +370,8 @@ def lista_pendencias():
             "Avaliacao2": obter_media(participante, avaliador2),
             "Questionário": tipo_avaliacao
         })
+
+        lista.sort(key=lambda x: x["Participante"])
 
     return lista
 
@@ -1249,9 +1251,9 @@ def main(page: ft.Page):
             if Participante != '':
                 sql_condicao += f" and Participante = '{Participante}'"
         elif Participante != '':
-            sql_condicao = f" where Participante = '{Participante}' "
+            sql_condicao = f" where Participante = '{Participante}'"
         else:
-            sql_condicao = ''
+            sql_condicao = ""
 
         
 
@@ -1292,11 +1294,11 @@ def main(page: ft.Page):
                     FROM QuestRH_Respostas {sql_condicao}
                     GROUP BY Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo
                 ) t
-            ) x
+            ) x where Status_Av = 'Finalizado'
         """
 
         if performance != '':
-            scrp_sql += f" Where x.Performance = '{performance}'"
+            scrp_sql += f" and x.Performance = '{performance}'"
     
 
         conn = mysql_connection()
