@@ -840,26 +840,37 @@ def main(page: ft.Page):
         try:
             if not Media is None and Media != '':
                 query_sql = f"""
-                SELECT Participante, Media from(
-                    SELECT Participante, ROUND(AVG(Resposta),0) as Media
-                    FROM QuestRH_Respostas
-                    WHERE id_rel > 0
-                    GROUP BY Participante
-                    HAVING COUNT(DISTINCT id_rel) = 2
-                    ORDER BY Participante) x
-                Where Media = {Media} order by Participante
+                Select Participante, Media from (Select Participante,
+                    CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media
+                from 
+                (SELECT Participante, id_rel, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+                    round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
+                    round(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as média_desemp_av1,
+                    round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2,
+                    round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
+                    round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
+                    round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto
+                FROM QuestRH_Respostas Where ID_REL > 0
+                group by Participante
+                HAVING COUNT(DISTINCT id_rel) = 2) as t) as x Where x.Media = {Media} order by Participante
             """
             else:
                 query_sql =f"""
-                SELECT Participante, Media from(
-                    SELECT Participante, ROUND(AVG(Resposta),0) as Media
-                    FROM QuestRH_Respostas
-                    WHERE id_rel > 0
-                    GROUP BY Participante
-                    HAVING COUNT(DISTINCT id_rel) = 2
-                    ORDER BY Participante) x order by Participante
+                Select Participante,
+                    CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media
+                from 
+                (SELECT Participante, id_rel, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+                    round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
+                    round(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as média_desemp_av1,
+                    round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2,
+                    round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
+                    round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
+                    round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto
+                FROM QuestRH_Respostas
+                Where ID_REL > 0
+                group by Participante
+                HAVING COUNT(DISTINCT id_rel) = 2) as t order by Participante
             """
-                
 
             conn = mysql_connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -1092,41 +1103,56 @@ def main(page: ft.Page):
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             scrp_sql ="""
                     SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
-                        Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
-                        Media_Avaliadores, 
-                        Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
-                        Media_Aval_Desemp,
-                        CASE 
-                            WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'Baixa Performance'
-                            WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'Inconsistente'
-                            WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'Especialista'
+                    Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
+                    Media_Avaliadores, 
+                    Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
+                    Media_Aval_Desemp,
+                    CASE 
+                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'Baixa Performance'
+                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'Inconsistente'
+                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'Especialista'
 
-                            WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'Dilema'
-                            WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'Competente'
-                            WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'Forte Entrega'
+                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'Dilema'
+                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'Competente'
+                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'Forte Entrega'
 
-                            WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'Desafio'
-                            WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'Forte Cultura'
-                            WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'Alto Potencial'
+                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'Desafio'
+                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'Forte Cultura'
+                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'Alto Potencial'
 
-                            ELSE ''
-                        END as Performance,
-                        Status_Av
-                    FROM (
-                        SELECT 
-                            Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo,
-                            ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
-                            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 0) AS Media_Avaliadores,
-                            ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
-                            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
-                            CASE 
-                                WHEN (COUNT(DISTINCT CASE When id_rel in (1,2) then id_rel end) = 2)
-                                THEN 'Finalizado' 
-                                ELSE 'Pendente' 
-                            END as Status_Av
-                        FROM QuestRH_Respostas 
-                        GROUP BY Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo
-                    ) as t;
+                        ELSE ''
+                    END as Performance,
+                    Status_Av from (
+                Select Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo,
+                    média_auto as Media_Auto,
+                    CASE WHEN média_av1 = média_av2 THEN média_av1 
+                    ELSE CASE WHEN isnull(média_av1) Then média_av2
+                    ELSE CASE When isnull(média_av2) then média_av1 
+                    ELSE CEIL( (média_av1 + média_av2) / 2) END END END
+                    AS Media_Avaliadores,
+                    média_desemp_auto as Media_Auto_Desemp,
+                    CASE WHEN média_desemp_av1 = média_desemp_av2 THEN média_desemp_av1 
+                     ELSE CASE WHEN isnull(média_desemp_av1) Then média_desemp_av2
+                    ELSE CASE When isnull(média_desemp_av2) then média_desemp_av1 
+                    ELSE CEIL( (média_desemp_av1 + média_desemp_av2) / 2) END END END AS Media_Aval_Desemp,
+                    Status_Av
+                from 
+                (SELECT Participante, id_rel, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+                    round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
+                    round(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as média_desemp_av1,
+                    round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2,
+                    round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
+                    round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
+                    round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto,
+                    -- Status
+                CASE 
+                    WHEN (COUNT(DISTINCT CASE When id_rel in (1,2) then id_rel end) = 2)
+                    THEN 'Finalizado' 
+                    ELSE 'Pendente' 
+                END as Status_Av
+                FROM QuestRH_Respostas where id_rel in (1,2)
+                group by Participante) as t
+            ) as x
             """
             cursor.execute(scrp_sql)
             consulta = cursor.fetchall()
@@ -1255,50 +1281,105 @@ def main(page: ft.Page):
         else:
             sql_condicao = ""
 
-        
+    
+        scrp_sql =f"""
+            SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+                Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
+                Media_Avaliadores, 
+                Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
+                Media_Aval_Desemp,
+                CASE 
+                    WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'Baixa Performance'
+                    WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'Inconsistente'
+                    WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'Especialista'
+
+                    WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'Dilema'
+                    WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'Competente'
+                    WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'Forte Entrega'
+
+                    WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'Desafio'
+                    WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'Forte Cultura'
+                    WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'Alto Potencial'
+
+                    ELSE ''
+                END as Performance,
+                Status_Av from (
+            Select Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo,
+                média_auto as Media_Auto,
+                CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media_Avaliadores,
+                média_desemp_auto as Media_Auto_Desemp,
+                CASE WHEN média_desemp_av1 = média_desemp_av2 THEN média_desemp_av1 ELSE CEIL( (média_desemp_av1 + média_desemp_av2) / 2) END AS Media_Aval_Desemp,
+                Status_Av
+            from 
+            (SELECT Participante, id_rel, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+                round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
+                round(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as média_desemp_av1,
+                round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2,
+                round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
+                round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
+                round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto,
+                -- Status
+            CASE 
+                WHEN (COUNT(DISTINCT CASE When id_rel in (1,2) then id_rel end) = 2)
+                THEN 'Finalizado' 
+                ELSE 'Pendente' 
+            END as Status_Av
+            FROM QuestRH_Respostas {sql_condicao}
+            group by Participante) as t
+        ) as x where Status_Av = 'Finalizado'
+        """
 
         scrp_sql =f"""
-        SELECT  * From (SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
-                    Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
-                    Media_Avaliadores, 
-                    Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
-                    Media_Aval_Desemp,
-                    CASE 
-                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'Baixa Performance'
-                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'Inconsistente'
-                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'Especialista'
+            SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo,  Media_Auto, Media_Avaliadores, Media_Aval_Desemp, Media_Auto_Desemp, Performance, Status_Av from 
+            (SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+                Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
+                Media_Avaliadores, 
+                Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
+                Media_Aval_Desemp,
+                CASE 
+                    WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'Baixa Performance'
+                    WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'Inconsistente'
+                    WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'Especialista'
 
-                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'Dilema'
-                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'Competente'
-                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'Forte Entrega'
+                    WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'Dilema'
+                    WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'Competente'
+                    WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'Forte Entrega'
 
-                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'Desafio'
-                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'Forte Cultura'
-                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'Alto Potencial'
+                    WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'Desafio'
+                    WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'Forte Cultura'
+                    WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'Alto Potencial'
 
-                        ELSE ''
-                    END as Performance,
-                    Status_Av
-                FROM (
-                    SELECT 
-                        Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo,
-                        ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
-                        ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 0) AS Media_Avaliadores,
-                        ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
-                        ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
-                        CASE 
-                            WHEN (COUNT(DISTINCT CASE When id_rel in (1,2) then id_rel end) = 2)
-                            THEN 'Finalizado' 
-                            ELSE 'Pendente' 
-                        END as Status_Av
-                    FROM QuestRH_Respostas {sql_condicao}
-                    GROUP BY Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo
-                ) t
-            ) x where Status_Av = 'Finalizado'
+                    ELSE ''
+                END as Performance,
+                Status_Av from (
+            Select Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo,
+                média_auto as Media_Auto,
+                CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media_Avaliadores,
+                média_desemp_auto as Media_Auto_Desemp,
+                CASE WHEN média_desemp_av1 = média_desemp_av2 THEN média_desemp_av1 ELSE CEIL( (média_desemp_av1 + média_desemp_av2) / 2) END AS Media_Aval_Desemp,
+                Status_Av
+            from 
+            (SELECT Participante, id_rel, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+                round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
+                round(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as média_desemp_av1,
+                round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2,
+                round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
+                round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
+                round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto,
+                -- Status
+            CASE 
+                WHEN (COUNT(DISTINCT CASE When id_rel in (1,2) then id_rel end) = 2)
+                THEN 'Finalizado' 
+                ELSE 'Pendente' 
+            END as Status_Av
+            FROM QuestRH_Respostas {sql_condicao}
+            group by Participante) as t
+        ) as x 
+        ) as y where Status_Av = 'Finalizado'
         """
 
         if performance != '':
-            scrp_sql += f" and x.Performance = '{performance}' order by Participante"
+            scrp_sql += f" and Performance = '{performance}'"
             
         scrp_sql += f" order by Participante"
 

@@ -48,14 +48,21 @@ def gera_ninebox(pilar = '', competencia = '', participante = '', outras_condico
             sql_condicao += f" and {outras_condicoes}"
 
         scrp_sql = f"""
-        SELECT 
-            Participante,
-            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 0) AS Media_Avaliadores,
-            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp
-        FROM QuestRH_Respostas
-        WHERE {sql_condicao}
-        GROUP BY Participante
+        Select Participante,
+            CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media_Avaliadores,
+            CASE WHEN média_desemp_av1 = média_desemp_av2 THEN média_desemp_av1 ELSE CEIL( (média_desemp_av1 + média_desemp_av2) / 2) END AS Media_Aval_Desemp
+        from 
+        (SELECT Participante, id_rel, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+            round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
+            round(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as média_desemp_av1,
+            round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2,
+            round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
+            round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
+            round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto
+        FROM QuestRH_Respostas WHERE {sql_condicao}
+        group by Participante
         HAVING COUNT(DISTINCT id_rel) = 2
+        ) as t
         """
         
         conn = mysql_connection()
@@ -252,17 +259,19 @@ def gera_gráfico_pilar(participante = '', pilar= '', competencia='', outras_con
         if outras_condicoes != '' and outras_condicoes != None:
             sql_condicao += f" and {outras_condicoes}"
 
+
         scrp_sql = f"""
-               SELECT Pilar, ROUND(AVG(Media)) AS Media_Geral
-                FROM (
-                    SELECT Pilar, Participante, AVG(Resposta) AS Media
-                    FROM QuestRH_Respostas
-                    WHERE {sql_condicao}
-                    GROUP BY Pilar, Participante
-                    HAVING COUNT(DISTINCT id_rel) = 2
-                ) AS Sub
-                GROUP BY Pilar
-                ORDER BY Pilar;
+            Select Pilar, round(AVG(Media_Geral),0) as Media_Geral from(
+            SELECT Pilar, Participante,
+            CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media_Geral 
+            from(SELECT Pilar, Participante, 
+                round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1, 
+                round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2
+                FROM QuestRH_Respostas
+                WHERE {sql_condicao}
+                GROUP BY Pilar, Participante
+            HAVING COUNT(DISTINCT id_rel) = 2)as x 
+            )as y group by Pilar
         """
         
         conn = mysql_connection()
@@ -397,16 +406,21 @@ def gera_gráfico_Competencia(participante = '', pilar= '', competencia='',  out
             sql_condicao += f" and {outras_condicoes}"
 
         scrp_sql = f"""
-               SELECT Competencia, ROUND(AVG(Media)) AS Media_Geral
-                FROM (
-                    SELECT Competencia, Participante, AVG(Resposta) AS Media
-                    FROM QuestRH_Respostas
-                    WHERE {sql_condicao}
-                    GROUP BY Competencia, Participante
-                    HAVING COUNT(DISTINCT id_rel) = 2
-                ) AS Sub
-                GROUP BY Competencia
-                ORDER BY Competencia;
+                SELECT Competencia, 
+                ROUND(AVG(Media_geral),0) as Media_Geral from(
+                SELECT Competencia, 
+                CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media_Geral
+                    FROM (
+                        SELECT Competencia, Participante, 
+                        round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1, 
+                        round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2
+                        FROM QuestRH_Respostas
+                        WHERE {sql_condicao}
+                        GROUP BY Competencia, Participante
+                        HAVING COUNT(DISTINCT id_rel) = 2
+                    ) AS Sub) as x
+                    GROUP BY Competencia
+                    ORDER BY Competencia;
         """
 
         conn = mysql_connection()
@@ -523,22 +537,28 @@ def gera_gráfico_Comparativo(participante = '', pilar= '', competencia='', outr
             sql_condicao += f" and {outras_condicoes}"
 
         scrp_sql = f"""
-                    SELECT 
-                        Competencia,
+                    Select Competencia,
+                    ROUND(AVG(Media_Auto),0) as Media_Auto,
+                    ROUND(AVG(Media_Avaliadores),0) as Media_Avaliadores from (
+                    Select Competencia,
+                        Participante,
+                        Media_Auto,
+                        CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media_Avaliadores
+                    from (SELECT Competencia, Participante,
                         ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
-                        ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 0) AS Media_Avaliadores
-                    FROM QuestRH_Respostas
-                    WHERE 
-                        ({sql_condicao})
-                        AND Participante IN (
+                        round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
+                        round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2
+                    FROM QuestRH_Respostas WHERE {sql_condicao} AND Participante IN (
                             SELECT Participante
                             FROM QuestRH_Respostas
                             WHERE id_rel IN (0,1,2)
-                            GROUP BY Participante
+                            GROUP BY  Participante
                             HAVING COUNT(DISTINCT id_rel) = 3
-                        )
-                    GROUP BY Competencia
+                        )group by  Competencia, Participante) as x
+                        ) as y group by  Competencia
                     """
+
+
         conn = mysql_connection()
 
         cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -573,8 +593,8 @@ def gera_gráfico_Comparativo(participante = '', pilar= '', competencia='', outr
         ax.set_xticklabels(labels_apurado, rotation=45, ha="right")
 
         # Eixo Y com margem para não cortar rótulos
-        y_min = min(min(desejado), min(apurado)) - 1
-        y_max = max(max(desejado), max(apurado)) + 1
+        y_min = min(min(desejado), min(apurado)) - 1.5
+        y_max = max(max(desejado), max(apurado)) + 1.5
         ax.set_ylim(y_min, y_max)
 
         # Linha zero
@@ -615,13 +635,22 @@ def gera_bell_curve():
     try:
         conn = mysql_connection()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
+    
         cursor.execute("""
-            SELECT Participante, ROUND(AVG(Resposta),0) as Media
-            FROM QuestRH_Respostas
-            WHERE id_rel > 0
-            GROUP BY Participante
+            Select Participante,
+                    CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media
+            from 
+            (SELECT Participante, id_rel, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+                round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
+                round(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as média_desemp_av1,
+                round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2,
+                round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
+                round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
+                round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto
+            FROM QuestRH_Respostas WHERE id_rel in (1,2)
+            group by Participante
             HAVING COUNT(DISTINCT id_rel) = 2
-            ORDER BY Participante
+            ) as t ORDER BY Participante
         """)
         pessoas = cursor.fetchall()
         conn.close()
@@ -727,44 +756,50 @@ def gera_grafico_conclusao(finalizados = False):
         if finalizados == True:
             scrp_sql = f"""
                     Select Sum(Grupo) as Realizado from
-                    (SELECT count(concat(Participante, ' - ', Nome_Avaliador)) as Grupo 
-                        From (SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, Nome_Avaliador,
-                                        Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
-                                        Media_Avaliadores, 
-                                        Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
-                                        Media_Aval_Desemp,
-                                        CASE 
-                                            WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'Baixa Performance'
-                                            WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'Inconsistente'
-                                            WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'Especialista'
+                    (SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, count(concat(Participante, ' - ', Nome_Avaliador)) as Grupo, 
+                            Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
+                            Media_Avaliadores, 
+                            Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
+                            Media_Aval_Desemp,
+                            CASE 
+                                WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'Baixa Performance'
+                                WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'Inconsistente'
+                                WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'Especialista'
 
-                                            WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'Dilema'
-                                            WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'Competente'
-                                            WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'Forte Entrega'
+                                WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'Dilema'
+                                WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'Competente'
+                                WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'Forte Entrega'
 
-                                            WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'Desafio'
-                                            WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'Forte Cultura'
-                                            WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'Alto Potencial'
+                                WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'Desafio'
+                                WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'Forte Cultura'
+                                WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'Alto Potencial'
 
-                                            ELSE ''
-                                        END as Performance,
-                                        Status_Av
-                                    FROM (
-                                        SELECT 
-                                            Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, Nome_Avaliador,
-                                            ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
-                                            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 0) AS Media_Avaliadores,
-                                            ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
-                                            ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
-                                            CASE 
-                                                WHEN (COUNT(DISTINCT id_rel) = 2)
-                                                THEN 'Finalizado' 
-                                                ELSE 'Pendente' 
-                                            END as Status_Av
-                                        FROM QuestRH_Respostas where id_rel in (1,2)
-                                        GROUP BY Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo
-                                    ) t
-                                ) x {sql_condicao} group by {agrupar}
+                                ELSE ''
+                            END as Performance,
+                            Status_Av from (
+                        Select Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, Nome_Avaliador,
+                            média_auto as Media_Auto,
+                            CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media_Avaliadores,
+                            média_desemp_auto as Media_Auto_Desemp,
+                            CASE WHEN média_desemp_av1 = média_desemp_av2 THEN média_desemp_av1 ELSE CEIL( (média_desemp_av1 + média_desemp_av2) / 2) END AS Media_Aval_Desemp,
+                            Status_Av
+                        from 
+                        (SELECT Participante, id_rel, Avaliacao, Sigla_Emp, C_Custo, Cargo, Nome_Avaliador, 
+                            round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
+                            round(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as média_desemp_av1,
+                            round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2,
+                            round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
+                            round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
+                            round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto,
+                            -- Status
+                        CASE 
+                            WHEN (COUNT(DISTINCT CASE When id_rel in (1,2) then id_rel end) = 2)
+                            THEN 'Finalizado' 
+                            ELSE 'Pendente' 
+                        END as Status_Av
+                        FROM QuestRH_Respostas
+                        group by Participante) as t
+                    ) as x {sql_condicao} group by {agrupar}
                     )y;
             """
         else:
@@ -860,8 +895,10 @@ def gera_gráfico_potencial(finalizados = False):
             titulo = "Distribuição de performances não finalizadas"
             sql_condicao_final = ' and Status_Av <> "Finalizado"'
 
+
         scrp_sql =f"""
-        SELECT Performance, COUNT(Participante) as Contagem From (SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+        SELECT Performance, COUNT(Participante) as Contagem From (
+            SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
                     Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
                     Media_Avaliadores, 
                     Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
@@ -881,23 +918,40 @@ def gera_gráfico_potencial(finalizados = False):
 
                         ELSE ''
                     END as Performance,
+                    Status_Av from (
+                Select Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo,
+                    média_auto as Media_Auto,
+                    CASE WHEN média_av1 = média_av2 THEN média_av1 
+                    ELSE CASE WHEN isnull(média_av1) Then média_av2
+                    ELSE CASE When isnull(média_av2) then média_av1 
+                    ELSE CEIL( (média_av1 + média_av2) / 2) END END END
+                    AS Media_Avaliadores,
+                    média_desemp_auto as Media_Auto_Desemp,
+                    CASE WHEN média_desemp_av1 = média_desemp_av2 THEN média_desemp_av1 
+                     ELSE CASE WHEN isnull(média_desemp_av1) Then média_desemp_av2
+                    ELSE CASE When isnull(média_desemp_av2) then média_desemp_av1 
+                    ELSE CEIL( (média_desemp_av1 + média_desemp_av2) / 2) END END END AS Media_Aval_Desemp,
                     Status_Av
-                FROM (
-                    SELECT 
-                        Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo,
-                        ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
-                        ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 0) AS Media_Avaliadores,
-                        ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
-                        ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
-                        CASE 
-                            WHEN (COUNT(DISTINCT id_rel) = 2)
-                            THEN 'Finalizado' 
-                            ELSE 'Pendente' 
-                        END as Status_Av
-                    FROM QuestRH_Respostas {sql_condicao}
-                    GROUP BY Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo
-                ) t
-            ) x where x.Performance <> '' {sql_condicao_final} group by x.Performance order by Contagem
+                from 
+                (SELECT Participante, id_rel, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+                    round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
+                    round(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as média_desemp_av1,
+                    round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2,
+                    round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
+                    round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
+                    round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto,
+                    -- Status
+                CASE 
+                    WHEN (COUNT(DISTINCT CASE When id_rel in (1,2) then id_rel end) = 2)
+                    THEN 'Finalizado' 
+                    ELSE 'Pendente' 
+                END as Status_AV
+                FROM QuestRH_Respostas {sql_condicao}
+                group by Participante) as t
+            ) as x        
+        ) as y where Performance <> '' {sql_condicao_final}
+                group by Performance 
+                order by Contagem;
         """
         
         conn = mysql_connection()
@@ -975,43 +1029,51 @@ def gera_gráfico_potencial(finalizados = False):
 def gera_grafico_empresas():
     try:
         scrp_sql = f"""
-        SELECT Sigla_Emp, COUNT(Participante) as Contagem From (SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
-                    Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
-                    Media_Avaliadores, 
-                    Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
-                    Media_Aval_Desemp,
-                    CASE 
-                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'Baixa Performance'
-                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'Inconsistente'
-                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'Especialista'
+                SELECT Sigla_Emp, COUNT(Participante) as Contagem From (SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+                Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
+                Media_Avaliadores, 
+                Case When isnull(Media_Auto_Desemp) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto_Desemp End as Media_Auto_Desemp, 
+                Media_Aval_Desemp,
+                CASE 
+                    WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'Baixa Performance'
+                    WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'Inconsistente'
+                    WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'Especialista'
 
-                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'Dilema'
-                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'Competente'
-                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'Forte Entrega'
+                    WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'Dilema'
+                    WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'Competente'
+                    WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'Forte Entrega'
 
-                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'Desafio'
-                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'Forte Cultura'
-                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'Alto Potencial'
+                    WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'Desafio'
+                    WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'Forte Cultura'
+                    WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'Alto Potencial'
 
-                        ELSE ''
-                    END as Performance,
+                    ELSE ''
+                END as Performance,
+                Status_Av from (
+                Select Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo,
+                    média_auto as Media_Auto,
+                    CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media_Avaliadores,
+                    média_desemp_auto as Media_Auto_Desemp,
+                    CASE WHEN média_desemp_av1 = média_desemp_av2 THEN média_desemp_av1 ELSE CEIL( (média_desemp_av1 + média_desemp_av2) / 2) END AS Media_Aval_Desemp,
                     Status_Av
-                FROM (
-                    SELECT 
-                        Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo,
-                        ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
-                        ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Resposta END), 0) AS Media_Avaliadores,
-                        ROUND(AVG(CASE WHEN id_rel = 0 THEN Desempenho_Tecnico END), 0) AS Media_Auto_Desemp,
-                        ROUND(AVG(CASE WHEN id_rel IN (1,2) THEN Desempenho_Tecnico END), 0) AS Media_Aval_Desemp,
-                        CASE 
-                            WHEN ((COUNT(DISTINCT CASE When id_rel in (1,2) then id_rel END)) = 2)
-                            THEN 'Finalizado' 
-                            ELSE 'Pendente' 
-                        END as Status_Av
-                    FROM QuestRH_Respostas 
-                    GROUP BY Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo
-                ) t
-            ) x where Status_Av = 'Finalizado' group by Sigla_Emp order by Sigla_Emp
+                from 
+                (SELECT Participante, id_rel, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
+                    round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
+                    round(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as média_desemp_av1,
+                    round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2,
+                    round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
+                    round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
+                    round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto,
+                    -- Status
+                CASE 
+                    WHEN (COUNT(DISTINCT CASE When id_rel in (1,2) then id_rel end) = 2)
+                    THEN 'Finalizado' 
+                    ELSE 'Pendente' 
+                END as Status_Av
+                FROM QuestRH_Respostas
+                group by Participante) as t
+            ) as x 
+        ) as y where Status_Av = 'Finalizado' group by Sigla_Emp order by Sigla_Emp
         """
         Valores = [0,0,0,0]
         Textos=['0 de 96 (0%)','0 de 2 (0%)','0 de 15 (0%)','0 de 30 (0%)']
