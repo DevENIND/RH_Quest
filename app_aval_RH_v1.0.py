@@ -547,7 +547,7 @@ def main(page: ft.Page):
     page.scroll = ft.ScrollMode.AUTO
     page.bgcolor = ft.Colors.TRANSPARENT
     page.window.maximized = True
-    data_limite = '2025/09/30 23:59:59'
+    data_limite = '2025/10/02 18:00:00'
     #data_limite = '2025/07/21 23:59:59'
     file_picker = ft.FilePicker()
     page.overlay.append(file_picker)
