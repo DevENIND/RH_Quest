@@ -613,7 +613,22 @@ def main(page: ft.Page):
     #Criando Objetos
 
     senha_txt =  ft.TextField(label="Digite a senha para entrar", expand=True , visible=True, password=True)
-    expiracao_txt = ft.Text(f'Data para envio de formulário expirado no dia {data_limite}.',expand= True, visible= False, size=20, weight=ft.FontWeight.BOLD, bgcolor=ft.Colors.RED_400, text_align=ft.alignment.center)
+    expiracao_txt = ft.Text(f'Data para envio de formulário expirado no dia {data_limite}.',
+                            expand= True, 
+                            visible= True, 
+                            size=15, 
+                            weight=ft.FontWeight.BOLD, 
+                            color= ft.Colors.RED_700,
+                            text_align=ft.alignment.center)
+    
+    container_expiração = ft.Container(expiracao_txt, 
+                                       alignment=ft.alignment.center, 
+                                       visible=False, 
+                                       bgcolor=ft.Colors.RED_100, 
+                                       expand=True, 
+                                       border_radius=10, 
+                                       padding=10, 
+                                       height=20)
 
     mensagem_aguarde = ft.Text(
                     "Aguarde, atualizando o relatório...",
@@ -1104,6 +1119,8 @@ def main(page: ft.Page):
         page.update()
     
     def exportar_grafico_excel(e=None):
+
+        sql_condicao = ''
 
         if chk_estrategico_grafico.value == True and chk_nao_estrategico_grafico.value == False:
             sql_condicao = ' and Grupo_estrategico = "Sim"'
@@ -1988,7 +2005,7 @@ def main(page: ft.Page):
 
             
         if data_atual >=data_fechamento:
-            expiracao_txt.visible = True
+            container_expiração.visible = True
 
         lista_pend_view.visible = True
         lista_view.update()
@@ -2081,7 +2098,7 @@ def main(page: ft.Page):
         
 
         if data_atual >=data_fechamento:
-            expiracao_txt.visible = True
+            container_expiração.visible = True
 
         lista_pend_view.visible = True
         lista_pend_view.update()
@@ -2526,8 +2543,8 @@ def main(page: ft.Page):
         #Inserindo informações no banco de dados
         for row in respostas:
 
-            campos = '''(Participante, Cargo, C_Custo,  Local, Avaliacao, Nome_Avaliador, ID_Rel, ID_Pergunta, Pilar, Competencia, Pergunta, Resposta,Desempenho_tecnico, Observacao, Data_Resp, Computador, Login, Empresa, Sigla_Emp) 
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
+            campos = '''(Participante, Cargo, C_Custo,  Local, Avaliacao, Nome_Avaliador, ID_Rel, ID_Pergunta, Pilar, Competencia, Pergunta, Resposta,Desempenho_tecnico, Observacao, Data_Resp, Computador, Login, Empresa, Sigla_Emp, Grupo_estrategico) 
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
             valores = (
                 participante,
                 consulta_pessoa['Cargo'],
@@ -2547,7 +2564,8 @@ def main(page: ft.Page):
                 computador,
                 usuario,
                 consulta_pessoa['Empresa'],
-                consulta_pessoa['Sigla_Emp']
+                consulta_pessoa['Sigla_Emp'],
+                consulta_relacao['Grupo_estrategico']
             )
 
             validacao = inserir_banco('QuestRH_Respostas',valores, campos)
@@ -2744,10 +2762,10 @@ def main(page: ft.Page):
 
 
     exportar_btn = ft.ElevatedButton(
-        "Exportar Respostas",
+        "Respostas",
         icon= ft.Icons.DOWNLOAD_ROUNDED,
         on_click=lambda _: exportar_para_excel(),
-        width=250,
+        width=150,
         height=50
     )
 
@@ -2763,7 +2781,7 @@ def main(page: ft.Page):
         "Gráficos",
         icon=ft.Icons.BAR_CHART_ROUNDED,
         on_click=lambda _: inicializa_grafico(),
-        width=250,
+        width=150,
         height=50
     )
 
@@ -2771,7 +2789,7 @@ def main(page: ft.Page):
         "Status",
         icon=ft.Icons.SPEED_OUTLINED,
         on_click=lambda e: atualizar_painel_status(e),
-        width=250,
+        width=150,
         height=50
     )
 
@@ -2779,13 +2797,13 @@ def main(page: ft.Page):
         content=ft.Row(
                 [
                     ft.Icon(name=ft.Icons.REFRESH, size=20),
-                    ft.Text("Atualizar Relatório")
+                    ft.Text("Atualizar")
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
                 spacing=10
             ),
             on_click=atualiza_rel,
-            width=250,
+            width=150,
             height=50
         )
 
@@ -2819,10 +2837,9 @@ def main(page: ft.Page):
     painel_view = ft.Container(
         content=ft.Column([
             ft.Row([ft.TextButton("Deslogar", icon=ft.Icons.ARROW_BACK, on_click=voltar_login), texto_ola1], spacing= 10),
-            expiracao_txt,
-            ft.Row([ft.Text("Painel de Controle", size=25, weight=ft.FontWeight.BOLD),btn_ver_manual],
+            container_expiração,
+            ft.Row([ft.Row([ft.Text("Painel de Controle", size=25, weight=ft.FontWeight.BOLD), atualizar_btn]),btn_ver_manual],
                    expand=True, alignment=ft.MainAxisAlignment.SPACE_BETWEEN,vertical_alignment=ft.CrossAxisAlignment.CENTER),
-            atualizar_btn,
             cabecalho,
             corpo_tabela
         ]),
@@ -2862,14 +2879,14 @@ def main(page: ft.Page):
         height = page.height * 0.7
     )
 
-    btn_exportar_tabela = ft.ElevatedButton('Exportar Tabela', on_click=lambda e:exportar_dados_painel_adm(e), width=250, height=50, icon=ft.Icons.DOWNLOAD_ROUNDED)
+    btn_exportar_tabela = ft.ElevatedButton('Tabela', on_click=lambda e:exportar_dados_painel_adm(e), width=150, height=50, icon=ft.Icons.DOWNLOAD_ROUNDED)
 
     painel_pend_view = ft.Container(
         content=ft.Column([
             ft.Row([ft.TextButton("Deslogar", icon=ft.Icons.ARROW_BACK, on_click=voltar_login),texto_ola2], spacing= 10),
-            expiracao_txt,
+            container_expiração,
             ft.Text("Painel de Controle", size=25, weight=ft.FontWeight.BOLD),
-            ft.Row([atualizar_btn,exportar_btn, grafico_btn, grafico_status_btn, btn_exportar_tabela, chk_estrategico, chk_nao_estrategico],spacing=10),
+            ft.Container(ft.Row([atualizar_btn,exportar_btn, grafico_btn, grafico_status_btn, btn_exportar_tabela, chk_estrategico, chk_nao_estrategico],spacing=10), expand=True),
             cabecalho_pend,
             corpo_tabela_pend
         ]),
