@@ -616,7 +616,7 @@ def main(page: ft.Page):
     expiracao_txt = ft.Text(f'Data para envio de formulário expirado no dia {data_limite}.',
                             expand= True, 
                             visible= True, 
-                            size=15, 
+                            size=15,
                             weight=ft.FontWeight.BOLD, 
                             color= ft.Colors.RED_700,
                             text_align=ft.alignment.center)
@@ -628,7 +628,7 @@ def main(page: ft.Page):
                                        expand=True, 
                                        border_radius=10, 
                                        padding=10, 
-                                       height=20)
+                                       height=50)
 
     mensagem_aguarde = ft.Text(
                     "Aguarde, atualizando o relatório...",
@@ -1181,7 +1181,7 @@ def main(page: ft.Page):
                     THEN 'Finalizado' 
                     ELSE 'Pendente' 
                 END as Status_Av
-                FROM QuestRH_Respostas where id_rel in (1,2) {sql_condicao}
+                FROM QuestRH_Respostas where id_rel in (0, 1,2) {sql_condicao}
                 group by Participante) as t
             ) as x
             """
@@ -3358,7 +3358,7 @@ def main(page: ft.Page):
     page.add(stack) 
     
     
-ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
+#ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-#ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
+ft.app(target=main,view=ft.WEB_BROWSER, port=8000, host="0.0.0.0")
