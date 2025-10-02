@@ -631,12 +631,20 @@ def gera_gráfico_Comparativo(participante = '', pilar= '', competencia='', outr
         print(f'❌ Erro ao gerar gráfico de comparação: {e}')
         return None, e
     
-def gera_bell_curve():
+def gera_bell_curve(estrategico = True, nao_estrategico = True):
     try:
         conn = mysql_connection()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-    
-        cursor.execute("""
+
+        sql_condicao =  'id_rel in (1,2)'
+
+        if estrategico == False and nao_estrategico == True:
+            sql_condicao += f" and Grupo_estrategico = 'Não'"
+        elif estrategico == True and nao_estrategico == False:
+            sql_condicao += f" and Grupo_estrategico = 'Sim'"
+
+
+        query_sql = f"""
             Select Participante,
                     CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media
             from 
@@ -647,11 +655,14 @@ def gera_bell_curve():
                 round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
                 round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
                 round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto
-            FROM QuestRH_Respostas WHERE id_rel in (1,2)
+            FROM QuestRH_Respostas WHERE {sql_condicao}
             group by Participante
             HAVING COUNT(DISTINCT id_rel) = 2
             ) as t ORDER BY Participante
-        """)
+        """
+
+
+        cursor.execute(query_sql)
         pessoas = cursor.fetchall()
         conn.close()
 

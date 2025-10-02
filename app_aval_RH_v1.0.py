@@ -314,15 +314,22 @@ def valida_texto(texto):
     return True
 
 
-def lista_pendencias():
+def lista_pendencias(estrategico = True, nao_estrategico = True):
     conn = mysql_connection()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
 
+    sql_condicao = ''
+
+    if estrategico ==  True and nao_estrategico == False:
+        sql_condicao = " Where Grupo_estrategico = 'Sim'"
+    elif estrategico ==  False and nao_estrategico == True:
+        sql_condicao = " Where Grupo_estrategico = 'Não'"
+
     # Carrega tudo de uma vez
-    cursor.execute("SELECT * FROM QuestRH_Relacoes")
+    cursor.execute(f"SELECT * FROM QuestRH_Relacoes {sql_condicao}")
     relacoes = cursor.fetchall()
 
-    cursor.execute("SELECT Participante, Nome_Avaliador, ROUND(AVG(Resposta)) as Media FROM QuestRH_Respostas GROUP BY Participante, Nome_Avaliador order by Participante")
+    cursor.execute(f'SELECT Participante, Nome_Avaliador, ROUND(AVG(Resposta)) as Media FROM QuestRH_Respostas {sql_condicao} GROUP BY Participante, Nome_Avaliador order by Participante')
     respostas_agrupadas = cursor.fetchall()
 
     conn.close()    
@@ -547,12 +554,23 @@ def main(page: ft.Page):
     page.scroll = ft.ScrollMode.AUTO
     page.bgcolor = ft.Colors.TRANSPARENT
     page.window.maximized = True
-    data_limite = '2025/10/02 18:00:00'
+    data_limite = '2025/10/02 15:00:00'
     #data_limite = '2025/07/21 23:59:59'
     file_picker = ft.FilePicker()
     page.overlay.append(file_picker)
     linhas = []
 
+    chk_estrategico = ft.Checkbox(
+        label="Estratégico",
+        value=True,
+        on_change=lambda e: atualiza_rel(e),
+    )
+
+    chk_nao_estrategico = ft.Checkbox(
+        label="Não Estrategico",
+        value=True,
+        on_change=lambda e: atualiza_rel(e),
+    )
     # Container de alerta
     alerta_container = ft.Container(
         content=ft.Text("", color=ft.Colors.WHITE),
@@ -828,13 +846,21 @@ def main(page: ft.Page):
     #-------------------------------------------------------------------------------------------------------------------------------------------
     def atualiza_tabela_bellcurve(e=None):
         Media = dropdown_bellcurve_nota.value
+        
+        sql_condicao = 'Where ID_REL > 0 '
+        sql_codicao_media = ''
+
+        
+        if chk_estrategico_grafico.value == True and chk_nao_estrategico_grafico.value == False:
+            sql_condicao += ' and Grupo_estrategico = "Sim"'
+        elif chk_estrategico_grafico.value == False and chk_nao_estrategico_grafico.value == True:
+            sql_condicao += ' and Grupo_estrategico = "Não"'
 
         if Media:
-            float(Media)
+            sql_codicao_media = f'Where x.Media = {float(Media)}'
 
         try:
-            if not Media is None and Media != '':
-                query_sql = f"""
+            query_sql = f"""
                 Select Participante, Media from (Select Participante,
                     CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media
                 from 
@@ -845,27 +871,11 @@ def main(page: ft.Page):
                     round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
                     round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
                     round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto
-                FROM QuestRH_Respostas Where ID_REL > 0
+                FROM QuestRH_Respostas {sql_condicao}
                 group by Participante
-                HAVING COUNT(DISTINCT id_rel) = 2) as t) as x Where x.Media = {Media} order by Participante
+                HAVING COUNT(DISTINCT id_rel) = 2) as t) as x {sql_codicao_media} order by Participante
             """
-            else:
-                query_sql =f"""
-                Select Participante,
-                    CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media
-                from 
-                (SELECT Participante, id_rel, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
-                    round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
-                    round(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as média_desemp_av1,
-                    round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2,
-                    round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
-                    round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
-                    round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto
-                FROM QuestRH_Respostas
-                Where ID_REL > 0
-                group by Participante
-                HAVING COUNT(DISTINCT id_rel) = 2) as t order by Participante
-            """
+        
 
             conn = mysql_connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -1074,7 +1084,7 @@ def main(page: ft.Page):
         else:  
             img_Compar.visible = True
         
-        grafico_bell64, msgerro_compar = gera_graficos.gera_bell_curve()
+        grafico_bell64, msgerro_compar = gera_graficos.gera_bell_curve(chk_estrategico_grafico.value, chk_nao_estrategico_grafico.value)
         if grafico_bell64 == None:
             img_BellCurve.visible = False
         else:  
@@ -1086,17 +1096,26 @@ def main(page: ft.Page):
         img_Compar.src_base64 = grafico_compar64
         img_BellCurve.src_base64 = grafico_bell64
 
+        atualiza_tabela_bellcurve()
+
         alimenta_tabela_graficos(Participante=participante, outras_condicoes=txt_outro_query.value, performance=performance)
         
         aguarde_overlay.visible = False
         page.update()
     
     def exportar_grafico_excel(e=None):
+
+        if chk_estrategico_grafico.value == True and chk_nao_estrategico_grafico.value == False:
+            sql_condicao = ' and Grupo_estrategico = "Sim"'
+        elif chk_estrategico_grafico.value == False and chk_nao_estrategico_grafico.value == True:
+            sql_condicao = ' and Grupo_estrategico = "Não"'
+
+
         try:
             # Conexão e consulta
             conn = mysql_connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
-            scrp_sql ="""
+            scrp_sql =f"""
                     SELECT Participante, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
                     Case WHEN  isnull(Media_Auto) and Avaliacao = 'A3' Then 'N/A' Else Media_Auto End as Media_Auto,
                     Media_Avaliadores, 
@@ -1145,7 +1164,7 @@ def main(page: ft.Page):
                     THEN 'Finalizado' 
                     ELSE 'Pendente' 
                 END as Status_Av
-                FROM QuestRH_Respostas where id_rel in (1,2)
+                FROM QuestRH_Respostas where id_rel in (1,2) {sql_condicao}
                 group by Participante) as t
             ) as x
             """
@@ -1498,6 +1517,11 @@ def main(page: ft.Page):
                  if res[0] in query_cargo:
                      dropdown_cargo.controls[0].controls[-1].value = True
 
+        if chk_estrategico_grafico.value == False and chk_nao_estrategico_grafico.value == True:
+            query_parts.append("Grupo_estrategico = 'Não'")
+        elif chk_estrategico_grafico.value == True and chk_nao_estrategico_grafico.value == False:
+            query_parts.append("Grupo_estrategico = 'Sim'")
+
         txt_outro_query.value = " and ".join(query_parts) if query_parts else ''
         
         atualiza_dados()
@@ -1717,7 +1741,7 @@ def main(page: ft.Page):
             painel_view.visible = False
             container_grafico.visible = False
             if atualizar == True:
-                questionarios = lista_pendencias()
+                questionarios = lista_pendencias(True, True)
                 montar_tabela_pendencias(questionarios)
         else:
             painel_view.visible = True
@@ -1739,10 +1763,12 @@ def main(page: ft.Page):
         aguarde_overlay.visible = True
         page.update()
 
+        chk_estrategico.value
+
         if nome_pessoa == 'Administrador':
             painel_pend_view.visible = True
             painel_view.visible = False
-            questionarios = lista_pendencias()
+            questionarios = lista_pendencias(chk_estrategico.value, chk_nao_estrategico.value)
             montar_tabela_pendencias(questionarios)
         else:
             painel_view.visible = True
@@ -1835,7 +1861,7 @@ def main(page: ft.Page):
 
                     page.update()
 
-                    questionarios = lista_pendencias()
+                    questionarios = lista_pendencias(True, True)
                     montar_tabela_pendencias(questionarios)
                     painel_pend_view.visible = True
                     painel_resposta_view.visible= False 
@@ -2714,6 +2740,9 @@ def main(page: ft.Page):
         height=50
     )
 
+    
+
+
     exportar_btn = ft.ElevatedButton(
         "Exportar Respostas",
         icon= ft.Icons.DOWNLOAD_ROUNDED,
@@ -2840,7 +2869,7 @@ def main(page: ft.Page):
             ft.Row([ft.TextButton("Deslogar", icon=ft.Icons.ARROW_BACK, on_click=voltar_login),texto_ola2], spacing= 10),
             expiracao_txt,
             ft.Text("Painel de Controle", size=25, weight=ft.FontWeight.BOLD),
-            ft.Row([atualizar_btn,exportar_btn, grafico_btn, grafico_status_btn, btn_exportar_tabela],spacing=10),
+            ft.Row([atualizar_btn,exportar_btn, grafico_btn, grafico_status_btn, btn_exportar_tabela, chk_estrategico, chk_nao_estrategico],spacing=10),
             cabecalho_pend,
             corpo_tabela_pend
         ]),
@@ -3095,6 +3124,9 @@ def main(page: ft.Page):
         expand=3
     )
 
+    chk_estrategico_grafico = ft.Checkbox(label="Estratégico", value=True, on_change=lambda e: atualizar_query(e))
+    chk_nao_estrategico_grafico = ft.Checkbox(label="Não Estratégico", value=True, on_change=lambda e: atualizar_query(e))
+
     cboxPessoa.on_change = atualiza_dados
     cboxPilar.on_change = atualiza_dados
     cboxCompetencia.on_change = atualiza_dados
@@ -3110,6 +3142,7 @@ def main(page: ft.Page):
                         ft.Container(cboxPilar,expand=2),
                         ft.Container(cboxCompetencia,expand=2),
                         ft.Container(dropdown_Performance, expand=2),
+                        ft.Container(ft.Column([chk_estrategico_grafico,chk_nao_estrategico_grafico]), expand=1),
                         btn_limpar_campos
                     ],
                     spacing=5
