@@ -1100,10 +1100,10 @@ def gera_grafico_empresas():
         
 
         Listagem_Avaliacoes ={
-            'Construção': 95,
+            'Construção': 96,
             'Locações': 2,
             'Montagens Industriais': 15,
-            'Serviços': 31,
+            'Serviços': 30,
         }
 
         # Dados
