@@ -352,6 +352,10 @@ def lista_pendencias(estrategico = True, nao_estrategico = True):
         avaliador1 = row['Avaliador1']
         avaliador2 = row['Avaliador2']
         tipo_avaliacao = tipo_avaliacao_dict.get(participante, '')
+        if row['data_feedback']:
+            data_feedback = row['data_feedback'].strftime('%d/%m/%Y %H:%M:%S')
+        else:
+            data_feedback = ''
 
         def obter_status(p, a):
             if (p, a) in respostas_dict:
@@ -375,7 +379,8 @@ def lista_pendencias(estrategico = True, nao_estrategico = True):
             "Avaliador2": avaliador2,
             "Status2": obter_status(participante, avaliador2),
             "Avaliacao2": obter_media(participante, avaliador2),
-            "Questionário": tipo_avaliacao
+            "Questionário": tipo_avaliacao,
+            'data_feedback': data_feedback
         })
 
         lista.sort(key=lambda x: x["Participante"])
@@ -483,6 +488,10 @@ def obter_questionarios(Pessoa):
                 Resp_aval1 = obter_media(row['Participante'],row['Avaliador1']) 
                 Resp_aval2 = obter_media(row['Participante'],row['Avaliador2']) 
 
+            if row['data_feedback']:
+                data_feedback = row['data_feedback'].strftime('%d/%m/%Y %H:%M:%S')
+            else:
+                data_feedback = ''
             
             if Pessoa == 'Administrador':
                 if Resp_auto == '' or Resp_aval1 == '' or Resp_aval2 == '':
@@ -500,7 +509,8 @@ def obter_questionarios(Pessoa):
                  "status": Status,
                  "auto_aval": Resp_auto,
                  "primaria": Resp_aval1, 
-                 "secundaria": Resp_aval2}
+                 "secundaria": Resp_aval2,
+                 "data_feedback": data_feedback}
             )
 
         return lista
@@ -1222,7 +1232,7 @@ def main(page: ft.Page):
                     linha = []
                     for i, subitem in enumerate(item.content.controls):
                         # Ignora o último item (botão de visualização)
-                        if i == 9:
+                        if i == 10:
                             continue
                         # Garante que subitem é um Container
                         if isinstance(subitem, ft.Container):
@@ -1237,8 +1247,9 @@ def main(page: ft.Page):
                                 linha.append(texto)
                             else:
                                 linha.append("")  # Se não houver texto, coloca vazio
+
                     # Mapeia os dados extraídos para colunas
-                    if len(linha) == 9:
+                    if len(linha) == 10:
                         qtd_pend = 0
                         if linha[1] == 'Pendente':
                             qtd_pend += 1
@@ -1269,7 +1280,8 @@ def main(page: ft.Page):
                             "Avaliacao2": linha[8],
                             "Qtd Pendente": qtd_pend,
                             "Status Global": status,
-                            "Status Avaliadores": status_avaliadores
+                            "Status Avaliadores": status_avaliadores,
+                            'Feedback': linha[9]
                         })
 
             # Cria o DataFrame
@@ -1940,6 +1952,19 @@ def main(page: ft.Page):
         page.update()
         
        
+    def realiza_feedback(e, nome):
+        data_atual = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+        conn = mysql_connection()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        scrp_sql = f"UPDATE QuestRH_Relacoes SET data_feedback = '{data_atual}' Where Participante = '{nome}'"
+        cursor.execute(scrp_sql)
+        conn.commit()
+        conn.close()
+
+        nome_avaliador = texto_ola.value.replace("Olá, ",'')
+        questionario = obter_questionarios(nome_avaliador)
+        montar_tabela(questionarios=questionario)
+        page.update()
 
     #Função para criar a tabela de visualização - Painel de controle
     def montar_tabela(questionarios):
@@ -1976,8 +2001,15 @@ def main(page: ft.Page):
                 if (q['Avaliador'] == 1) else ft.Text("")
             )
 
-             # Dados que vão rolar
-           
+            if q['data_feedback'] == '':
+                if q['primaria'] == 'Sim' or q['primaria'] == 'Não':
+                    contole_feedback = ft.Text(f'')
+                else:
+                    contole_feedback = ft.TextButton('Realizar',icon=ft.Icons.FEEDBACK, on_click=lambda e, nome=q["nome"]: realiza_feedback(e, nome))
+            else:
+                contole_feedback = ft.Text(f'{q["data_feedback"]}')
+
+            # Dados que vão rolar
             linha = ft.Container(
                 content=ft.Row([
                         ft.Container(ft.Text(q["nome"]), expand=3),
@@ -1993,7 +2025,8 @@ def main(page: ft.Page):
                             expand=1
                         ),
                         ft.Container(btn_avaliar, expand=1),
-                        ft.Container(btn_ver_resp, expand=1)
+                        ft.Container(btn_ver_resp, expand=1),
+                        ft.Container(contole_feedback, expand=1)
                     ], spacing=10),
                 padding=10,
                 bgcolor=ft.Colors.TRANSPARENT,
@@ -2085,7 +2118,8 @@ def main(page: ft.Page):
                             expand=1
                         ),
                         ft.Container(ft.Text(q["Avaliacao2"]), expand=1, alignment=ft.alignment.center),
-                         ft.Container(btn_ver_resp, expand=1),
+                        ft.Container(ft.Text(q["data_feedback"]), expand=1, alignment=ft.alignment.center),
+                        ft.Container(btn_ver_resp, expand=1)
                     ], spacing=10),
                 padding=10,
                 bgcolor=ft.Colors.TRANSPARENT,
@@ -2817,6 +2851,7 @@ def main(page: ft.Page):
             ft.Container(ft.Text("Status", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text('Avaliar', weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text('Visualizar', weight=ft.FontWeight.BOLD), expand=1),
+            ft.Container(ft.Text('Feedback', weight=ft.FontWeight.BOLD), expand=1),
         ],alignment=ft.MainAxisAlignment.CENTER),
         padding=10,
         bgcolor=ft.Colors.BLUE_100,
@@ -2862,7 +2897,9 @@ def main(page: ft.Page):
             ft.Container(ft.Text("Avaliador2", weight=ft.FontWeight.BOLD), expand=3),
             ft.Container(ft.Text("Status", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text("Avaliação", weight=ft.FontWeight.BOLD), expand=1),
+            ft.Container(ft.Text('Feedback', weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text('Visualizar', weight=ft.FontWeight.BOLD), expand=1),
+            
         ],alignment=ft.MainAxisAlignment.CENTER),
         padding=10,
         bgcolor=ft.Colors.BLUE_100,
