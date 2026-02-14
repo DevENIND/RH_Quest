@@ -75,7 +75,9 @@ BASE_DIR = Path(__file__).parent
 TOKEN_FILE = BASE_DIR / "session_token.json"
 
 # Caminho absoluto para a imagem
-image_path = BASE_DIR / "Imagem_Quest.svg"
+#image_path = BASE_DIR / "Imagem_Quest.svg"
+#gif_path = BASE_DIR / "evolucao.gif"
+#image_log_path = BASE_DIR / "Enind Grupo - Vetor.svg"
 
 def caminho_recurso(rel_path):
     """Retorna o caminho absoluto de arquivos mesmo no executável PyInstaller"""
@@ -3296,6 +3298,7 @@ def main(page: ft.Page):
         right_side.offset = ft.Offset(0, 0)
         page.update()
 
+            
     # --- LADO ESQUERDO: Layout com Logo no topo e GIF na base ---
     left_side = ft.Container(
         expand=True,
@@ -3315,7 +3318,7 @@ def main(page: ft.Page):
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     controls=[
                         ft.Image(
-                        src= BASE_DIR / "Enind Grupo - Vetor.svg",
+                        src='/Enind Grupo - Vetor.svg',
                         width=220,
                         height=220,
                         fit=ft.ImageFit.CONTAIN,
@@ -3335,7 +3338,7 @@ def main(page: ft.Page):
                 ft.Divider(height=40, color=ft.Colors.TRANSPARENT),
                 # Seu GIF de evolução abaixo de tudo
                 ft.Image(
-                    src=BASE_DIR / "evolucao.gif", # Nome do seu arquivo GIF
+                    src='/evolucao.gif',  # Nome do seu arquivo GIF
                     height=60,
                     width=426
                 ),
@@ -3938,12 +3941,13 @@ def main(page: ft.Page):
     visible=False)
 
     
-    with open(image_path, "rb") as img_file:
-            img_base64 = base64.b64encode(img_file.read()).decode('utf-8')
+    #with open(image_path, "rb") as img_file:
+            #img_base64 = base64.b64encode(img_file.read()).decode('utf-8')
+    
 
     imagem_fundo = ft.Container(
         content=ft.Image(
-            src=f"data:image/png;base64,{img_base64}",
+            src='/Imagem_Quest.svg',
             fit=ft.ImageFit.COVER,
             expand=True,
             gapless_playback=True
@@ -4026,4 +4030,4 @@ def main(page: ft.Page):
 #ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-ft.app(target=main, port=8000,view=ft.WEB_BROWSER)#, host="0.0.0.0")
+ft.app(target=main, port=8000,view=ft.WEB_BROWSER, assets_dir="assets")#, host="0.0.0.0")
