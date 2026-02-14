@@ -3315,7 +3315,7 @@ def main(page: ft.Page):
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     controls=[
                         ft.Image(
-                        src="Enind Grupo - Vetor.svg",
+                        src= BASE_DIR / "Enind Grupo - Vetor.svg",
                         width=220,
                         height=220,
                         fit=ft.ImageFit.CONTAIN,
@@ -3335,7 +3335,7 @@ def main(page: ft.Page):
                 ft.Divider(height=40, color=ft.Colors.TRANSPARENT),
                 # Seu GIF de evolução abaixo de tudo
                 ft.Image(
-                    src="evolucao.gif", # Nome do seu arquivo GIF
+                    src=BASE_DIR / "evolucao.gif", # Nome do seu arquivo GIF
                     height=60,
                     width=426
                 ),
@@ -4026,4 +4026,4 @@ def main(page: ft.Page):
 #ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-ft.app(target=main, port=8000,view=ft.WEB_BROWSER, host="0.0.0.0")
+ft.app(target=main, port=8000,view=ft.WEB_BROWSER)#, host="0.0.0.0")
