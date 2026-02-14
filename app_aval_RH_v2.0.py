@@ -4026,4 +4026,4 @@ def main(page: ft.Page):
 #ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-ft.app(target=main, port=8000,assets_dir="assets",view=ft.WEB_BROWSER, host="0.0.0.0")
+ft.app(target=main, port=8000,view=ft.WEB_BROWSER, host="0.0.0.0")
