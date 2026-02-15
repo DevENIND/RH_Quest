@@ -576,6 +576,15 @@ def main(page: ft.Page):
     page.bgcolor = ft.Colors.WHITE
     page.theme_mode = ft.ThemeMode.LIGHT
     
+
+    
+    page.meta_tags = [
+        {
+            "name": "viewport", 
+            "content": "width=device-width, initial-scale=1.0, user-scalable=yes"
+        }
+    ]
+
     
     # Configuração de Fonte Moderna
     page.fonts = {
@@ -583,7 +592,8 @@ def main(page: ft.Page):
         "Inter": "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Light.ttf"
     }
     page.theme = ft.Theme(font_family="Inter")
-
+    page.update()
+    
     chk_estrategico = ft.Checkbox(
         label="Estratégico",
         value=True,
@@ -2324,7 +2334,8 @@ def main(page: ft.Page):
                         ft.Container(ft.ListTile(leading=ft.CircleAvatar(
                             foreground_image_src=q["nome"], #imagem rosto,
                             radius=22, # Tamanho razoável
-                            content=ft.Text(str(q["nome"][0]).upper()) # Letra inicial se a imagem falhar
+                            content=ft.Text(str(q["nome"][0]).upper()),# Letra inicial se a imagem falhar
+                            bgcolor=ft.Colors.TRANSPARENT
                         )), expand=1),
                         ft.Container(ft.Text(q["nome"]), expand=3),
                         ft.Container(ft.Text(q["auto_aval"]), expand=1),
@@ -3944,15 +3955,18 @@ def main(page: ft.Page):
     #with open(image_path, "rb") as img_file:
             #img_base64 = base64.b64encode(img_file.read()).decode('utf-8')
     
-
-    imagem_fundo = ft.Container(
+    '''
         content=ft.Image(
             src='/Imagem_Quest.svg',
             fit=ft.ImageFit.COVER,
             expand=True,
             gapless_playback=True
         ),
+        '''
+    imagem_fundo = ft.Container(
+        content=ft.Text(''),
         alignment=ft.alignment.center,
+        bgcolor=ft.Colors.TRANSPARENT,
         expand=True
     )
 
@@ -4030,4 +4044,4 @@ def main(page: ft.Page):
 #ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-ft.app(target=main, port=8000,view=ft.WEB_BROWSER, assets_dir="assets")#, host="0.0.0.0")
+ft.app(target=main, port=8000,view=ft.WEB_BROWSER, assets_dir="assets", host="0.0.0.0")
