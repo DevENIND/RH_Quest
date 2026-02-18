@@ -3347,15 +3347,26 @@ def main(page: ft.Page):
         pisa_status = pisa.CreatePDF(io.BytesIO(texto_html.encode("utf-8")), dest=pdf_buffer)
         
         if not pisa_status.err:
+            enviar_msg(f"Gerando relatório para {participante}!", ft.Colors.GREY_700)
+            
             # 2. Nome do arquivo dinâmico
             timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
             nome_arquivo = f"Relatorio_{login.replace('.', '_')}.pdf"
-
-            # Salva fisicamente o arquivo na pasta assets
-            with open(f"assets/relatorios/{nome_arquivo}", "wb") as f:
-                f.write(pdf_buffer.getbuffer())
             
-            page.launch_url(f"/relatorios/{nome_arquivo}")
+            caminho_file = os.path.join("assets", "relatorios",  nome_arquivo)
+            
+            # 2. Certifique-se que a pasta assets existe na VPS 
+            if not os.path.exists(os.path.join("assets", "relatorios")):
+                os.makedirs(os.path.join("assets", "relatorios"))
+                
+                
+            # Salva fisicamente o arquivo na pasta assets
+            with open(caminho_file, "wb") as f:
+                f.write(pdf_buffer.getbuffer())
+                
+                
+            caminho_url = f"/relatorios/{nome_arquivo}"
+            page.launch_url(f"{caminho_url}?t={datetime.datetime.now().timestamp()}")
            
             enviar_msg(f"Relatório gerado com sucesso para o participante {participante}!", ft.Colors.GREEN_600)
         else:
