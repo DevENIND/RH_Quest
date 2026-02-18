@@ -3414,7 +3414,8 @@ def main(page: ft.Page):
     </table>
                     """
         dados_html += f'<div class="pilar-header">Observações</div>'
-        dados_html += f'<div class="observacoes-texto">{str(dados[0]['Observacao']).replace('\n', '<br>')}</div>'
+        observacao = str(dados[0]['Observacao']).replace('\n', '<br>')
+        dados_html += f'<div class="observacoes-texto">{observacao}</div>'
         
         
         return dados_html
