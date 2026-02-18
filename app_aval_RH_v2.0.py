@@ -13,10 +13,9 @@ from pathlib import Path
 import io
 import gera_graficos
 import pytz
+from xhtml2pdf import pisa
 
 import os
-import tempfile
-import secrets
 import json
 import sys
 
@@ -556,8 +555,7 @@ def validar_token(token, pessoa):
 ############################################################ Inicio da Aplicação ##########################################################
 ########################################################################################################################################### 
 IDLE_TIMEOUT = 300  # segundos -> 5*60 - 5 Minutos
-
-
+        
 def main(page: ft.Page):
     
     #print(f'🚀 Iniciando aplicação... a imagem está no diretório:{image_path}')
@@ -566,7 +564,7 @@ def main(page: ft.Page):
     page.title = "Sistema de Avaliação ENIND"
     #page.scroll = ft.ScrollMode.AUTO
     page.window.maximized = True
-    data_limite = '2026/02/01 18:00:00'
+    data_limite = '2026/06/01 18:00:00'
     #data_limite = '2025/07/21 23:59:59'
     file_picker = ft.FilePicker()
     page.overlay.append(file_picker)
@@ -2335,8 +2333,7 @@ def main(page: ft.Page):
                             foreground_image_src=q["nome"], #imagem rosto,
                             radius=22, # Tamanho razoável
                             content=ft.Text(str(q["nome"][0]).upper()),# Letra inicial se a imagem falhar
-                            bgcolor=ft.Colors.TRANSPARENT
-                        )), expand=1),
+                        ), bgcolor=ft.Colors.TRANSPARENT), expand=1),
                         ft.Container(ft.Text(q["nome"]), expand=3),
                         ft.Container(ft.Text(q["auto_aval"]), expand=1),
                         ft.Container(ft.Text(q["primaria"]), expand=1),
@@ -2453,7 +2450,12 @@ def main(page: ft.Page):
                         ft.Container(btn_ver_resp, expand=1)
                     ], spacing=10),
                 padding=10,
-                bgcolor=ft.Colors.TRANSPARENT,
+                bgcolor=ft.Colors.WHITE,
+                shadow=ft.BoxShadow(
+                    blur_radius=10,
+                    color=ft.Colors.with_opacity(0.05, ft.Colors.BLACK),
+                    offset=ft.Offset(0, 4)
+                ),
                 border_radius=8,
                 margin=ft.margin.only(bottom=4)
             )
@@ -2777,6 +2779,8 @@ def main(page: ft.Page):
         form_content.controls.clear()
         perguntas_formulario = obter_perguntas(nome)
         dropdown_desempenho.value = 0
+        
+        exportar_pdf_btn_bkp.visible = nome != avaliador
 
         # Opções padrão
         opcoes_avaliacao = [
@@ -2979,7 +2983,7 @@ def main(page: ft.Page):
             return False, 'Seu login não confere com seu nome, por gentileza, log-se novamente.'
 
     #Função para enviar as resposta dos usuários
-    def enviar_formulario(e, backup=False):
+    def enviar_formulario(e, backup=False,reinicio=True):
         respostas = []
         if backup == False:
             mensagem_aguarde.value = 'Aguarde, enviando respostas...'
@@ -3145,12 +3149,300 @@ def main(page: ft.Page):
             participante_realizado.value = participante
             formulario_Envio.visible = True
         
-        Gestor_tempo_formulario.visible = False
+        
+        if reinicio:
+            Gestor_tempo_formulario.visible = False
+            
         mensagem_aguarde.value = 'Aguarde, atualizando o relatório...'
         aguarde_overlay.visible = False
         page.update()
-            
+    
+    def preparar_pdf(e=None, backup = False):
+        avaliadores = []
+        login = nome_cb.value
+        nome_log = texto_ola.value.replace("Olá, ",'')
+        avaliador_pendente = ''
+        verificacao, erro = validar_usuario(nome_log)
         
+        if verificacao == False:
+            voltar_login(None)
+            enviar_msg(f'Login Inválido:{erro}',ft.Colors.RED_600)
+            return
+        
+        if backup == True:
+            enviar_formulario(None, True, False)
+            participante = nome_em_avaliacao.value.replace('Você está avaliando: ','')
+            avaliador_pendente = texto_ola.value.replace("Olá, ",'')
+        else:
+            participante = nome_avaliado.value.replace('Você está analisando: ','')
+            
+        scrp_sql = f"Select Participante, Avaliador1, Avaliador2 from QuestRH_Relacoes where Participante = '{participante}'"
+        conn = mysql_connection()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute(scrp_sql)
+        consulta = cursor.fetchone()
+        cursor.close()
+        avaliadores.append(consulta['Participante'])
+        avaliadores.append(consulta['Avaliador1'])
+        avaliadores.append(consulta['Avaliador2'])
+    
+        texto_html = f"""
+<html>
+<head>
+<style>
+    @page {{ size: A4; margin: 1cm; }}
+    body {{ font-family: Helvetica, Arial, sans-serif; color: #333; }}
+    
+    /* Cabeçalho conforme o PDF anexo */
+    .header-table {{ width: 100%; border-bottom: 2px solid #444; margin-bottom: 20px; }}
+    .header-title {{ font-size: 18pt; font-weight: bold; padding-bottom: 5px; }}
+    .info-text {{ font-size: 10pt; padding: 2px 0; }}
+
+    /* Pilar (Faixa escura) [cite: 4] */
+    .pilar-header {{ 
+        background-color: #0070C0; color: white; padding: 8px; 
+        font-size: 11pt; font-weight: bold; margin-top: 15px;
+    }}
+
+    /* Competência (Subtítulo) [cite: 5, 7] */
+    .competencia-title {{ 
+        background-color: #D5EDFF; font-size: 10pt; font-weight: bold; color: #0070C0; 
+        padding: 10px 0 5px 5px; border-bottom: 1px solid #eee;
+    }}
+    
+    .quebra-pagina {{page-break-before: always;}}
+
+    /* Tabela de Perguntas e Respostas  */
+    .tabela-dados {{ width: 100%; border-collapse: collapse; margin-bottom: 10px; }}
+    .td-pergunta {{ width: 50%; font-size: 9pt; padding: 8px 5px; border-bottom: 0.5pt solid #f0f0f0; }}
+    .td-resposta {{ width: 50%; padding: 5px; border-bottom: 0.5pt solid #f0f0f0; }}
+
+    /* Estilização das Notas (Cores da sua imagem) */
+    .nota-box {{ padding: 6px; border-radius: 3px; font-size: 8.5pt; font-weight: bold; }}
+    
+    /* Cores baseadas no esquema Flet solicitado */
+    .excelente {{ background-color: #66BB6A; color: #ffffff; }} /* GREEN_400 */
+    .bom {{ background-color: #DCEDC8; color: #33691E; }}       /* LIGHT_GREEN_100 */
+    .mediano {{ background-color: #FFF9C4; color: #F57F17; }}   /* YELLOW_100 */
+    .regular {{ background-color: #FFE0B2; color: #E65100; }}    /* ORANGE_100 */
+    .ruim {{ background-color: #FFCDD2; color: #B71C1C; }}       /* RED_100 */
+    .nao-apurado {{ background-color: #F5F5F5; color: #9E9E9E; border: 1px solid #E0E0E0; }} /* GREY_100 */
+    
+    
+    .observacoes-texto {{
+            font-size: 9pt;
+            padding: 5px;
+            color: #555;
+            text-align: justify;
+            line-height: 1.4;
+        }}
+    
+    /* Classe para a linha da Média Final unificada */
+    .media-final-full {{
+        margin-top: 30px;
+        padding: 15px 20px;
+        text-align: center;
+        font-size: 18pt; /* Tamanho de fonte maior e igual para toda a linha */
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 5px; /* Cantos levemente arredondados para manter o padrão das labels */
+        page-break-inside: avoid;
+    }}
+    
+    /* Classes para a linha da Média Final (seguindo o mesmo padrão) */
+    .media-full-excelente {{ background-color: #66BB6A; color: #ffffff; border: 1px solid #4CAF50; }}
+    .media-full-bom {{ background-color: #DCEDC8; color: #33691E; border: 1px solid #C5E1A5; }}
+    .media-full-mediano {{ background-color: #FFF9C4; color: #F57F17; border: 1px solid #FFF59D; }}
+    .media-full-regular {{ background-color: #FFE0B2; color: #E65100; border: 1px solid #FFCC80; }}
+    .media-full-ruim {{ background-color: #FFCDD2; color: #B71C1C; border: 1px solid #EF9A9A; }}
+    .media-full-cinza {{ background-color: #F5F5F5; color: #9E9E9E; border: 1px solid #E0E0E0; }}    
+        
+</style>
+</head>
+<body>
+            """
+        for i, avaliador in  enumerate(avaliadores):
+            if avaliador == avaliador_pendente:
+                scrp_sql = f"Select ID_Pergunta, Pilar, Competencia, Pergunta, Resposta, Desempenho_tecnico, Observacao"
+                scrp_sql +=  f" from QuestRH_Rascunho where Participante = '{participante}' and Nome_Avaliador = '{avaliador}'"
+            else:
+                scrp_sql = f"Select ID_Pergunta, Pilar, Competencia, Pergunta, Resposta, Desempenho_tecnico, Observacao"
+                scrp_sql +=  f" from QuestRH_Respostas where Participante = '{participante}' and Nome_Avaliador = '{avaliador}'"
+            
+            conn = mysql_connection()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute(scrp_sql)
+            consulta = cursor.fetchall()
+            cursor.close()
+            
+           
+            scrp_sql = f'Select ROUND(AVG(Resposta)) as "média" from QuestRH_Respostas where Participante = "{participante}" and Nome_Avaliador = "{avaliador}"'
+            
+            
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute(scrp_sql)
+            média_resultado= cursor.fetchone()
+            cursor.close()
+            
+            if média_resultado and backup == False:
+                nota = média_resultado['média']
+                if nota is None:
+                    nota = 'N/I'
+            else:
+                if avaliador == avaliador_pendente:
+                    nota ='Rascunho'
+                else:
+                    nota = 'N/I'
+                
+            if i>0:
+                texto_html += '<div class="quebra-pagina"></div>'
+                
+            texto_html += gera_cabecalho_html(participante, avaliador, nota, id_avaliador = i)
+            if consulta:
+                texto_html += gera_conteudo_html(consulta)
+            else:
+                texto_html += '<div style:"alingment: center, font-weight: bold", font-size: 10pt, padding=5px 8px>Sem informações do avaliador</div>'
+        
+        # Validação e tratamento do valor
+        valor_limpo = str(txt_media_final.value).replace(',', '.')
+
+        try:
+            media_num = float(valor_limpo)
+            nota_inteira = int(media_num) 
+            
+            cores_linha = {
+                0: 'media-full-cinza',
+                1: 'media-full-ruim', 
+                2: 'media-full-regular', 
+                3: 'media-full-mediano', 
+                4: 'media-full-bom', 
+                5: 'media-full-excelente'
+            }
+            
+            # Busca a cor ou define 'media-full-mediano' como padrão
+            classe_aplicada = cores_linha.get(nota_inteira, 'media-full-mediano')
+            
+            texto_html += f"""
+            <div class="media-final-full {classe_aplicada}">
+                MÉDIA FINAL: {valor_limpo}
+            </div>
+            """
+        except (ValueError, TypeError):
+            # Se não for numérico, aplica a classe cinza-claro
+            texto_html += f"""
+            <div class="media-final-full media-full-cinza">
+                MÉDIA FINAL: NÃO APURADA
+            </div>
+            """
+            
+        texto_html += "</body></html>" 
+        #print(texto_html)
+        
+        
+        with open(f"{BASE_DIR}/assets/relatorios/{login}.txt", "w+b") as f:
+            f.write(texto_html.encode("utf-8"))
+        
+        pdf_buffer = io.BytesIO()
+        pisa_status = pisa.CreatePDF(io.BytesIO(texto_html.encode("utf-8")), dest=pdf_buffer)
+        
+        if not pisa_status.err:
+            # 2. Nome do arquivo dinâmico
+            timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+            nome_arquivo = f"Relatorio_{participante.replace(' ', '_')}_{timestamp}.pdf"
+
+            # 3. Codificar o conteúdo do buffer para Base64
+            pdf_buffer.seek(0)
+            b64 = base64.b64encode(pdf_buffer.read()).decode()
+
+            # 4. Criar o link de download com o MIME type correto para PDF
+            link_download = f"data:application/pdf;base64,{b64}"
+
+            # 5. Lançar a URL para download
+            page.launch_url(link_download)
+            
+            enviar_msg(f"Relatório gerado com sucesso para o participante {participante}!", ft.Colors.GREEN_600)
+        else:
+            print("Erro ao gerar PDF")
+            
+        #page.launch_url(f"/relatorio_{login}.pdf")    
+    
+    def gera_conteudo_html(dados={}):
+        pilar_anterior = ''
+        competencia_anterior = ''
+        dados_html = ''
+        
+        classificacao_nota= {0: 'nao-apurado',1: 'ruim', 2: 'regular', 3: 'mediano', 4: 'bom', 5: 'excelente'}
+        descricao_nota = {
+            0: "Não apurado",
+            1: "1 - Insatisfatório - Não atende ou atende minimamente aos padrões",
+            2: "2 - Regular - Atende parcialmente aos padrões esperados",
+            3: "3 - Satisfatório - Atende os padrões esperados",
+            4: "4 - Bom - Demonstra empenho e excelência no atendimento de padrões esperados",
+            5: "5 - Excelente - Supera os padrões esperados"
+        }
+        
+        for dado in dados:
+            if dado['Pilar'] != pilar_anterior:
+                if competencia_anterior != '':
+                    dados_html += '</table>'
+                pilar_anterior = dado['Pilar']
+                dados_html += f'<div class="pilar-header">Pilar: {dado["Pilar"]}</div>'
+                
+            if dado['Competencia'] != competencia_anterior:
+                if competencia_anterior != '':
+                    dados_html += '</table>'
+                competencia_anterior = dado['Competencia']
+                dados_html += f'<div class="competencia-title">Competência: {dado["Competencia"]}</div>'
+                dados_html += '<table class="tabela-dados">'
+            
+            dados_html += f"""
+    <tr>
+        <td class="td-pergunta">{dado['ID_Pergunta']}) {dado['Pergunta']}</td>
+        <td class="td-resposta"><div class="nota-box {classificacao_nota[dado['Resposta']]}">{descricao_nota[dado['Resposta']]}</div></td>
+    </tr>
+                """
+        
+        dados_html += '</table>'
+        
+        dados_html += f'<div class="pilar-header">Desempenho Técnico</div>'
+        dados_html += f"""
+    <table class="tabela-dados">
+        <tr>
+            <td class="td-pergunta">Desempenho - Execução e entrega de atividades de forma geral</td>
+            <td class="td-resposta"><div class="nota-box {classificacao_nota[dados[0]['Desempenho_tecnico']]}">{descricao_nota[dados[0]['Desempenho_tecnico']]}</div></td>
+        </tr>
+    </table>
+                    """
+        dados_html += f'<div class="pilar-header">Observações</div>'
+        dados_html += f'<div class="observacoes-texto">{str(dados[0]['Observacao']).replace('\n', '<br>')}</div>'
+        
+        
+        return dados_html
+    
+    def gera_cabecalho_html(participante, avaliador, media, id_avaliador):
+        
+        if id_avaliador == 0:
+            nomenclatura = "Auto Avaliação"
+        else:
+            nomenclatura = f"Avaliação{id_avaliador}"
+        
+        html_content = f"""
+    <table class="header-table">
+        <tr>
+            <td>
+                <div class="header-title">Relatório de Desempenho</div>
+                <div class="info-text"><strong>Participante:</strong> {participante}</div>
+                <div class="info-text"><strong>{nomenclatura}:</strong> {avaliador}</div>
+            </td>
+            <td align="right" valign="bottom">
+                <div class="info-text"><strong>Média:</strong></div>
+                <div style="font-size: 20pt; font-weight: bold; color: #2c3e50;">{media}</div>
+            </td>
+        </tr>
+    </table>
+        """
+        return html_content
+    
     def exportar_para_excel(e=None):
         try:
             # Conexão e consulta
@@ -3408,13 +3700,30 @@ def main(page: ft.Page):
         height=50
     )
 
+    exportar_pdf_btn = ft.ElevatedButton(
+        "Exportar para PDF",
+        icon= ft.Icons.DOWNLOAD_ROUNDED,
+        on_click=lambda _: preparar_pdf(),
+        width=250,
+        height=50
+    )
+    
+    exportar_pdf_btn_bkp = ft.ElevatedButton(
+        "Exportar para PDF",
+        icon= ft.Icons.DOWNLOAD_ROUNDED,
+        on_click=lambda _: preparar_pdf(None, True),
+        width=250,
+        height=50,
+        visible = False
+    )
+    
     
     exportar_btn = ft.ElevatedButton(
         "Respostas",
         icon= ft.Icons.DOWNLOAD_ROUNDED,
         on_click=lambda _: exportar_para_excel(),
         width=150,
-        height=50
+        height=35
     )
 
     exportar_grafico_btn = ft.ElevatedButton(
@@ -3422,7 +3731,7 @@ def main(page: ft.Page):
         icon= ft.Icons.DOWNLOAD_ROUNDED,
         on_click=lambda _: exportar_grafico_excel(),
         width=250,
-        height=50
+        height=35
     )
 
     grafico_btn = ft.ElevatedButton(
@@ -3430,7 +3739,7 @@ def main(page: ft.Page):
         icon=ft.Icons.BAR_CHART_ROUNDED,
         on_click=lambda _: inicializa_grafico(),
         width=150,
-        height=50
+        height=35
     )
 
     grafico_status_btn = ft.ElevatedButton(
@@ -3438,7 +3747,7 @@ def main(page: ft.Page):
         icon=ft.Icons.SPEED_OUTLINED,
         on_click=lambda e: atualizar_painel_status(e),
         width=150,
-        height=50
+        height=35
     )
 
     atualizar_btn = ft.ElevatedButton(
@@ -3452,7 +3761,7 @@ def main(page: ft.Page):
             ),
             on_click=atualiza_rel,
             width=150,
-            height=50
+            height=35
         )
 
     # Cabeçalho fixo
@@ -3531,19 +3840,19 @@ def main(page: ft.Page):
         height = page.height * 0.7
     )
 
-    btn_exportar_tabela = ft.ElevatedButton('Tabela', on_click=lambda e:exportar_dados_painel_adm(e), width=150, height=50, icon=ft.Icons.DOWNLOAD_ROUNDED)
+    btn_exportar_tabela = ft.ElevatedButton('Tabela', on_click=lambda e:exportar_dados_painel_adm(e), width=150, height=35, icon=ft.Icons.DOWNLOAD_ROUNDED)
     btn_reiniciar_ciclo  = ft.ElevatedButton(
             'Reiniciar Ciclo', 
             on_click=lambda e:reiniciar_ciclo(e), 
             width=150,
-            height=50, 
+            height=35, 
             icon=ft.Icons.CLOUD_UPLOAD, visible = False)
     
     btn_restaurar = ft.ElevatedButton(
         "Restaurar Dados",
         icon=ft.Icons.SETTINGS_BACKUP_RESTORE,
         width=150,
-        height=50, 
+        height=35, 
         on_click=restaurar_backup_dinamico,
         visible= False
     )
@@ -3552,7 +3861,7 @@ def main(page: ft.Page):
         "Relatório Final",
         icon=ft.Icons.DOWNLOAD_FOR_OFFLINE,
         width=150,
-        height=50, 
+        height=35, 
         on_click=lambda e:preparar_relatório_final(e),
         visible= False
     )
@@ -3598,7 +3907,10 @@ def main(page: ft.Page):
     txt_ociosidade = ft.Text("", size=10, weight=ft.FontWeight.BOLD)
     formulario_view =  ft.Container(
             content=ft.Column([
-                ft.Row([ ft.TextButton("Voltar", on_click=voltar_painel, icon=ft.Icons.ARROW_BACK),texto_ola3]),
+                ft.Row([
+                        ft.Row([ ft.TextButton("Voltar", on_click=voltar_painel, icon=ft.Icons.ARROW_BACK),texto_ola3]),
+                        exportar_pdf_btn_bkp],
+                    alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                 ft.Row([nome_em_avaliacao,txt_ociosidade],spacing=10, alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                 container_perguntas,
                 alerta_container_form,
@@ -3683,7 +3995,11 @@ def main(page: ft.Page):
 
     painel_resposta_view = ft.Container(
         content=ft.Column([
-            ft.Row([ft.TextButton("Voltar", on_click=voltar_painel, icon=ft.Icons.ARROW_BACK),texto_ola4]),
+            ft.Row([
+                    ft.Row([ft.TextButton("Voltar", on_click=voltar_painel, icon=ft.Icons.ARROW_BACK),texto_ola4]),
+                    exportar_pdf_btn
+                ],
+                alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
             ft.Row([nome_avaliado, container_media_final], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
             container_txt_auto,
             container_respostas_auto,
@@ -4044,4 +4360,4 @@ def main(page: ft.Page):
 #ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-ft.app(target=main, port=8000,view=ft.WEB_BROWSER, assets_dir="assets", host="0.0.0.0")
+ft.app(target=main, port=8000,view=ft.WEB_BROWSER, assets_dir="assets")#, host="0.0.0.0")
