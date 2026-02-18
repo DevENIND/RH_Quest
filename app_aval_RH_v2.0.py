@@ -3339,8 +3339,8 @@ def main(page: ft.Page):
         #print(texto_html)
         
         
-        with open(f"{BASE_DIR}/assets/relatorios/{login}.txt", "w+b") as f:
-            f.write(texto_html.encode("utf-8"))
+        #with open(f"{BASE_DIR}/assets/relatorios/{login}.txt", "w+b") as f:
+            #f.write(texto_html.encode("utf-8"))
         
         pdf_buffer = io.BytesIO()
         pisa_status = pisa.CreatePDF(io.BytesIO(texto_html.encode("utf-8")), dest=pdf_buffer)
@@ -3414,7 +3414,9 @@ def main(page: ft.Page):
     </table>
                     """
         dados_html += f'<div class="pilar-header">Observações</div>'
+        
         observacao = str(dados[0]['Observacao']).replace('\n', '<br>')
+        
         dados_html += f'<div class="observacoes-texto">{observacao}</div>'
         
         
@@ -3470,8 +3472,8 @@ def main(page: ft.Page):
             b64 = base64.b64encode(output.read()).decode()
 
             # Criar link de download
-            link_download = f"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}"
-
+            link_download = f"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}
+            
             # Abrir o link no navegador (força o download)
             page.launch_url(link_download, web_window_name=nome_arquivo)
 
