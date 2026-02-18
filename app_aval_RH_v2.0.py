@@ -861,7 +861,7 @@ def main(page: ft.Page):
     
     container_txt_auto = ft.Container(
                 content=ft.Row([
-                    ft.Container(ft.ListTile(leading=leading_auto), expand=1),
+                    ft.Container(ft.ListTile(leading=leading_auto, bgcolor=ft.Colors.TRANSPARENT), expand=1),
                     ft.Container(ft.Text('Auto Avaliação', size = 12, color=ft.Colors.BLUE_900), expand=1),
                     ft.Container(txt_auto, expand=4),
                     container_status_auto]),
@@ -879,7 +879,7 @@ def main(page: ft.Page):
     
     container_txt_av1 = ft.Container(
                 content=ft.Row([
-                    ft.Container(ft.ListTile(leading=leading_av1), expand=1),
+                    ft.Container(ft.ListTile(leading=leading_av1, bgcolor=ft.Colors.TRANSPARENT), expand=1),
                     ft.Container(ft.Text('Avaliador 1', size = 12, color=ft.Colors.BLUE_900), expand=1),
                     ft.Container(txt_av1, expand=4),
                     container_status_av1]),
@@ -899,7 +899,7 @@ def main(page: ft.Page):
     container_txt_av2 = ft.Container(
                 content=ft.Row([
                     
-                    ft.Container(ft.ListTile(leading=leading_av2), expand=1),
+                    ft.Container(ft.ListTile(leading=leading_av2, bgcolor=ft.Colors.TRANSPARENT), expand=1),
                     ft.Container(ft.Text('Avaliador 2', size = 12, color=ft.Colors.BLUE_900), expand=1),
                     ft.Container(txt_av2, expand=4),
                     container_status_av2]),
@@ -2287,7 +2287,6 @@ def main(page: ft.Page):
         nonlocal linhas
         data_atual = datetime.datetime.now()
         data_fechamento = datetime.datetime.strptime(data_limite,"%Y/%m/%d %H:%M:%S") 
-
         lista_view.controls.clear()
 
 
@@ -2317,10 +2316,12 @@ def main(page: ft.Page):
                 ft.TextButton('', icon=ft.Icons.VISIBILITY, on_click=lambda e, nome=q["nome"]: abrir_formulario_respostas(nome))
                 if (q['Avaliador'] >= 1 ) else ft.Text("")
             )
+            
+            
             #btn visualizar
             if q['data_feedback'] == '':
                 contole_feedback = (
-                    ft.TextButton('Realizar',icon=ft.Icons.FEEDBACK, on_click=lambda e, nome=q["nome"]: realiza_feedback(e, nome))
+                    ft.TextButton('Realizar',icon=ft.Icons.FEEDBACK, on_click=lambda e, nome=q["nome"]: realiza_feedback(e, nome), disabled=(data_atual <= data_fechamento))
                     if (q['Avaliador'] == 1) else ft.Text("")
                 )
             else:
@@ -3348,18 +3349,14 @@ def main(page: ft.Page):
         if not pisa_status.err:
             # 2. Nome do arquivo dinâmico
             timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
-            nome_arquivo = f"Relatorio_{participante.replace(' ', '_')}_{timestamp}.pdf"
+            nome_arquivo = f"Relatorio_{login.replace('.', '_')}.pdf"
 
-            # 3. Codificar o conteúdo do buffer para Base64
-            pdf_buffer.seek(0)
-            b64 = base64.b64encode(pdf_buffer.read()).decode()
-
-            # 4. Criar o link de download com o MIME type correto para PDF
-            link_download = f"data:application/pdf;base64,{b64}"
-
-            # 5. Lançar a URL para download
-            page.launch_url(link_download)
+            # Salva fisicamente o arquivo na pasta assets
+            with open(f"assets/relatorios/{nome_arquivo}", "wb") as f:
+                f.write(pdf_buffer.getbuffer())
             
+            page.launch_url(f"/relatorios/{nome_arquivo}")
+           
             enviar_msg(f"Relatório gerado com sucesso para o participante {participante}!", ft.Colors.GREEN_600)
         else:
             print("Erro ao gerar PDF")
