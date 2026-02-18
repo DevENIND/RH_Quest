@@ -861,7 +861,7 @@ def main(page: ft.Page):
     
     container_txt_auto = ft.Container(
                 content=ft.Row([
-                    ft.Container(ft.ListTile(leading=leading_auto, bgcolor=ft.Colors.TRANSPARENT), expand=1),
+                    ft.Container(ft.ListTile(leading=leading_auto, bgcolor=ft.Colors.WHITE), expand=1),
                     ft.Container(ft.Text('Auto Avaliação', size = 12, color=ft.Colors.BLUE_900), expand=1),
                     ft.Container(txt_auto, expand=4),
                     container_status_auto]),
@@ -879,7 +879,7 @@ def main(page: ft.Page):
     
     container_txt_av1 = ft.Container(
                 content=ft.Row([
-                    ft.Container(ft.ListTile(leading=leading_av1, bgcolor=ft.Colors.TRANSPARENT), expand=1),
+                    ft.Container(ft.ListTile(leading=leading_av1, bgcolor=ft.Colors.WHITE), expand=1),
                     ft.Container(ft.Text('Avaliador 1', size = 12, color=ft.Colors.BLUE_900), expand=1),
                     ft.Container(txt_av1, expand=4),
                     container_status_av1]),
@@ -899,7 +899,7 @@ def main(page: ft.Page):
     container_txt_av2 = ft.Container(
                 content=ft.Row([
                     
-                    ft.Container(ft.ListTile(leading=leading_av2, bgcolor=ft.Colors.TRANSPARENT), expand=1),
+                    ft.Container(ft.ListTile(leading=leading_av2, bgcolor=ft.Colors.WHITE), expand=1),
                     ft.Container(ft.Text('Avaliador 2', size = 12, color=ft.Colors.BLUE_900), expand=1),
                     ft.Container(txt_av2, expand=4),
                     container_status_av2]),
@@ -2334,7 +2334,7 @@ def main(page: ft.Page):
                             foreground_image_src=q["nome"], #imagem rosto,
                             radius=22, # Tamanho razoável
                             content=ft.Text(str(q["nome"][0]).upper()),# Letra inicial se a imagem falhar
-                        ), bgcolor=ft.Colors.TRANSPARENT), expand=1),
+                        ), bgcolor=ft.Colors.WHITE), expand=1),
                         ft.Container(ft.Text(q["nome"]), expand=3),
                         ft.Container(ft.Text(q["auto_aval"]), expand=1),
                         ft.Container(ft.Text(q["primaria"]), expand=1),
