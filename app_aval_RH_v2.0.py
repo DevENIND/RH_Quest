@@ -3367,7 +3367,14 @@ def main(page: ft.Page):
                 
             caminho_url = f"/relatorios/{nome_arquivo}"
             page.launch_url(f"{caminho_url}?t={datetime.datetime.now().timestamp()}")
-           
+            # Cria uma tarefa em segundo plano para deletar daqui a 30 segundos
+            def deletar_depois():
+                time.sleep(30) # Tempo suficiente para o navegador completar o download
+                if os.path.exists(caminho_file):
+                    os.remove(caminho_file)
+                    
+            threading.Thread(target=deletar_depois, daemon=True).start()
+            
             enviar_msg(f"Relatório gerado com sucesso para o participante {participante}!", ft.Colors.GREEN_600)
         else:
             print("Erro ao gerar PDF")
