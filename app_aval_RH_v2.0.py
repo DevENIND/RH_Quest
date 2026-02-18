@@ -3472,7 +3472,7 @@ def main(page: ft.Page):
             b64 = base64.b64encode(output.read()).decode()
 
             # Criar link de download
-            link_download = f"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}
+            link_download = f"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}"
             
             # Abrir o link no navegador (força o download)
             page.launch_url(link_download, web_window_name=nome_arquivo)
