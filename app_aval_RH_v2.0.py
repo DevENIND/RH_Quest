@@ -477,14 +477,14 @@ def obter_questionarios(Pessoa):
                     Resp_auto = "Não"
 
                 if obter_status(row['Participante'],row['Avaliador2']) == 'Realizado':
-                    Resp_aval2 = "Sim"
+                    Resp_aval2 = "N/I"
                 else:
-                    Resp_aval2 = "Não"
+                    Resp_aval2 = "N/I"
 
                 if obter_status(row['Participante'],row['Avaliador1']) == 'Realizado':
-                    Resp_aval1 = "Sim"
+                    Resp_aval1 = "N/I"
                 else:
-                    Resp_aval1 = "Não"
+                    Resp_aval1 = "N/I"
             else:
                 Resp_auto = obter_media(row['Participante'],row['Participante'])
                 Resp_aval1 = obter_media(row['Participante'],row['Avaliador1']) 
@@ -684,8 +684,56 @@ def main(page: ft.Page):
                                     filled=False,
                                     shift_enter=True,)
     
+
+    
+    txt_observacoes_e = ft.TextField(label="Pilar E", expand=True, multiline=False,max_length=2000, 
+                                    on_change=lambda e: reset_idle_time(e), 
+                                    on_click=lambda e: reset_idle_time(e),
+                                    on_blur=lambda e: reset_idle_time(e),
+                                    on_focus=lambda e: reset_idle_time(e),
+                                    on_submit=lambda e: reset_idle_time(e),
+                                    on_animation_end=lambda e: reset_idle_time(e),
+                                    visible=True,
+                                    border=ft.InputBorder.NONE,
+                                    filled=False,
+                                    shift_enter=True,)
+
+    txt_observacoes_p = ft.TextField(label="Pilar P", expand=True, multiline=False,max_length=2000, 
+                                    on_change=lambda e: reset_idle_time(e), 
+                                    on_click=lambda e: reset_idle_time(e),
+                                    on_blur=lambda e: reset_idle_time(e),
+                                    on_focus=lambda e: reset_idle_time(e),
+                                    on_submit=lambda e: reset_idle_time(e),
+                                    on_animation_end=lambda e: reset_idle_time(e),
+                                    visible=True,
+                                    border=ft.InputBorder.NONE,
+                                    filled=False,
+                                    shift_enter=True,)
+    
+    txt_observacoes_c = ft.TextField(label="Pilar C", expand=True, multiline=False,max_length=2000, 
+                                    on_change=lambda e: reset_idle_time(e), 
+                                    on_click=lambda e: reset_idle_time(e),
+                                    on_blur=lambda e: reset_idle_time(e),
+                                    on_focus=lambda e: reset_idle_time(e),
+                                    on_submit=lambda e: reset_idle_time(e),
+                                    on_animation_end=lambda e: reset_idle_time(e),
+                                    visible=True,
+                                    border=ft.InputBorder.NONE,
+                                    filled=False,
+                                    shift_enter=True,)
+    
+    txt_calibracao = ft.Text("Calibração",size=9,weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900)
+    divisor_observacao = ft.Divider(height=1, thickness=1, color=ft.Colors.BLUE_800, visible=True)
+    
+    linha_calibracao = ft.Column([txt_calibracao, 
+                        txt_observacoes_e, 
+                        txt_observacoes_p, 
+                        txt_observacoes_c,
+                        divisor_observacao], spacing=5, visible = False)
+    
     container_observacoes = ft.Container(
-        content=txt_observacoes,
+        content=ft.Column([linha_calibracao,
+                        txt_observacoes]),
         expand=1,
         bgcolor=ft.Colors.GREY_50,   
         height = page.height * 0.7,
@@ -699,12 +747,16 @@ def main(page: ft.Page):
             ),
     )
     
+    
+    
     nome_cb = ft.TextField(label="Login", width=380, border_radius=12, prefix_icon=ft.Icons.PERSON)
     form_inputs = []
 
     txt_observacoes_auto = ft.Text("", size=15)
+
+    
     container_obs_auto = ft.Container(
-                            content=ft.Column([ 
+                            content=ft.Column([                
                                 ft.Text("Observações:", size=20, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900),
                                 txt_observacoes_auto], scroll=ft.ScrollMode.ADAPTIVE,),
                             bgcolor=ft.Colors.GREY_50,   
@@ -716,8 +768,19 @@ def main(page: ft.Page):
 
     
     txt_observacoes_av1 =ft.Text("", size=15)
+    txt_observacoes_av1_e = ft.Text("", size=15)
+    txt_observacoes_av1_p = ft.Text("", size=15)
+    txt_observacoes_av1_c = ft.Text("", size=15)
     container_obs_av1 = ft.Container(
                             content=ft.Column([ 
+                                ft.Text("Calibração", size=20, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900),
+                                ft.Row([ft.Text("Pilar E:", size=9, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900),
+                                txt_observacoes_av1_e]), 
+                                ft.Row([ft.Text("Pilar P:", size=9, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900),
+                                txt_observacoes_av1_p]), 
+                                ft.Row([ft.Text("Pilar C:", size=9, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900),
+                                txt_observacoes_av1_c]),   
+                                ft.Divider(height=1, thickness=1, color=ft.Colors.BLUE_800),                
                                 ft.Text("Observações:", size=20, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900),
                                 txt_observacoes_av1], scroll=ft.ScrollMode.ADAPTIVE,),
                             bgcolor=ft.Colors.GREY_50,
@@ -729,8 +792,19 @@ def main(page: ft.Page):
 
     
     txt_observacoes_av2 = ft.Text("", size=15, no_wrap=False, expand=True)
+    txt_observacoes_av2_e = ft.Text("", size=15)
+    txt_observacoes_av2_p = ft.Text("", size=15)
+    txt_observacoes_av2_c = ft.Text("", size=15)
     container_obs_av2 = ft.Container(
                             content=ft.Column([ 
+                                ft.Text("Calibração", size=20, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900),
+                                ft.Text("E", size=15, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900),
+                                txt_observacoes_av2_e, 
+                                ft.Text("P", size=15, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900),
+                                txt_observacoes_av2_p, 
+                                ft.Text("C", size=15, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900),
+                                txt_observacoes_av2_c,   
+                                ft.Divider(height=1, thickness=1, color=ft.Colors.BLUE_800),                 
                                 ft.Text("Observações:", size=20, weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900),
                                 txt_observacoes_av2], scroll=ft.ScrollMode.ADAPTIVE,), 
                             bgcolor=ft.Colors.GREY_50,
@@ -2470,6 +2544,7 @@ def main(page: ft.Page):
             btn_restaurar.visible = True
             btn_reiniciar_ciclo.visible = True
             baixar_rel_final.visible = True
+            baixar_rel_final_av1.visible = True
             
 
         lista_pend_view.visible = True
@@ -2565,8 +2640,12 @@ def main(page: ft.Page):
 
             elif row['ID_Rel'] == 1:
                 txt_observacoes_av1.value = f"{row['Observacao']}" 
+                txt_observacoes_av1_e.value = f"{row['obs_e']}"
+                txt_observacoes_av1_p.value = f"{row['obs_p']}"
+                txt_observacoes_av1_c.value = f"{row['obs_c']}"
                 txt_av1.value = f"{row['Nome_Avaliador']}"
                 leading_av1.content.value = str(row['Nome_Avaliador'])[0].upper()
+               
                 leading_av1.foreground_image_src=f"fotos/{row['Nome_Avaliador']}"
                 
 
@@ -2587,6 +2666,9 @@ def main(page: ft.Page):
                 #container_obs_av1.visible = True
             else:
                 txt_observacoes_av2.value = f"{row['Observacao']}" 
+                txt_observacoes_av2_e.value = f"{row['obs_e']}"
+                txt_observacoes_av2_p.value = f"{row['obs_p']}"
+                txt_observacoes_av2_c.value = f"{row['obs_c']}"
                 txt_av2.value = f"{row['Nome_Avaliador']}"
                 leading_av2.content.value = str(row['Nome_Avaliador'][0]).upper()
                 leading_av2.foreground_image_src=f"fotos/{row['Nome_Avaliador']}"
@@ -2717,7 +2799,10 @@ def main(page: ft.Page):
         # Atualiza a interface
         container.update()
 
-    def preparar_relatório_final(e=None):
+    
+    
+    def preparar_relatório_final(e=None, av1 = False):
+        enviar_msg('Preparando relatório final...',ft.Colors.BLUE_400)
         conn = mysql_connection()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         
@@ -2740,28 +2825,170 @@ def main(page: ft.Page):
         cursor.close()
         conn.close()
         
-        if consulta:
-            try:
-                # Criar DataFrame
-                df = pd.DataFrame(consulta)
+        
+        if av1== True:
+            conn = mysql_connection()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            
+            sql_texto = '''
+            SELECT Participante, Avaliador1 From QuestRH_Relacoes
+            '''
+            
+            cursor.execute(sql_texto)
+            consulta_avaliadores1 = cursor.fetchall()
+            cursor.close()
+            conn.close()
+            
+            df_avaliadores = pd.DataFrame(consulta_avaliadores1)
+            avaliadores = df_avaliadores['Avaliador1'].unique()
+        
+        if consulta and av1 == False:
+            participante_anterior = ''
+            
+            df_geral = pd.DataFrame(consulta)
+            participantes = df_geral['Participante'].unique()
+            
+            nome_arquivo = f"Relatorio_final.xlsx"
+            caminho_file = os.path.join("assets", "relatorios",  nome_arquivo)
+            
+            writer = pd.ExcelWriter(caminho_file, engine='xlsxwriter')
+            
+            for i, p in enumerate(participantes):
+                df_participante = df_geral[df_geral['Participante'] == p]
+            
+                participante_anterior = p
+                grafico64, msgerro = gera_graficos.gera_ninebox(participante=p)
+                grafico_pilar64, msgerro = gera_graficos.gera_gráfico_pilar(participante=p)
+                grafico_comp64, msgerro = gera_graficos.gera_gráfico_Competencia(participante=p)
+                grafico_compar64, msgerro_compar = gera_graficos.gera_gráfico_Comparativo(participante=p)
 
-                # Criar arquivo em memória
-                output = io.BytesIO()
-                df.to_excel(output, index=False, engine='openpyxl')
-                output.seek(0)
-
-                # Nome do arquivo
-                nome_arquivo = f"exportacao_final_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
+                # Transformar dados em DataFrame para a tabela
+                df = df_participante
                 
-                # Codificar para base64
-                b64 = base64.b64encode(output.read()).decode()
+                nome = p
+                # Salvar o DataFrame na aba do colaborador
+                nome_aba = str(p)[:31]
+                nome_curto = "".join(c for c in str(p) if c not in r"/\?*[]:")[:31]
+                df.to_excel(writer, sheet_name=nome_aba, index=False, startrow=45)
+                
+        
 
-                # Criar link de download
-                link_download = f"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}"
+                # --- INSERIR NO EXCEL ---
+                worksheet = writer.sheets[nome_aba]
+                worksheet.write(0, 0, f"{nome}")
+                
+                # Inserir a imagem do buffer diretamente na célula E2
+                if grafico64:
+                    img_bytes = io.BytesIO(base64.b64decode(grafico64))
+                    worksheet.insert_image('A2', f'ninbox_{nome}.png', {'image_data': img_bytes,
+                                                                        'x_scale': 0.4,
+                                                                        'y_scale': 0.4})
 
-                # Abrir o link no navegador (força o download)
-                page.launch_url(link_download, web_window_name=nome_arquivo)
+                if grafico_pilar64:
+                    img_bytes = io.BytesIO(base64.b64decode(grafico_pilar64))
+                    worksheet.insert_image('F2', f'pilar_{nome}.png', {'image_data': img_bytes,
+                                                                        'x_scale': 0.72,
+                                                                        'y_scale': 0.72})
 
+                if grafico_comp64:
+                    img_bytes = io.BytesIO(base64.b64decode(grafico_comp64))
+                    worksheet.insert_image('A16', f'comp_{nome}.png', {'image_data': img_bytes,
+                                                                        'x_scale': 0.57,
+                                                                        'y_scale': 0.57})
+        
+                if grafico_compar64:
+                    img_bytes = io.BytesIO(base64.b64decode(grafico_compar64))
+                    worksheet.insert_image('A30', f'comparativo_{nome}.png', {'image_data': img_bytes,
+                                                                        'x_scale': 0.57,
+                                                                        'y_scale': 0.57})
+
+                enviar_msg(f'Preparando relatório final... {i+1}/{len(participantes)} - participante: {p} [{round(((i+1)/len(participantes))*100,2)}%]',ft.Colors.BLUE_600) 
+                
+            writer.close()
+        elif consulta and av1 == True:
+            df_geral = pd.DataFrame(consulta)
+            participantes = df_geral['Participante'].unique()
+            
+            nome_arquivo = f"Relatorio_final_av1.xlsx"
+            caminho_file = os.path.join("assets", "relatorios",  nome_arquivo)
+            
+            writer = pd.ExcelWriter(caminho_file, engine='xlsxwriter')
+            
+            for i, av in enumerate(avaliadores):
+                participantes = df_avaliadores[df_avaliadores['Avaliador1'] == av]['Participante'].unique()
+                
+                df_participante = df_geral[df_geral['Participante'].isin(participantes)]
+                
+                # 3. Prepara a cláusula WHERE para uma futura consulta SQL
+                if len(participantes) > 0:
+                    # O join coloca aspas ENTRE os nomes, e o f-string coloca nas extremidades
+                    sql_outras = "Participante IN ('" + "', '".join(participantes) + "')"
+                else:
+                    sql_outras = "Participante IN ('')" # Evita erro de SQL vazio
+                
+                grafico64, msgerro = gera_graficos.gera_ninebox(outras_condicoes=sql_outras)
+                grafico_pilar64, msgerro = gera_graficos.gera_gráfico_pilar(outras_condicoes=sql_outras)
+                grafico_comp64, msgerro = gera_graficos.gera_gráfico_Competencia(outras_condicoes=sql_outras)
+                grafico_compar64, msgerro_compar = gera_graficos.gera_gráfico_Comparativo(outras_condicoes=sql_outras)
+
+                # Transformar dados em DataFrame para a tabela
+                df = df_participante
+                
+                nome = av
+                # Salvar o DataFrame na aba do colaborador
+                nome_aba = str(av)[:31]
+                df.to_excel(writer, sheet_name=nome_aba, index=False, startrow=45)
+                
+                # --- INSERIR NO EXCEL ---
+                worksheet = writer.sheets[nome_aba]
+                worksheet.write(0, 0, f"{nome}")
+                
+                # Inserir a imagem do buffer diretamente na célula E2
+                if grafico64:
+                    img_bytes = io.BytesIO(base64.b64decode(grafico64))
+                    worksheet.insert_image('A2', f'ninbox_{nome}.png', {'image_data': img_bytes,
+                                                                        'x_scale': 0.4,
+                                                                        'y_scale': 0.4})
+
+                if grafico_pilar64:
+                    img_bytes = io.BytesIO(base64.b64decode(grafico_pilar64))
+                    worksheet.insert_image('F2', f'pilar_{nome}.png', {'image_data': img_bytes,
+                                                                        'x_scale': 0.72,
+                                                                        'y_scale': 0.72})
+
+                if grafico_comp64:
+                    img_bytes = io.BytesIO(base64.b64decode(grafico_comp64))
+                    worksheet.insert_image('A16', f'comp_{nome}.png', {'image_data': img_bytes,
+                                                                        'x_scale': 0.57,
+                                                                        'y_scale': 0.57})
+        
+                if grafico_compar64:
+                    img_bytes = io.BytesIO(base64.b64decode(grafico_compar64))
+                    worksheet.insert_image('A30', f'comparativo_{nome}.png', {'image_data': img_bytes,
+                                                                        'x_scale': 0.57,
+                                                                        'y_scale': 0.57})
+
+                enviar_msg(f'Preparando relatório final av1... {i+1}/{len(avaliadores)} - participante: {av} [{round(((i+1)/len(avaliadores))*100,2)}%]',ft.Colors.BLUE_600) 
+                
+            writer.close()
+            
+            try:
+                # 2. Certifique-se que a pasta assets existe na VPS 
+                if not os.path.exists(os.path.join("assets", "relatorios")):
+                    os.makedirs(os.path.join("assets", "relatorios"))
+                    
+                    
+                caminho_url = f"/relatorios/{nome_arquivo}"
+                page.launch_url(f"{caminho_url}?t={datetime.datetime.now().timestamp()}")
+                
+                # Cria uma tarefa em segundo plano para deletar daqui a 30 segundos
+                def deletar_depois():
+                    time.sleep(30) # Tempo suficiente para o navegador completar o download
+                    if os.path.exists(caminho_file):
+                        os.remove(caminho_file)
+                        
+                threading.Thread(target=deletar_depois, daemon=True).start()
+                
                 mostrar_alerta_temporario('Exportação realizada com sucesso', ft.Colors.GREEN_400)
             except Exception as ex:
                 mostrar_alerta_temporario(f'Erro ao exportar: {ex}', ft.Colors.RED_400)
@@ -2775,13 +3002,21 @@ def main(page: ft.Page):
     def abrir_formulario(nome):
         nome_em_avaliacao.value = f'Você está avaliando: {nome}'
         avaliador = texto_ola.value.replace('Olá, ','')
+        
+        #Limpando os campos
         txt_observacoes.value =''
+        txt_observacoes_e.value = ''
+        txt_observacoes_p.value = ''
+        txt_observacoes_c.value = ''
         form_inputs.clear()
         form_content.controls.clear()
         perguntas_formulario = obter_perguntas(nome)
         dropdown_desempenho.value = 0
         
+        
+        #Diponibiliza recursos para av1 e av2
         exportar_pdf_btn_bkp.visible = nome != avaliador
+        linha_calibracao.visible = nome != avaliador
 
         # Opções padrão
         opcoes_avaliacao = [
@@ -2922,7 +3157,7 @@ def main(page: ft.Page):
         
         conn = mysql_connection()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        texto_sql = f"Select Desempenho_tecnico, Observacao from QuestRH_Rascunho where Nome_Avaliador = '{avaliador}'"
+        texto_sql = f"Select Desempenho_tecnico, Observacao, obs_e, obs_p, obs_c from QuestRH_Rascunho where Nome_Avaliador = '{avaliador}'"
         texto_sql +=  f"and Participante = '{nome}'"
         cursor.execute(texto_sql)
         resposta= cursor.fetchone()
@@ -2946,6 +3181,9 @@ def main(page: ft.Page):
                 container_desempenho.bgcolor = ft.Colors.GREEN_100
                 
             txt_observacoes.value = resposta['Observacao']
+            txt_observacoes_e.value = resposta['obs_e']
+            txt_observacoes_p.value = resposta['obs_p']
+            txt_observacoes_c.value = resposta['obs_c']
 
         form_content.controls.append(ft.Column(
                     controls=[
@@ -3025,19 +3263,62 @@ def main(page: ft.Page):
             else:
                 valor_desempenho = ''
                 
-
-        obs_us = txt_observacoes.value
-        if valida_texto(obs_us) == False:
-            if backup == False:
-                mostrar_alerta_temporario('Campo de obsevações contem palavras não permitidas, por gentileza, analise o texto', ft.Colors.RED_400)
-                alerta_container_form.visible = True
-                txt_msg_alerta.value = 'Campo de obsevações contem palavras não permitidas, por gentileza, analise o texto'
-                aguarde_overlay.visible = False
-                page.update()
-                return
-
+        def valida_campos_texto(texto, campo = ''):
+            if texto == '':
+               return False, 'Campo de ' + campo + ' vazio, por gentileza, coloque suas considerações'
+            elif valida_texto(texto) == False:
+               return False, 'Campo de ' + campo + ' contem palavras não permitidas, por gentileza, analise o texto'
+            elif len(texto)<3: 
+               return False, 'Campo de ' + campo + ' muito curto, por gentileza, aumente suas considerações'
+       
+            return True, ''
+            
         avaliador = texto_ola.value.replace("Olá, ",'')
         participante = nome_em_avaliacao.value.replace('Você está avaliando: ', "")
+        
+        if backup == False:
+            validacao_texto, msg =valida_campos_texto(txt_observacoes.value, 'observações')
+            if validacao_texto == False:
+                    mostrar_alerta_temporario(msg, ft.Colors.RED_400)
+                    alerta_container_form.visible = True
+                    txt_msg_alerta.value = msg
+                    aguarde_overlay.visible = False
+                    page.update()
+                    return
+            
+            if participante != avaliador:  
+                validacao_texto, msg =valida_campos_texto(txt_observacoes_e.value, 'calibração do pilar "E"')
+                if validacao_texto == False:
+                        mostrar_alerta_temporario(msg, ft.Colors.RED_400)
+                        alerta_container_form.visible = True
+                        txt_msg_alerta.value = msg
+                        aguarde_overlay.visible = False
+                        page.update()
+                        return
+                
+                validacao_texto, msg =valida_campos_texto(txt_observacoes_p.value, 'calibração do pilar "P"')
+                if validacao_texto == False:
+                        mostrar_alerta_temporario(msg, ft.Colors.RED_400)
+                        alerta_container_form.visible = True
+                        txt_msg_alerta.value = msg
+                        aguarde_overlay.visible = False
+                        page.update()
+                        return
+                    
+                validacao_texto, msg =valida_campos_texto(txt_observacoes_c.value, 'calibração do pilar "C"')
+                if validacao_texto == False:
+                        mostrar_alerta_temporario(msg, ft.Colors.RED_400)
+                        alerta_container_form.visible = True
+                        txt_msg_alerta.value = msg
+                        aguarde_overlay.visible = False
+                        page.update()
+                        return
+            else:
+                txt_observacoes_e.value = 'Não se Aplica'   
+                txt_observacoes_p.value = 'Não se Aplica' 
+                txt_observacoes_c.value = 'Não se Aplica' 
+
+        
         data_envio = datetime.datetime.now()
         data_envio_formatado = data_envio.strftime("%Y/%m/%d %H:%M:%S")
         
@@ -3100,8 +3381,6 @@ def main(page: ft.Page):
         usuario = nome_cb.value
         computador = platform.node()
 
-        
-        
         #Inserindo informações no banco de dados
         for row in respostas:
             if row['resposta']:
@@ -3109,8 +3388,8 @@ def main(page: ft.Page):
             else:
                 resposta = 0
                 
-            campos = '''(Participante, Cargo, C_Custo,  Local, Avaliacao, Nome_Avaliador, ID_Rel, ID_Pergunta, Pilar, Competencia, Pergunta, Resposta,Desempenho_tecnico, Observacao, Data_Resp, Computador, Login, Empresa, Sigla_Emp, Grupo_estrategico) 
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
+            campos = '''(Participante, Cargo, C_Custo,  Local, Avaliacao, Nome_Avaliador, ID_Rel, ID_Pergunta, Pilar, Competencia, Pergunta, Resposta,Desempenho_tecnico, Observacao, Data_Resp, Computador, Login, Empresa, Sigla_Emp, Grupo_estrategico, obs_e, obs_p, obs_c) 
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
             valores = (
                 participante,
                 consulta_pessoa['Cargo'],
@@ -3125,13 +3404,16 @@ def main(page: ft.Page):
                 consulta_perguntas[int(row['ID'])-1]['Pergunta'],
                 resposta,
                 valor_desempenho,
-                obs_us,
+                txt_observacoes.value,
                 data_envio_formatado,
                 computador,
                 usuario,
                 consulta_pessoa['Empresa'],
                 consulta_pessoa['Sigla_Emp'],
-                consulta_relacao['Grupo_estrategico']
+                consulta_relacao['Grupo_estrategico'],
+                txt_observacoes_e.value,
+                txt_observacoes_p.value,
+                txt_observacoes_c.value
             )
             if backup == False:
                 tabela_resp = 'QuestRH_Respostas'
@@ -3264,10 +3546,10 @@ def main(page: ft.Page):
             """
         for i, avaliador in  enumerate(avaliadores):
             if avaliador == avaliador_pendente:
-                scrp_sql = f"Select ID_Pergunta, Pilar, Competencia, Pergunta, Resposta, Desempenho_tecnico, Observacao"
+                scrp_sql = f"Select ID_Pergunta, Pilar, Competencia, Pergunta, Resposta, Desempenho_tecnico, Observacao, obs_e, obs_p, obs_c"
                 scrp_sql +=  f" from QuestRH_Rascunho where Participante = '{participante}' and Nome_Avaliador = '{avaliador}'"
             else:
-                scrp_sql = f"Select ID_Pergunta, Pilar, Competencia, Pergunta, Resposta, Desempenho_tecnico, Observacao"
+                scrp_sql = f"Select ID_Pergunta, Pilar, Competencia, Pergunta, Resposta, Desempenho_tecnico, Observacao, obs_e, obs_p, obs_c"
                 scrp_sql +=  f" from QuestRH_Respostas where Participante = '{participante}' and Nome_Avaliador = '{avaliador}'"
             
             conn = mysql_connection()
@@ -3300,7 +3582,7 @@ def main(page: ft.Page):
                 
             texto_html += gera_cabecalho_html(participante, avaliador, nota, id_avaliador = i)
             if consulta:
-                texto_html += gera_conteudo_html(consulta)
+                texto_html += gera_conteudo_html(consulta,participante, avaliador)
             else:
                 texto_html += '<div style:"alingment: center, font-weight: bold", font-size: 10pt, padding=5px 8px>Sem informações do avaliador</div>'
         
@@ -3347,8 +3629,6 @@ def main(page: ft.Page):
         pisa_status = pisa.CreatePDF(io.BytesIO(texto_html.encode("utf-8")), dest=pdf_buffer)
         
         if not pisa_status.err:
-            enviar_msg(f"Gerando relatório para {participante}!", ft.Colors.GREY_700)
-            
             # 2. Nome do arquivo dinâmico
             timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
             nome_arquivo = f"Relatorio_{login.replace('.', '_')}.pdf"
@@ -3381,7 +3661,7 @@ def main(page: ft.Page):
             
         #page.launch_url(f"/relatorio_{login}.pdf")    
     
-    def gera_conteudo_html(dados={}):
+    def gera_conteudo_html(dados={}, participante='', avaliador=''):
         pilar_anterior = ''
         competencia_anterior = ''
         dados_html = ''
@@ -3428,12 +3708,25 @@ def main(page: ft.Page):
         </tr>
     </table>
                     """
+       
+
+        if participante != avaliador:
+            dados_html += f'<div class="pilar-header">Calibração</div>'
+            dados_html += f'<div class="competencia-title">Pilar E</div>'
+            observacao = str(dados[0]['obs_e']).replace('\n', '<br>')
+            dados_html += f'<div class="observacoes-texto">{observacao}</div>'
+            
+            dados_html += f'<div class="competencia-title">Pilar P</div>'
+            observacao = str(dados[0]['obs_p']).replace('\n', '<br>')
+            dados_html += f'<div class="observacoes-texto">{observacao}</div>'
+            
+            dados_html += f'<div class="competencia-title">Pilar C</div>'
+            observacao = str(dados[0]['obs_c']).replace('\n', '<br>')
+            dados_html += f'<div class="observacoes-texto">{observacao}</div>'
+        
         dados_html += f'<div class="pilar-header">Observações</div>'
-        
         observacao = str(dados[0]['Observacao']).replace('\n', '<br>')
-        
         dados_html += f'<div class="observacoes-texto">{observacao}</div>'
-        
         
         return dados_html
     
@@ -3884,12 +4177,21 @@ def main(page: ft.Page):
         visible= False
     )
     
+    baixar_rel_final_av1 = ft.ElevatedButton(
+        "Relatório Av1",
+        icon=ft.Icons.DOWNLOAD_FOR_OFFLINE,
+        width=150,
+        height=35, 
+        on_click=lambda e:preparar_relatório_final(e, True),
+        visible= False
+    )
+    
     painel_pend_view = ft.Container(
         content=ft.Column([
             ft.Row([ft.TextButton("Deslogar", icon=ft.Icons.ARROW_BACK, on_click=voltar_login),texto_ola2], spacing= 10),
             container_expiração,
             ft.Text("Painel de Controle", size=25, weight=ft.FontWeight.BOLD),
-            ft.Container(ft.Row([btn_reiniciar_ciclo,btn_restaurar,baixar_rel_final],spacing=10), expand=True),
+            ft.Container(ft.Row([btn_reiniciar_ciclo,btn_restaurar,baixar_rel_final, baixar_rel_final_av1],spacing=10), expand=True),
             ft.Container(ft.Row([atualizar_btn,exportar_btn, grafico_btn, grafico_status_btn, btn_exportar_tabela, chk_estrategico, chk_nao_estrategico],spacing=10), expand=True),
             cabecalho_pend,
             corpo_tabela_pend
