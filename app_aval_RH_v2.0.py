@@ -672,7 +672,7 @@ def main(page: ft.Page):
 
 
     erro_login = ft.Text("", color=ft.Colors.RED)
-    txt_observacoes = ft.TextField(label="Observações", expand=True, multiline=True,max_length=200000, 
+    txt_observacoes = ft.TextField(label="", expand=True, multiline=True,max_length=200000, 
                                     on_change=lambda e: reset_idle_time(e), 
                                     on_click=lambda e: reset_idle_time(e),
                                     on_blur=lambda e: reset_idle_time(e),
@@ -686,7 +686,7 @@ def main(page: ft.Page):
     
 
     
-    txt_observacoes_e = ft.TextField(label="Pilar E", expand=True, multiline=False,max_length=2000, 
+    txt_observacoes_e = ft.TextField(label="Pilar E*", expand=True, multiline=False,max_length=2000, 
                                     on_change=lambda e: reset_idle_time(e), 
                                     on_click=lambda e: reset_idle_time(e),
                                     on_blur=lambda e: reset_idle_time(e),
@@ -694,11 +694,10 @@ def main(page: ft.Page):
                                     on_submit=lambda e: reset_idle_time(e),
                                     on_animation_end=lambda e: reset_idle_time(e),
                                     visible=True,
-                                    border=ft.InputBorder.NONE,
                                     filled=False,
                                     shift_enter=True,)
 
-    txt_observacoes_p = ft.TextField(label="Pilar P", expand=True, multiline=False,max_length=2000, 
+    txt_observacoes_p = ft.TextField(label="Pilar P*", expand=True, multiline=False,max_length=2000, 
                                     on_change=lambda e: reset_idle_time(e), 
                                     on_click=lambda e: reset_idle_time(e),
                                     on_blur=lambda e: reset_idle_time(e),
@@ -706,11 +705,10 @@ def main(page: ft.Page):
                                     on_submit=lambda e: reset_idle_time(e),
                                     on_animation_end=lambda e: reset_idle_time(e),
                                     visible=True,
-                                    border=ft.InputBorder.NONE,
                                     filled=False,
                                     shift_enter=True,)
     
-    txt_observacoes_c = ft.TextField(label="Pilar C", expand=True, multiline=False,max_length=2000, 
+    txt_observacoes_c = ft.TextField(label="Pilar C*", expand=True, multiline=False,max_length=2000, 
                                     on_change=lambda e: reset_idle_time(e), 
                                     on_click=lambda e: reset_idle_time(e),
                                     on_blur=lambda e: reset_idle_time(e),
@@ -718,22 +716,25 @@ def main(page: ft.Page):
                                     on_submit=lambda e: reset_idle_time(e),
                                     on_animation_end=lambda e: reset_idle_time(e),
                                     visible=True,
-                                    border=ft.InputBorder.NONE,
                                     filled=False,
                                     shift_enter=True,)
     
-    txt_calibracao = ft.Text("Calibração",size=9,weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900)
+    txt_calibracao = ft.Text("Calibração",weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900)
     divisor_observacao = ft.Divider(height=1, thickness=1, color=ft.Colors.BLUE_800, visible=True)
-    
+    txt_campos_obrigatórios = ft.Text("campos com * são obrigatórios o preenchimento",size=10,weight=ft.FontWeight.BOLD,color=ft.Colors.GREY_700)
+    txt_titulo_obs = ft.Text("Observações*",weight=ft.FontWeight.BOLD,color=ft.Colors.BLUE_900)
     linha_calibracao = ft.Column([txt_calibracao, 
                         txt_observacoes_e, 
                         txt_observacoes_p, 
                         txt_observacoes_c,
-                        divisor_observacao], spacing=5, visible = False)
+                        
+                        divisor_observacao], spacing=10, visible = False)
     
     container_observacoes = ft.Container(
         content=ft.Column([linha_calibracao,
-                        txt_observacoes]),
+                            txt_titulo_obs,
+                            txt_observacoes,
+                            txt_campos_obrigatórios]),
         expand=1,
         bgcolor=ft.Colors.GREY_50,   
         height = page.height * 0.7,
@@ -3051,7 +3052,7 @@ def main(page: ft.Page):
             competencia_atual = ''
 
             for row in perguntas:
-                texto_pergunta = f"{row['ID']}) {row['Pergunta']}"
+                texto_pergunta = f"{row['ID']}) {row['Pergunta']}*"
                 obj_texto = ft.Text(texto_pergunta, size=18)
 
                 # Agrupamento por Competência
