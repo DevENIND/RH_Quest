@@ -2423,7 +2423,7 @@ def main(page: ft.Page):
             linha = ft.Container(
                 content=ft.Row([
                         ft.Container(ft.ListTile(leading=ft.CircleAvatar(
-                            foreground_image_src=link_foto, #imagem rosto,
+                            foreground_image_src=f'{link_foto}', #imagem rosto,
                             radius=22, # Tamanho razoável
                             content=ft.Text(str(q["nome"][0]).upper()),# Letra inicial se a imagem falhar
                         ), bgcolor=ft.Colors.WHITE), expand=1),
