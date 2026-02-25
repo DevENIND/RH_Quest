@@ -4855,4 +4855,4 @@ HAVING COUNT(DISTINCT CASE WHEN id_rel IN (1, 2) THEN id_rel END) = 2
 #ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-ft.app(target=main, port=8000,view=ft.WEB_BROWSER, assets_dir="assets" host="0.0.0.0")
+ft.app(target=main, port=8000,view=ft.WEB_BROWSER, assets_dir="assets", host="0.0.0.0")
