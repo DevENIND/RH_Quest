@@ -2406,10 +2406,10 @@ def main(page: ft.Page):
             else:
                 contole_feedback = ft.Text(f'{q["data_feedback"]}')
             
-            
+            nome_pessoa = q['nome']
             conn = mysql_connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
-            scrp_sql = f"Select link_foto from QuestRH_Pessoas Where Nome ='{q["nome"]}'"
+            scrp_sql = f"Select link_foto from QuestRH_Pessoas Where Nome ='{nome_pessoa}'"
             cursor.execute(scrp_sql)
             link_foto_resultado = cursor.fetchone()
             cursor.close()
