@@ -430,6 +430,7 @@ def obter_questionarios(Pessoa):
         cursor.execute("SELECT Participante, Nome_Avaliador, ROUND(AVG(Resposta)) as Media FROM QuestRH_Respostas GROUP BY Participante, Nome_Avaliador")
         respostas_agrupadas = cursor.fetchall()
 
+    
         conn.close()
 
         # Indexa dados em dicionários para acesso rápido
@@ -504,6 +505,9 @@ def obter_questionarios(Pessoa):
             else:
                 Status = obter_status(row['Participante'], Pessoa)
 
+            
+            
+            
             lista.append(
                 {"nome": row['Participante'], 
                  "Avaliador": Avaliador, 
@@ -2402,11 +2406,24 @@ def main(page: ft.Page):
             else:
                 contole_feedback = ft.Text(f'{q["data_feedback"]}')
             
+            
+            conn = mysql_connection()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            scrp_sql = f"Select link_foto from QuestRH_Pessoas Where Nome ='{q["nome"]}'"
+            cursor.execute(scrp_sql)
+            link_foto_resultado = cursor.fetchone()
+            cursor.close()
+            conn.close()
+            
+            if link_foto_resultado:
+                link_foto = link_foto_resultado['link_foto']
+           
+            
             # Dados que vão rolar
             linha = ft.Container(
                 content=ft.Row([
                         ft.Container(ft.ListTile(leading=ft.CircleAvatar(
-                            foreground_image_src=q["nome"], #imagem rosto,
+                            foreground_image_src=link_foto, #imagem rosto,
                             radius=22, # Tamanho razoável
                             content=ft.Text(str(q["nome"][0]).upper()),# Letra inicial se a imagem falhar
                         ), bgcolor=ft.Colors.WHITE), expand=1),
@@ -2617,12 +2634,23 @@ def main(page: ft.Page):
                 border_radius=12,
                 expand=True
             )
+            
+            conn = mysql_connection()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            scrp_sql = f"Select link_foto from QuestRH_Pessoas Where Nome ='{row['Nome_Avaliador']}'"
+            cursor.execute(scrp_sql)
+            link_foto_resultado = cursor.fetchone()
+            cursor.close()
+            conn.close()
+            
+            if link_foto_resultado:
+                link_foto = link_foto_resultado['link_foto']
 
             if row['ID_Rel'] == 0:
                 txt_observacoes_auto.value = f"{row['Observacao']}" 
                 txt_auto.value = f"{row['Nome_Avaliador']}"
                 leading_auto.content.value = str(row['Nome_Avaliador'][0]).upper()
-                leading_auto.foreground_image_src=f"fotos/{row['Nome_Avaliador']}"
+                leading_auto.foreground_image_src=f'{link_foto}'
 
                 if row['Desempenho_tecnico'] or row['Desempenho_tecnico']>0:
                     #container_desempenho_auto.visible =True
@@ -2647,7 +2675,7 @@ def main(page: ft.Page):
                 txt_av1.value = f"{row['Nome_Avaliador']}"
                 leading_av1.content.value = str(row['Nome_Avaliador'])[0].upper()
                
-                leading_av1.foreground_image_src=f"fotos/{row['Nome_Avaliador']}"
+                leading_av1.foreground_image_src=f"{link_foto}"
                 
 
                 if row['Desempenho_tecnico'] or row['Desempenho_tecnico']>0:
@@ -2672,7 +2700,7 @@ def main(page: ft.Page):
                 txt_observacoes_av2_c.value = f"{row['obs_c']}"
                 txt_av2.value = f"{row['Nome_Avaliador']}"
                 leading_av2.content.value = str(row['Nome_Avaliador'][0]).upper()
-                leading_av2.foreground_image_src=f"fotos/{row['Nome_Avaliador']}"
+                leading_av2.foreground_image_src=f"{link_foto}"
 
                 if row['Desempenho_tecnico'] or row['Desempenho_tecnico']>0:
                     #container_desempenho_av2.visible =True
@@ -3018,6 +3046,7 @@ def main(page: ft.Page):
         #Diponibiliza recursos para av1 e av2
         exportar_pdf_btn_bkp.visible = nome != avaliador
         linha_calibracao.visible = nome != avaliador
+        exportar_pdf_btn_antes.visible = nome != avaliador
 
         # Opções padrão
         opcoes_avaliacao = [
@@ -3441,7 +3470,7 @@ def main(page: ft.Page):
         aguarde_overlay.visible = False
         page.update()
     
-    def preparar_pdf(e=None, backup = False):
+    def preparar_pdf(e=None, backup = False, anterior=False, adm= False):
         avaliadores = []
         login = nome_cb.value
         nome_log = texto_ola.value.replace("Olá, ",'')
@@ -3453,23 +3482,44 @@ def main(page: ft.Page):
             enviar_msg(f'Login Inválido:{erro}',ft.Colors.RED_600)
             return
         
-        if backup == True:
+        if adm == False:
             enviar_formulario(None, True, False)
             participante = nome_em_avaliacao.value.replace('Você está avaliando: ','')
             avaliador_pendente = texto_ola.value.replace("Olá, ",'')
         else:
             participante = nome_avaliado.value.replace('Você está analisando: ','')
-            
-        scrp_sql = f"Select Participante, Avaliador1, Avaliador2 from QuestRH_Relacoes where Participante = '{participante}'"
-        conn = mysql_connection()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute(scrp_sql)
-        consulta = cursor.fetchone()
-        cursor.close()
-        avaliadores.append(consulta['Participante'])
-        avaliadores.append(consulta['Avaliador1'])
-        avaliadores.append(consulta['Avaliador2'])
     
+        
+        if anterior == False:   
+            scrp_sql = f"Select Participante, Avaliador1, Avaliador2 from QuestRH_Relacoes where Participante = '{participante}'"
+            conn = mysql_connection()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute(scrp_sql)
+            consulta = cursor.fetchone()
+            cursor.close()
+            avaliadores.append(consulta['Participante'])
+            avaliadores.append(consulta['Avaliador1'])
+            avaliadores.append(consulta['Avaliador2'])
+        else:
+            scrp_sql = f"""
+SELECT DISTINCT Nome_Avaliador, ID_Rel 
+    FROM QuestRH_Resp_BKP 
+    WHERE Participante = '{participante}' 
+    AND data_bkp = (SELECT MAX(data_bkp) FROM QuestRH_Resp_BKP WHERE Participante = '{participante}') order by ID_Rel;
+"""
+            conn = mysql_connection()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute(scrp_sql)
+            consulta = cursor.fetchall()
+            cursor.close()
+            
+            if consulta:
+                for linha in consulta:
+                    avaliadores.append({'nome':linha['Nome_Avaliador'], 'id':linha['ID_Rel']})
+            else:
+                enviar_msg (f'Não há dados do {participante} no ciclo passado',ft.Colors.RED_600)
+                return
+            
         texto_html = f"""
 <html>
 <head>
@@ -3540,18 +3590,58 @@ def main(page: ft.Page):
     .media-full-regular {{ background-color: #FFE0B2; color: #E65100; border: 1px solid #FFCC80; }}
     .media-full-ruim {{ background-color: #FFCDD2; color: #B71C1C; border: 1px solid #EF9A9A; }}
     .media-full-cinza {{ background-color: #F5F5F5; color: #9E9E9E; border: 1px solid #E0E0E0; }}    
+      
+    .relatorio-header {{
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }}
+
+    .relatorio-header h1 {{
+        color: #333;
+        margin: 0;
+        font-size: 24px;
+    }}
+
+    .badge {{
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }}
+
+    .badge-anterior {{
+        background-color: #e3f2fd;
+        color: #1976d2;
+        border: 1px solid #1976d2;
+    }}
+
+    .badge-atual {{
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #2e7d32;
+    }}  
         
 </style>
 </head>
 <body>
             """
         for i, avaliador in  enumerate(avaliadores):
-            if avaliador == avaliador_pendente:
+            
+            if anterior == True:
+                scrp_sql = f"Select ID_Pergunta, Pilar, Competencia, Pergunta, Resposta, Desempenho_tecnico, Observacao, obs_e, obs_p, obs_c"
+                scrp_sql +=  f" from QuestRH_Resp_BKP where Participante = '{participante}' and Nome_Avaliador = '{avaliador['nome']}' "
+                scrp_sql += f"AND data_bkp = (SELECT MAX(data_bkp) FROM QuestRH_Resp_BKP WHERE Participante = '{participante}'and Nome_Avaliador = '{avaliador['nome']}')"
+            elif avaliador == avaliador_pendente:
                 scrp_sql = f"Select ID_Pergunta, Pilar, Competencia, Pergunta, Resposta, Desempenho_tecnico, Observacao, obs_e, obs_p, obs_c"
                 scrp_sql +=  f" from QuestRH_Rascunho where Participante = '{participante}' and Nome_Avaliador = '{avaliador}'"
             else:
                 scrp_sql = f"Select ID_Pergunta, Pilar, Competencia, Pergunta, Resposta, Desempenho_tecnico, Observacao, obs_e, obs_p, obs_c"
                 scrp_sql +=  f" from QuestRH_Respostas where Participante = '{participante}' and Nome_Avaliador = '{avaliador}'"
+            
+               
             
             conn = mysql_connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -3559,65 +3649,123 @@ def main(page: ft.Page):
             consulta = cursor.fetchall()
             cursor.close()
             
-           
-            scrp_sql = f'Select ROUND(AVG(Resposta)) as "média" from QuestRH_Respostas where Participante = "{participante}" and Nome_Avaliador = "{avaliador}"'
-            
+            if anterior == False:
+                scrp_sql = f'Select ROUND(AVG(Resposta)) as "média" from QuestRH_Respostas where Participante = "{participante}" and Nome_Avaliador = "{avaliador}"'
+            else:
+                scrp_sql= f"""
+    SELECT ROUND(AVG(Resposta)) AS média 
+    FROM QuestRH_Resp_BKP 
+    WHERE Participante = "{participante}" 
+      AND Nome_Avaliador = "{avaliador['nome']}"
+      AND data_bkp = (
+          SELECT MAX(data_bkp) 
+          FROM QuestRH_Resp_BKP 
+          WHERE Participante = "{participante}" 
+            AND Nome_Avaliador = "{avaliador['nome']}"
+      )
+"""
             
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             cursor.execute(scrp_sql)
             média_resultado= cursor.fetchone()
             cursor.close()
             
-            if média_resultado and backup == False:
+            if média_resultado and backup == False and anterior == False:
                 nota = média_resultado['média']
                 if nota is None:
                     nota = 'N/I'
-            else:
+            elif anterior == False:
                 if avaliador == avaliador_pendente:
                     nota ='Rascunho'
                 else:
                     nota = 'N/I'
+            elif média_resultado and anterior == True:
+                nota = média_resultado['média']
+                if nota is None:
+                    nota = 'N/I'
+            else:
+                nota = 'N/I'
                 
             if i>0:
                 texto_html += '<div class="quebra-pagina"></div>'
                 
-            texto_html += gera_cabecalho_html(participante, avaliador, nota, id_avaliador = i)
-            if consulta:
-                texto_html += gera_conteudo_html(consulta,participante, avaliador)
+            if anterior == False:    
+                texto_html += gera_cabecalho_html(participante, avaliador, nota, id_avaliador = i)
+                if consulta:
+                    texto_html += gera_conteudo_html(consulta,participante, avaliador)
+                else:
+                    texto_html += '<div style:"alingment: center, font-weight: bold", font-size: 10pt, padding=5px 8px>Sem informações do avaliador</div>'
             else:
-                texto_html += '<div style:"alingment: center, font-weight: bold", font-size: 10pt, padding=5px 8px>Sem informações do avaliador</div>'
+                texto_html += gera_cabecalho_html(participante, avaliador['nome'], nota, id_avaliador = avaliador['id'], anterior=anterior)
+                if consulta:
+                    texto_html += gera_conteudo_html(consulta,participante, avaliador['nome'])
+                else:
+                    texto_html += '<div style:"alingment: center, font-weight: bold", font-size: 10pt, padding=5px 8px>Sem informações do avaliador</div>'
+           
+        cores_linha = {
+                    0: 'media-full-cinza',
+                    1: 'media-full-ruim', 
+                    2: 'media-full-regular', 
+                    3: 'media-full-mediano', 
+                    4: 'media-full-bom', 
+                    5: 'media-full-excelente'
+                }
         
-        # Validação e tratamento do valor
-        valor_limpo = str(txt_media_final.value).replace(',', '.')
+        if anterior == False:
+            # Validação e tratamento do valor
+            valor_limpo = str(txt_media_final.value).replace(',', '.')
 
-        try:
-            media_num = float(valor_limpo)
-            nota_inteira = int(media_num) 
+            try:
+                media_num = float(valor_limpo)
+                nota_inteira = int(media_num) 
+                
+                # Busca a cor ou define 'media-full-mediano' como padrão
+                classe_aplicada = cores_linha.get(nota_inteira, 'media-full-mediano')
+                
+                texto_html += f"""
+                <div class="media-final-full {classe_aplicada}">
+                    MÉDIA FINAL: {valor_limpo}
+                </div>
+                """
+            except (ValueError, TypeError):
+                # Se não for numérico, aplica a classe cinza-claro
+                texto_html += f"""
+                <div class="media-final-full media-full-cinza">
+                    MÉDIA FINAL: NÃO APURADA
+                </div>
+                """
+        else:
+            scrp_sql = f"""
+SELECT ROUND(AVG(Resposta)) as média 
+FROM QuestRH_Resp_BKP 
+WHERE Participante = '{participante}' 
+  AND data_bkp = (SELECT MAX(data_bkp) FROM QuestRH_Resp_BKP WHERE Participante = '{participante}')
+GROUP BY Participante, data_bkp
+HAVING COUNT(DISTINCT CASE WHEN id_rel IN (1, 2) THEN id_rel END) = 2
+"""
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute(scrp_sql)
+            resp_média= cursor.fetchone()
+            cursor.close()
             
-            cores_linha = {
-                0: 'media-full-cinza',
-                1: 'media-full-ruim', 
-                2: 'media-full-regular', 
-                3: 'media-full-mediano', 
-                4: 'media-full-bom', 
-                5: 'media-full-excelente'
-            }
-            
-            # Busca a cor ou define 'media-full-mediano' como padrão
-            classe_aplicada = cores_linha.get(nota_inteira, 'media-full-mediano')
-            
-            texto_html += f"""
-            <div class="media-final-full {classe_aplicada}">
-                MÉDIA FINAL: {valor_limpo}
-            </div>
-            """
-        except (ValueError, TypeError):
-            # Se não for numérico, aplica a classe cinza-claro
-            texto_html += f"""
-            <div class="media-final-full media-full-cinza">
-                MÉDIA FINAL: NÃO APURADA
-            </div>
-            """
+            if resp_média:
+                try:
+                    nota_inteira = int(resp_média['média'])
+                    # Busca a cor ou define 'media-full-mediano' como padrão
+                    classe_aplicada = cores_linha.get(nota_inteira, 'media-full-mediano')
+                    
+                    texto_html += f"""
+                    <div class="media-final-full {classe_aplicada}">
+                        MÉDIA FINAL: {nota_inteira}
+                    </div>
+                    """
+                except (ValueError, TypeError):
+                    # Se não for numérico, aplica a classe cinza-claro
+                    texto_html += f"""
+                    <div class="media-final-full media-full-cinza">
+                        MÉDIA FINAL: NÃO APURADA
+                    </div>
+                    """    
             
         texto_html += "</body></html>" 
         #print(texto_html)
@@ -3731,18 +3879,28 @@ def main(page: ft.Page):
         
         return dados_html
     
-    def gera_cabecalho_html(participante, avaliador, media, id_avaliador):
+    def gera_cabecalho_html(participante, avaliador, media, id_avaliador, anterior= False):
         
         if id_avaliador == 0:
             nomenclatura = "Auto Avaliação"
         else:
             nomenclatura = f"Avaliação{id_avaliador}"
         
+        classe_ciclo = 'badge-anterior' if anterior else 'badge-atual'
+        texto_ciclo = 'CICLO ANTERIOR' if anterior else 'CICLO ATUAL'
+
+        nome_rel = f"""
+            <div class="relatorio-header">
+                <h1>Relatório de Desempenho</h1>
+                <span class="badge {classe_ciclo}">{texto_ciclo}</span>
+            </div>
+        """
+        
         html_content = f"""
     <table class="header-table">
         <tr>
             <td>
-                <div class="header-title">Relatório de Desempenho</div>
+                <div class="header-title">{nome_rel}</div>
                 <div class="info-text"><strong>Participante:</strong> {participante}</div>
                 <div class="info-text"><strong>{nomenclatura}:</strong> {avaliador}</div>
             </td>
@@ -4015,7 +4173,23 @@ def main(page: ft.Page):
     exportar_pdf_btn = ft.ElevatedButton(
         "Exportar para PDF",
         icon= ft.Icons.DOWNLOAD_ROUNDED,
-        on_click=lambda _: preparar_pdf(),
+        on_click=lambda _: preparar_pdf(adm=True),
+        width=250,
+        height=50
+    )
+    
+    exportar_pdf_btn_antes = ft.ElevatedButton(
+        "PDF Ciclo Passado",
+        icon= ft.Icons.CLOUD_DOWNLOAD_ROUNDED,
+        on_click=lambda _: preparar_pdf(anterior=True),
+        width=250,
+        height=50
+    )
+    
+    exportar_pdf_btn_antes_adm = ft.ElevatedButton(
+        "PDF Ciclo Passado",
+        icon= ft.Icons.CLOUD_DOWNLOAD_ROUNDED,
+        on_click=lambda _: preparar_pdf(anterior=True, adm=True),
         width=250,
         height=50
     )
@@ -4230,7 +4404,7 @@ def main(page: ft.Page):
             content=ft.Column([
                 ft.Row([
                         ft.Row([ ft.TextButton("Voltar", on_click=voltar_painel, icon=ft.Icons.ARROW_BACK),texto_ola3]),
-                        exportar_pdf_btn_bkp],
+                        ft.Row([exportar_pdf_btn_bkp, exportar_pdf_btn_antes], spacing=10),],
                     alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                 ft.Row([nome_em_avaliacao,txt_ociosidade],spacing=10, alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                 container_perguntas,
@@ -4318,7 +4492,7 @@ def main(page: ft.Page):
         content=ft.Column([
             ft.Row([
                     ft.Row([ft.TextButton("Voltar", on_click=voltar_painel, icon=ft.Icons.ARROW_BACK),texto_ola4]),
-                    exportar_pdf_btn
+                    ft.Row([exportar_pdf_btn, exportar_pdf_btn_antes_adm], spacing=10)
                 ],
                 alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
             ft.Row([nome_avaliado, container_media_final], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
