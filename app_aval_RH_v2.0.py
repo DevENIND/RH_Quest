@@ -3887,7 +3887,7 @@ HAVING COUNT(DISTINCT CASE WHEN id_rel IN (1, 2) THEN id_rel END) = 2
             nomenclatura = f"Avaliação{id_avaliador}"
         
         classe_ciclo = 'badge-anterior' if anterior else 'badge-atual'
-        texto_ciclo = 'CICLO ANTERIOR' if anterior else 'CICLO ATUAL'
+        texto_ciclo = 'CICLO ANTERIOR - 2025' if anterior else 'CICLO ATUAL - 2026'
 
         nome_rel = f"""
             <div class="relatorio-header">
