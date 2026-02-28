@@ -73,6 +73,7 @@ sudo systemctl status fletapp.service
 BASE_DIR = Path(__file__).parent
 TOKEN_FILE = BASE_DIR / "session_token.json"
 
+
 # Caminho absoluto para a imagem
 #image_path = BASE_DIR / "Imagem_Quest.svg"
 #gif_path = BASE_DIR / "evolucao.gif"
@@ -928,7 +929,8 @@ def main(page: ft.Page):
     leading_av1 = ft.CircleAvatar(
                         foreground_image_src='', #imagem rosto,
                         radius=22, # Tamanho razoável
-                        content=ft.Text('ABC')) # Letra inicial se a imagem falhar
+                        content=ft.Text('ABC'),
+                        ) # Letra inicial se a imagem falhar
                     
 
     leading_av2 = ft.CircleAvatar(
@@ -937,10 +939,10 @@ def main(page: ft.Page):
                     content=ft.Text('ABC')) # Letra inicial se a imagem falhar
                 
  
-    
+    list_tile_auto = ft.ListTile(leading=leading_auto, bgcolor=ft.Colors.WHITE)
     container_txt_auto = ft.Container(
                 content=ft.Row([
-                    ft.Container(ft.ListTile(leading=leading_auto, bgcolor=ft.Colors.WHITE), expand=1),
+                    ft.Container(list_tile_auto, expand=1),
                     ft.Container(ft.Text('Auto Avaliação', size = 12, color=ft.Colors.BLUE_900), expand=1),
                     ft.Container(txt_auto, expand=4),
                     container_status_auto]),
@@ -956,9 +958,10 @@ def main(page: ft.Page):
                 on_click=lambda _: mostrar_formulario(av='auto')
             )
     
+    list_tile_av1 = ft.ListTile(leading=leading_av1, bgcolor=ft.Colors.WHITE)
     container_txt_av1 = ft.Container(
                 content=ft.Row([
-                    ft.Container(ft.ListTile(leading=leading_av1, bgcolor=ft.Colors.WHITE), expand=1),
+                    ft.Container(list_tile_av1, expand=1),
                     ft.Container(ft.Text('Avaliador 1', size = 12, color=ft.Colors.BLUE_900), expand=1),
                     ft.Container(txt_av1, expand=4),
                     container_status_av1]),
@@ -974,11 +977,11 @@ def main(page: ft.Page):
                 on_click=lambda _: mostrar_formulario(av='av1')
     )
     
-    
+    list_tile_av2 = ft.ListTile(leading=leading_av2, bgcolor=ft.Colors.WHITE)
     container_txt_av2 = ft.Container(
                 content=ft.Row([
                     
-                    ft.Container(ft.ListTile(leading=leading_av2, bgcolor=ft.Colors.WHITE), expand=1),
+                    ft.Container(list_tile_av2, expand=1),
                     ft.Container(ft.Text('Avaliador 2', size = 12, color=ft.Colors.BLUE_900), expand=1),
                     ft.Container(txt_av2, expand=4),
                     container_status_av2]),
@@ -2289,7 +2292,8 @@ def main(page: ft.Page):
                     
                 elif avaliador1:
                     page.controls.clear()
-
+                    btn_excel_av1.visible = True
+                    btn_excel_av1.on_click = lambda e:preparar_relatório_final(e, av1=True, avaliador=resultados['Nome'])
                     overlay = ft.Column([
                         alerta_container,
                         painel_av1,
@@ -2313,7 +2317,7 @@ def main(page: ft.Page):
                     painel_resposta_view.visible= False 
                 else:
                     page.clean()
-
+                    btn_excel_av1.visible = False
                     overlay = ft.Column([
                         alerta_container,
                         painel_comum,
@@ -2409,14 +2413,20 @@ def main(page: ft.Page):
             nome_pessoa = q['nome']
             conn = mysql_connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
-            scrp_sql = f"Select link_foto from QuestRH_Pessoas Where Nome ='{nome_pessoa}'"
+            scrp_sql = f"Select Nome, link_foto from QuestRH_Pessoas Where Nome ='{nome_pessoa}'"
             cursor.execute(scrp_sql)
             link_foto_resultado = cursor.fetchone()
             cursor.close()
             conn.close()
             
             if link_foto_resultado:
-                link_foto = link_foto_resultado['link_foto']
+                if os.path.exists(os.path.join(BASE_DIR, "assets", "fotos", f"{link_foto_resultado['Nome']}.jpg")):
+                    # Note que REMOVEMOS o "assets" da string que vai para o componente
+                    link_foto = f"/fotos/{link_foto_resultado['Nome'].strip()}.jpg"
+                else:
+                    link_foto = link_foto_resultado['link_foto']
+
+                
            
             
             # Dados que vão rolar
@@ -2426,7 +2436,8 @@ def main(page: ft.Page):
                             foreground_image_src=f'{link_foto}', #imagem rosto,
                             radius=22, # Tamanho razoável
                             content=ft.Text(str(q["nome"][0]).upper()),# Letra inicial se a imagem falhar
-                        ), bgcolor=ft.Colors.WHITE), expand=1),
+                            
+                        ), bgcolor=ft.Colors.WHITE, on_click=lambda e, f=link_foto, n=q["nome"]: abrir_foto_popup(f,n)), expand=1),
                         ft.Container(ft.Text(q["nome"]), expand=3),
                         ft.Container(ft.Text(q["auto_aval"]), expand=1),
                         ft.Container(ft.Text(q["primaria"]), expand=1),
@@ -2505,11 +2516,34 @@ def main(page: ft.Page):
             btn_ver_resp = (
                 ft.TextButton('', icon=ft.Icons.VISIBILITY, on_click=lambda e, nome=q["Participante"]: abrir_formulario_respostas(nome))
             )
+            
+            nome_pessoa = q['Participante']
+            conn = mysql_connection()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            scrp_sql = f"Select Nome, link_foto from QuestRH_Pessoas Where Nome ='{nome_pessoa}'"
+            cursor.execute(scrp_sql)
+            link_foto_resultado = cursor.fetchone()
+            cursor.close()
+            conn.close()
+            
+            if link_foto_resultado:
+                if os.path.exists(os.path.join(BASE_DIR, "assets", "fotos", f"{link_foto_resultado['Nome']}.jpg")):
+                    # Note que REMOVEMOS o "assets" da string que vai para o componente
+                    link_foto = f"/fotos/{link_foto_resultado['Nome'].strip()}.jpg"
+                else:
+                    link_foto = link_foto_resultado['link_foto']
 
+       
              # Dados que vão rolar
             linha = ft.Container(
                 content=ft.Row([
-                        ft.Container(ft.Text(q["Participante"]), expand=3),
+                         ft.Container(ft.ListTile(leading=ft.CircleAvatar(
+                            foreground_image_src=f'{link_foto}', #imagem rosto,
+                            radius=22, # Tamanho razoável
+                            content=ft.Text(str(q["Participante"][0]).upper()),# Letra inicial se a imagem falhar
+                        ), bgcolor=ft.Colors.WHITE
+                        , on_click=lambda e, f=link_foto, n=q["Participante"]: abrir_foto_popup(f,n)), expand=1),
+                        ft.Container(ft.Text(q["Participante"], size=10), expand=2),
                         ft.Container(
                             content=ft.Text(Status, size=10),
                             bgcolor=bg_cor,
@@ -2519,7 +2553,7 @@ def main(page: ft.Page):
                             expand=1
                         ),
                         ft.Container(ft.Text(q["Avaliacao"]), expand=1, alignment=ft.alignment.center),
-                        ft.Container(ft.Text(q["Avaliador1"]), expand=3),
+                        ft.Container(ft.Text(q["Avaliador1"], size=10), expand=2),
                         ft.Container(
                             content=ft.Text(q["Status1"], size=10),
                             bgcolor=bg_cor1,
@@ -2529,7 +2563,7 @@ def main(page: ft.Page):
                             expand=1
                         ),
                         ft.Container(ft.Text(q["Avaliacao1"]), expand=1, alignment=ft.alignment.center),
-                        ft.Container(ft.Text(q["Avaliador2"]), expand=3),
+                        ft.Container(ft.Text(q["Avaliador2"], size=10), expand=2),
                          ft.Container(
                             content=ft.Text(q["Status2"], size=10),
                             bgcolor=bg_cor2,
@@ -2569,7 +2603,75 @@ def main(page: ft.Page):
         lista_pend_view.update()
         page.update()
     
-    
+    def abrir_foto_popup(foto_caminho: str, nome: str):
+        """
+        Abre um pop-up profissional e clean para visualizar a foto.
+        """
+        
+        # Referência para o diálogo para que as ações de fechar funcionem
+        dlg_ref = ft.Ref[ft.AlertDialog]()
+
+        # Função auxiliar para fechar
+        def fechar(e):
+            dlg_ref.current.open = False
+            page.update()
+
+        # O Diálogo em si
+        dlg = ft.AlertDialog(
+            ref=dlg_ref,
+            content_padding=0,  # Removemos o padding padrão para controlar nós mesmos
+            bgcolor=ft.Colors.TRANSPARENT, # Fundo transparente para o AlertDialog, o Card será o fundo
+            content=ft.Card(
+                elevation=10, # Sombra projetada
+                color=ft.Colors.SURFACE, # Cor de fundo do Card
+                content=ft.Container(
+                    padding=20, # Padding interno do Card
+                    width=450,  # Largura fixa razoável
+                    content=ft.Column(
+                        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                        controls=[
+                            # --- CABEÇALHO ---
+                            ft.Row(
+                                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                                controls=[
+                                    ft.Column(
+                                        controls=[
+                                            ft.Text(nome, weight=ft.FontWeight.BOLD, size=18),
+                                            ft.Text("Visualização de Foto", size=12, color=ft.Colors.ON_SURFACE_VARIANT),
+                                        ],
+                                        spacing=0,
+                                    ),
+                                    ft.IconButton(
+                                        icon=ft.Icons.CLOSE_ROUNDED,
+                                        icon_color=ft.Colors.ON_SURFACE_VARIANT,
+                                        on_click=fechar,
+                                        tooltip="Fechar",
+                                    )
+                                ]
+                            ),
+                            ft.Divider(height=1, color=ft.Colors.OUTLINE_VARIANT), # Linha sutil separadora
+                            
+                            # --- CONTEÚDO DA FOTO ---
+                            ft.Container(
+                                margin=ft.margin.only(top=20, bottom=10),
+                                content=ft.Image(
+                                    src=foto_caminho,
+                                    fit=ft.ImageFit.CONTAIN,
+                                    border_radius=12, # Cantos arredondados na imagem
+                                ),
+                                # Limitamos a altura máxima da imagem para não estourar telas menores
+                                height=page.height * 0.6, 
+                            ),
+                        ],
+                    ),
+                ),
+            ),
+        )
+
+        # Adicionamos ao overlay e abrimos
+        page.overlay.append(dlg)
+        dlg.open = True
+        page.update()
 
      #Função para construir os formulários de respostas
     def abrir_formulario_respostas(Pessoa):
@@ -2617,12 +2719,88 @@ def main(page: ft.Page):
         cursor.execute(scrp_sql)
         resultados = cursor.fetchall()
         conn.close()
+        
+        
 
         
         pilar_atual = None
         competencia_atual = ''
         bloco_perguntas = []
         media_final = 0
+        
+        # Abrindo conexão
+        conn = mysql_connection()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        
+        # Realizando Consulta de Relacoes
+        scrp_sql = f"SELECT * FROM QuestRH_Relacoes WHERE Participante = '{Pessoa}'"
+        cursor.execute(scrp_sql)
+        relacoes = cursor.fetchone()
+
+        #Auto avaliação
+        scrp_sql = f"Select Nome, link_foto from QuestRH_Pessoas Where Nome ='{relacoes['Participante']}'"
+        cursor.execute(scrp_sql)
+        link_foto_resultado = cursor.fetchone()
+
+        
+        if link_foto_resultado:
+            if os.path.exists(os.path.join(BASE_DIR, "assets", "fotos", f"{link_foto_resultado['Nome']}.jpg")):
+                # Note que REMOVEMOS o "assets" da string que vai para o componente
+                link_foto = f"/fotos/{link_foto_resultado['Nome'].strip()}.jpg"
+            else:
+                link_foto = link_foto_resultado['link_foto']
+                
+        txt_auto.value = f"{relacoes['Participante']}"
+        leading_auto.content.value = str(relacoes['Participante'])[0].upper()
+        leading_auto.foreground_image_src=f'{link_foto}'
+        
+       
+        list_tile_auto.on_click=lambda e, f = link_foto, n=relacoes['Participante']: abrir_foto_popup(f,n)
+        
+        #Avaliação 1
+        scrp_sql = f"Select Nome, link_foto from QuestRH_Pessoas Where Nome ='{relacoes['Avaliador1']}'"
+        cursor.execute(scrp_sql)
+        link_foto_resultado = cursor.fetchone()
+    
+        
+        if link_foto_resultado:
+            if os.path.exists(os.path.join(BASE_DIR, "assets", "fotos", f"{link_foto_resultado['Nome']}.jpg")):
+                # Note que REMOVEMOS o "assets" da string que vai para o componente
+                link_foto = f"/fotos/{link_foto_resultado['Nome'].strip()}.jpg"
+            else:
+                link_foto = link_foto_resultado['link_foto']
+                
+        txt_av1.value = f"{relacoes['Avaliador1']}"
+        leading_av1.content.value = str(relacoes['Avaliador1'])[0].upper()
+        leading_av1.foreground_image_src=f'{link_foto}'
+        
+        
+        list_tile_av1.on_click=lambda e, f = link_foto, n=relacoes['Avaliador1']: abrir_foto_popup(f,n)
+        
+        
+        #Avaliação 2
+        scrp_sql = f"Select Nome, link_foto from QuestRH_Pessoas Where Nome ='{relacoes['Avaliador2']}'"
+        cursor.execute(scrp_sql)
+        link_foto_resultado = cursor.fetchone()
+        
+        
+        if link_foto_resultado:
+            if os.path.exists(os.path.join(BASE_DIR, "assets", "fotos", f"{link_foto_resultado['Nome']}.jpg")):
+                # Note que REMOVEMOS o "assets" da string que vai para o componente
+                link_foto = f"/fotos/{link_foto_resultado['Nome'].strip()}.jpg"
+            else:
+                link_foto = link_foto_resultado['link_foto']
+                
+        txt_av2.value = f"{relacoes['Avaliador2']}"
+        leading_av2.content.value = str(relacoes['Avaliador2'])[0].upper()
+        leading_av2.foreground_image_src=f'{link_foto}'
+        
+        
+        list_tile_av2.on_click=lambda e, f= link_foto, n=relacoes['Avaliador2']: abrir_foto_popup(f,n)
+
+        #fecha as conexões
+        cursor.close()
+        conn.close()
 
         def adicionar_container_pilar(bloco, row):
             container_pilar = ft.Container(
@@ -2635,22 +2813,10 @@ def main(page: ft.Page):
                 expand=True
             )
             
-            conn = mysql_connection()
-            cursor = conn.cursor(pymysql.cursors.DictCursor)
-            scrp_sql = f"Select link_foto from QuestRH_Pessoas Where Nome ='{row['Nome_Avaliador']}'"
-            cursor.execute(scrp_sql)
-            link_foto_resultado = cursor.fetchone()
-            cursor.close()
-            conn.close()
-            
-            if link_foto_resultado:
-                link_foto = link_foto_resultado['link_foto']
 
             if row['ID_Rel'] == 0:
                 txt_observacoes_auto.value = f"{row['Observacao']}" 
-                txt_auto.value = f"{row['Nome_Avaliador']}"
-                leading_auto.content.value = str(row['Nome_Avaliador'][0]).upper()
-                leading_auto.foreground_image_src=f'{link_foto}'
+                
 
                 if row['Desempenho_tecnico'] or row['Desempenho_tecnico']>0:
                     #container_desempenho_auto.visible =True
@@ -2672,11 +2838,7 @@ def main(page: ft.Page):
                 txt_observacoes_av1_e.value = f"{row['obs_e']}"
                 txt_observacoes_av1_p.value = f"{row['obs_p']}"
                 txt_observacoes_av1_c.value = f"{row['obs_c']}"
-                txt_av1.value = f"{row['Nome_Avaliador']}"
-                leading_av1.content.value = str(row['Nome_Avaliador'])[0].upper()
-               
-                leading_av1.foreground_image_src=f"{link_foto}"
-                
+            
 
                 if row['Desempenho_tecnico'] or row['Desempenho_tecnico']>0:
                     #container_desempenho_av1.visible =True
@@ -2698,10 +2860,7 @@ def main(page: ft.Page):
                 txt_observacoes_av2_e.value = f"{row['obs_e']}"
                 txt_observacoes_av2_p.value = f"{row['obs_p']}"
                 txt_observacoes_av2_c.value = f"{row['obs_c']}"
-                txt_av2.value = f"{row['Nome_Avaliador']}"
-                leading_av2.content.value = str(row['Nome_Avaliador'][0]).upper()
-                leading_av2.foreground_image_src=f"{link_foto}"
-
+                
                 if row['Desempenho_tecnico'] or row['Desempenho_tecnico']>0:
                     #container_desempenho_av2.visible =True
                     txt_desempenho_av2.value = lista_avaliação[row['Desempenho_tecnico'] - 1]['Resp']
@@ -2830,10 +2989,21 @@ def main(page: ft.Page):
 
     
     
-    def preparar_relatório_final(e=None, av1 = False):
+    def preparar_relatório_final(e=None, av1 = False, avaliador = ''):
         enviar_msg('Preparando relatório final...',ft.Colors.BLUE_400)
         conn = mysql_connection()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
+        
+        if avaliador != '':
+            scrp_sql = f"Select * from QuestRH_Relacoes Where Avaliador1 = '{avaliador}'"
+            cursor.execute(scrp_sql)
+            avaliador1 = cursor.fetchall()
+        
+            if not avaliador1:
+                enviar_msg('Você não é avaliador 1, não pode gerar relatório',ft.Colors.RED_400)
+                cursor.close()
+                conn.close()
+                return
         
         sql_texto = '''
         SELECT ID, Participante, Cargo, C_Custo, Local, Avaliacao, ID_Pergunta, Pilar, Competencia, Pergunta,
@@ -2859,9 +3029,14 @@ def main(page: ft.Page):
             conn = mysql_connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             
-            sql_texto = '''
-            SELECT Participante, Avaliador1 From QuestRH_Relacoes
-            '''
+            if avaliador != '':
+                sql_texto = f'''
+                SELECT Participante, Avaliador1 From QuestRH_Relacoes Where Avaliador1 = '{avaliador}'
+                '''
+            else:
+                sql_texto = '''
+                SELECT Participante, Avaliador1 From QuestRH_Relacoes
+                '''
             
             cursor.execute(sql_texto)
             consulta_avaliadores1 = cursor.fetchall()
@@ -3887,7 +4062,7 @@ HAVING COUNT(DISTINCT CASE WHEN id_rel IN (1, 2) THEN id_rel END) = 2
             nomenclatura = f"Avaliação{id_avaliador}"
         
         classe_ciclo = 'badge-anterior' if anterior else 'badge-atual'
-        texto_ciclo = 'CICLO ANTERIOR - 2025' if anterior else 'CICLO ATUAL - 2026'
+        texto_ciclo = 'CICLO 2025' if anterior else 'CICLO 2026'
 
         nome_rel = f"""
             <div class="relatorio-header">
@@ -4186,6 +4361,15 @@ HAVING COUNT(DISTINCT CASE WHEN id_rel IN (1, 2) THEN id_rel END) = 2
         height=50
     )
     
+    
+    btn_excel_av1 = ft.ElevatedButton(
+        "Exportar Avaliador 1",
+        icon= ft.Icons.CLOUD_DOWNLOAD_ROUNDED,
+        width=250,
+        height=50
+    )
+    
+    
     exportar_pdf_btn_antes_adm = ft.ElevatedButton(
         "PDF Ciclo Passado",
         icon= ft.Icons.CLOUD_DOWNLOAD_ROUNDED,
@@ -4283,7 +4467,8 @@ HAVING COUNT(DISTINCT CASE WHEN id_rel IN (1, 2) THEN id_rel END) = 2
         content=ft.Column([
             ft.Row([ft.TextButton("Deslogar", icon=ft.Icons.ARROW_BACK, on_click=voltar_login), texto_ola1], spacing= 10),
             container_expiração,
-            ft.Row([ft.Row([ft.Text("Painel de Controle", size=25, weight=ft.FontWeight.BOLD), atualizar_btn]),btn_ver_manual],
+            ft.Row([ft.Row([ft.Text("Painel de Controle", size=25, weight=ft.FontWeight.BOLD), 
+                            ft.Row([atualizar_btn, btn_excel_av1], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)]),btn_ver_manual],
                    expand=True, alignment=ft.MainAxisAlignment.SPACE_BETWEEN,vertical_alignment=ft.CrossAxisAlignment.CENTER),
            cabecalho,
            corpo_tabela
@@ -4298,13 +4483,14 @@ HAVING COUNT(DISTINCT CASE WHEN id_rel IN (1, 2) THEN id_rel END) = 2
       # Cabeçalho fixo
     cabecalho_pend = ft.Container(
         content=ft.Row([
-            ft.Container(ft.Text("Participante", weight=ft.FontWeight.BOLD), expand=3),
+            ft.Container(ft.Text("Foto", weight=ft.FontWeight.BOLD), expand=1),
+            ft.Container(ft.Text("Participante", weight=ft.FontWeight.BOLD), expand=2),
             ft.Container(ft.Text("Status", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text("Avaliação", weight=ft.FontWeight.BOLD), expand=1),
-            ft.Container(ft.Text("Avaliador1", weight=ft.FontWeight.BOLD), expand=3),
+            ft.Container(ft.Text("Avaliador1", weight=ft.FontWeight.BOLD), expand=2),
             ft.Container(ft.Text("Status", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text("Avaliação", weight=ft.FontWeight.BOLD), expand=1),
-            ft.Container(ft.Text("Avaliador2", weight=ft.FontWeight.BOLD), expand=3),
+            ft.Container(ft.Text("Avaliador2", weight=ft.FontWeight.BOLD), expand=2),
             ft.Container(ft.Text("Status", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text("Avaliação", weight=ft.FontWeight.BOLD), expand=1),
             ft.Container(ft.Text('Feedback', weight=ft.FontWeight.BOLD), expand=1),
@@ -4855,4 +5041,4 @@ HAVING COUNT(DISTINCT CASE WHEN id_rel IN (1, 2) THEN id_rel END) = 2
 #ft.app(target=main,view=ft.WEB_BROWSER, port=8000)
 
 #Colocar sempre porta 8000
-ft.app(target=main, port=8000,view=ft.WEB_BROWSER, assets_dir="assets", host="0.0.0.0")
+ft.app(target=main, port=8000,view=ft.WEB_BROWSER, assets_dir="assets")#, host="0.0.0.0")
