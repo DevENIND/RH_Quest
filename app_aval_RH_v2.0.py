@@ -569,7 +569,7 @@ def main(page: ft.Page):
     page.title = "Sistema de Avaliação ENIND"
     #page.scroll = ft.ScrollMode.AUTO
     page.window.maximized = True
-    data_limite = '2026/06/01 18:00:00'
+    data_limite = '2026/03/31 23:59:59'
     #data_limite = '2025/07/21 23:59:59'
     file_picker = ft.FilePicker()
     page.overlay.append(file_picker)
@@ -1510,84 +1510,35 @@ def main(page: ft.Page):
             
 
     def exportar_dados_painel_adm(e=None):
+        nonlocal lista_dados
+        nonlocal lista_pend
         try:
-            dados_extraidos = []
-            for item in lista_pend_view.controls:
-                if isinstance(item, ft.Container) and isinstance(item.content, ft.Row):
-                    linha = []
-                    for i, subitem in enumerate(item.content.controls):
-                        # Ignora o último item (botão de visualização)
-                        if i == 10:
-                            continue
-                        # Garante que subitem é um Container
-                        if isinstance(subitem, ft.Container):
-                            content = subitem.content
-                            # Pode ser um Text direto
-                            if isinstance(content, ft.Text):
-                                linha.append(content.value)
-                            # Ou pode estar aninhado (ex: conteúdo do status)
-                            elif hasattr(content, "controls"):
-                                # Procura o primeiro ft.Text dentro do container
-                                texto = next((ctrl.value for ctrl in content.controls if isinstance(ctrl, ft.Text)), "")
-                                linha.append(texto)
-                            else:
-                                linha.append("")  # Se não houver texto, coloca vazio
+            df = pd.DataFrame(lista_dados)
+            df_pend = pd.DataFrame(lista_pend)
 
-                    # Mapeia os dados extraídos para colunas
-                    if len(linha) == 10:
-                        qtd_pend = 0
-                        if linha[1] == 'Pendente':
-                            qtd_pend += 1
-                        if linha[4] == 'Pendente':
-                            qtd_pend += 1
-                        if linha[7] == 'Pendente':
-                            qtd_pend += 1
-
-                        if linha[4] == 'Realizado' and linha[7] == 'Realizado':
-                            status_avaliadores = 'Realizado'
-                        else:
-                            status_avaliadores = 'Pendente'
-                        
-                        if qtd_pend > 0:
-                            status = 'Pendente'
-                        else:
-                            status = 'Finalizado'
-
-                        dados_extraidos.append({
-                            "Participante": linha[0],
-                            "Status": linha[1],
-                            "Avaliacao": linha[2],
-                            "Avaliador1": linha[3],
-                            "Status1": linha[4],
-                            "Avaliacao1": linha[5],
-                            "Avaliador2": linha[6],
-                            "Status2": linha[7],
-                            "Avaliacao2": linha[8],
-                            "Qtd Pendente": qtd_pend,
-                            "Status Global": status,
-                            "Status Avaliadores": status_avaliadores,
-                            'Feedback': linha[9]
-                        })
-
-            # Cria o DataFrame
-            df = pd.DataFrame(dados_extraidos)
-
-            # Criar arquivo em memória
+            # 1. Criar o objeto BytesIO para salvar na memória
             output = io.BytesIO()
-            df.to_excel(output, index=False, engine='openpyxl')
+
+            # 2. Usar o ExcelWriter com o engine 'openpyxl'
+            with pd.ExcelWriter(output, engine='openpyxl') as writer:
+                # Grava a primeira aba
+                df.to_excel(writer, sheet_name='Dados Gerais', index=False)
+                
+                # Grava a segunda aba
+                df_pend.to_excel(writer, sheet_name='Pendentes', index=False)
+
+            # 3. Importante: O arquivo é finalizado ao sair do bloco 'with'. 
+            # Agora voltamos o ponteiro para o início para leitura.
             output.seek(0)
 
-            # Nome do arquivo
-            nome_arquivo = f"exportacao_grafico_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
-             
-            # Codificar para base64
+            # 4. Processo de conversão para download no Flet
+            nome_arquivo = f"exportacao_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
             b64 = base64.b64encode(output.read()).decode()
-
-            # Criar link de download
             link_download = f"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}"
 
-            # Abrir o link no navegador (força o download)
+            # 5. Lançar o download
             page.launch_url(link_download, web_window_name=nome_arquivo)
+    
 
             mostrar_alerta_temporario('Exportação realizada com sucesso', ft.Colors.GREEN_400)
         except Exception as ex:
@@ -2475,11 +2426,16 @@ def main(page: ft.Page):
         lista_pend_view.visible = True
         lista_view.update()
         page.update()
-
+        
+    lista_dados = []
+    lista_pend = []
+    
     #Função para criar a tabela de visualização - Painel de controle - PENDENCIAS
     def montar_tabela_pendencias(questionarios):
         nonlocal data_limite
         nonlocal linhas
+        nonlocal lista_dados
+        nonlocal lista_pend
         data_atual = datetime.datetime.now()
         data_fechamento = datetime.datetime.strptime(data_limite,"%Y/%m/%d %H:%M:%S") 
 
@@ -2533,7 +2489,51 @@ def main(page: ft.Page):
                 else:
                     link_foto = link_foto_resultado['link_foto']
 
-       
+            qtd_pend = 0
+            if q["Status"] == 'Pendente': 
+                qtd_pend += 1
+                if not q['Participante'] in lista_pend:
+                    lista_pend.append(q['Participante'])
+            if q["Status1"] == 'Pendente': 
+                qtd_pend += 1
+                if not q['Avaliador1'] in lista_pend:
+                    lista_pend.append(q['Avaliador1'])
+                
+            if q["Status2"] == 'Pendente': 
+                qtd_pend += 1
+                if not q['Avaliador2'] in lista_pend:
+                    lista_pend.append(q['Avaliador2'])
+           
+            if q["Status1"] =='Realizado' and q["Status2"] == 'Realizado':
+                status_avaliadores = 'Realizado'
+            else:
+                status_avaliadores = 'Pendente'
+            
+            if qtd_pend>0:
+                status = 'Pendente'
+            else:
+                status = 'Realizado'
+            
+            
+            
+            lista_dados.append(
+                {
+                    "Participante": q["Participante"],
+                    "Status": q["Status"],
+                    "Avaliacao": q["Avaliacao"],
+                    "Avaliador1": q["Avaliador1"],
+                    "Status1": q["Status1"],
+                    "Avaliacao1": q["Avaliacao1"],
+                    "Avaliador2": q["Avaliador2"],
+                    "Status2": q["Status2"],
+                    "Avaliacao2": q["Avaliacao2"],
+                    "Qtd Pendente": qtd_pend,
+                    "Status Global": status,
+                    "Status Avaliadores": status_avaliadores,
+                    'Feedback': q["data_feedback"]
+                }
+            )
+            
              # Dados que vão rolar
             linha = ft.Container(
                 content=ft.Row([
@@ -3471,8 +3471,6 @@ def main(page: ft.Page):
         def valida_campos_texto(texto, campo = ''):
             if texto == '':
                return False, 'Campo de ' + campo + ' vazio, por gentileza, coloque suas considerações'
-            elif valida_texto(texto) == False:
-               return False, 'Campo de ' + campo + ' contem palavras não permitidas, por gentileza, analise o texto'
             elif len(texto)<3: 
                return False, 'Campo de ' + campo + ' muito curto, por gentileza, aumente suas considerações'
        
@@ -3482,6 +3480,7 @@ def main(page: ft.Page):
         participante = nome_em_avaliacao.value.replace('Você está avaliando: ', "")
         
         if backup == False:
+        
             validacao_texto, msg =valida_campos_texto(txt_observacoes.value, 'observações')
             if validacao_texto == False:
                     mostrar_alerta_temporario(msg, ft.Colors.RED_400)
@@ -4512,7 +4511,7 @@ HAVING COUNT(DISTINCT CASE WHEN id_rel IN (1, 2) THEN id_rel END) = 2
         height = page.height * 0.7
     )
 
-    btn_exportar_tabela = ft.ElevatedButton('Tabela', on_click=lambda e:exportar_dados_painel_adm(e), width=150, height=35, icon=ft.Icons.DOWNLOAD_ROUNDED)
+    btn_exportar_tabela = ft.ElevatedButton('Pendências', on_click=lambda e:exportar_dados_painel_adm(e), width=150, height=35, icon=ft.Icons.DOWNLOAD_ROUNDED)
     btn_reiniciar_ciclo  = ft.ElevatedButton(
             'Reiniciar Ciclo', 
             on_click=lambda e:reiniciar_ciclo(e), 
