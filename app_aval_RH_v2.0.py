@@ -569,7 +569,7 @@ def main(page: ft.Page):
     page.title = "Sistema de Avaliação ENIND"
     #page.scroll = ft.ScrollMode.AUTO
     page.window.maximized = True
-    data_limite = '2026/03/31 23:59:59'
+    data_limite = '2026/04/30 23:59:59'
     #data_limite = '2025/07/21 23:59:59'
     file_picker = ft.FilePicker()
     page.overlay.append(file_picker)
@@ -1137,6 +1137,8 @@ def main(page: ft.Page):
     img_Concluidos = ft.Image(fit=ft.ImageFit.COVER, expand=True,gapless_playback=True)
     img_Finalizados = ft.Image(fit=ft.ImageFit.COVER, expand=True,gapless_playback=True)
     img_Barra_Empresa = ft.Image(fit=ft.ImageFit.COVER, expand=True,gapless_playback=True)
+    img_feedback_antes = ft.Image(fit=ft.ImageFit.COVER, expand=True,gapless_playback=True)
+    img_feedback_atual = ft.Image(fit=ft.ImageFit.COVER, expand=True,gapless_playback=True)
     
     # textos -> Referencia de tamanhos de fontes =https://flet.dev/docs/controls/text/#font_family
     txt_Realizados = ft.Text('', size=40, weight='w200',text_align="center", color=ft.Colors.GREEN)
@@ -1223,7 +1225,10 @@ def main(page: ft.Page):
         grafico64_concluidos, erro, realizado, nao_concluidos = gera_graficos.gera_grafico_conclusao()
         grafico64_finalizados, erro, finalizados, nao_finalizados = gera_graficos.gera_grafico_conclusao(finalizados=True)
         grafico64_empresas, erro = gera_graficos.gera_grafico_empresas()
-
+        grafico64_feedback_antes, erro = gera_graficos.gera_grafico_conclusao_feedback(anterior=True)
+        grafico64_feedback_atual, erro = gera_graficos.gera_grafico_conclusao_feedback()
+        
+        
         if grafico64_potencial:
             img_Potencial.src_base64 = grafico64_potencial
         if grafico64_potencial_nao_finalizados:
@@ -1234,6 +1239,10 @@ def main(page: ft.Page):
             img_Finalizados.src_base64 = grafico64_finalizados
         if grafico64_empresas:
             img_Barra_Empresa.src_base64 = grafico64_empresas
+        if grafico64_feedback_antes:
+            img_feedback_antes.src_base64 = grafico64_feedback_antes
+        if grafico64_feedback_atual:
+            img_feedback_atual.src_base64 = grafico64_feedback_atual
 
         txt_Finalizados.value = str(finalizados or 0)
         txt_Realizados.value = str(realizado or 0)
@@ -1515,6 +1524,16 @@ def main(page: ft.Page):
         try:
             df = pd.DataFrame(lista_dados)
             df_pend = pd.DataFrame(lista_pend)
+            
+            conn = mysql_connection()
+            cursor = conn.cursor(pymysql.cursors.DictCursor)
+            cursor.execute(f"SELECT * FROM QuestRH_Feedbacks where id_ciclo = (SELECT MAX(id_ciclo) FROM QuestRH_Feedbacks);")
+            consulta = cursor.fetchall()
+            cursor.close()
+            conn.close()
+
+            df_feedback_antes = pd.DataFrame(consulta)
+            
 
             # 1. Criar o objeto BytesIO para salvar na memória
             output = io.BytesIO()
@@ -1526,6 +1545,9 @@ def main(page: ft.Page):
                 
                 # Grava a segunda aba
                 df_pend.to_excel(writer, sheet_name='Pendentes', index=False)
+                
+                #Grava a Terceira aba
+                df_feedback_antes.to_excel(writer, sheet_name= 'Feedback Anterior', index=False)  
 
             # 3. Importante: O arquivo é finalizado ao sair do bloco 'with'. 
             # Agora voltamos o ponteiro para o início para leitura.
@@ -4920,32 +4942,62 @@ HAVING COUNT(DISTINCT CASE WHEN id_rel IN (1, 2) THEN id_rel END) = 2
 
     # painel principal
     container_painel_grafico = ft.Column([
-        ft.Row([ft.TextButton("Voltar", icon=ft.Icons.ARROW_BACK, on_click=voltar_painel), texto_ola6], spacing= 10),
-        ft.Row([ft.Text("📊 Análise Gráfica - Status das Avaliações", size=20, weight="bold")], spacing= 10),
-        ft.Divider(),
-        container_texto_grafico,
+        # --- CABEÇALHO ---
         ft.Row([
-            # coluna da esquerda (2 linhas)
-            ft.Column([
-                ft.Row([
-                    ft.Container(img_Concluidos, expand=1),
-                    ft.Container(img_Potencial_nao_finalizados, expand=2)
-                ]),
-                ft.Row([
-                    ft.Container(img_Finalizados, expand=1),
-                    ft.Container(img_Potencial, expand=2),
-                ])
-            ],expand=2),
+            ft.TextButton("Voltar", icon=ft.Icons.ARROW_BACK, on_click=voltar_painel),
+            ft.VerticalDivider(width=1),
+            texto_ola6
+        ], alignment=ft.MainAxisAlignment.START, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+        
+        ft.Row([
+            ft.Text("   📊 Análise Gráfica - Status das Avaliações", size=24, weight="bold", color="blue900")
+        ]),
+        
+        ft.Divider(height=10, color="transparent"),
+        ft.Container(container_texto_grafico, padding=ft.padding.only(left=15)),
 
-             # coluna da direita (um único gráfico maior)
+        # --- CORPO DO DASHBOARD ---
+        ft.Row([
+            
+            # COLUNA DA ESQUERDA (Status e Potencial)
             ft.Column([
+                # Linha 1: Concluídos e Não Finalizados
                 ft.Row([
-                    ft.Container(img_Barra_Empresa, expand=2)
-                ])
-            ],expand=2)
-        ])
-    ],
-    visible=False)
+                    ft.Container(img_Concluidos, expand=1, bgcolor="white", border_radius=10, padding=10, shadow=ft.BoxShadow(blur_radius=5, color="black12")),
+                    ft.Container(img_Potencial_nao_finalizados, expand=2, bgcolor="white", border_radius=10, padding=10, shadow=ft.BoxShadow(blur_radius=5, color="black12")),
+                ], spacing=15),
+                
+                # Linha 2: Finalizados e Potencial
+                ft.Row([
+                    ft.Container(img_Finalizados, expand=1, bgcolor="white", border_radius=10, padding=10, shadow=ft.BoxShadow(blur_radius=5, color="black12")),
+                    ft.Container(img_Potencial, expand=2, bgcolor="white", border_radius=10, padding=10, shadow=ft.BoxShadow(blur_radius=5, color="black12")),
+                ], spacing=15),
+            ], expand=3, spacing=15),
+
+            # COLUNA DA DIREITA (Barra Empresa + Feedbacks abaixo)
+            ft.Column([
+                # Gráfico de Barras Principal (Topo)
+                ft.Container(
+                    content=img_Barra_Empresa,
+                    expand=2, # Dá mais espaço vertical para as barras
+                    bgcolor="white",
+                    border_radius=10,
+                    padding=20,
+                    alignment=ft.alignment.center,
+                    shadow=ft.BoxShadow(blur_radius=8, color="black12")
+                ),
+                
+                # Linha de Feedbacks (Base da coluna direita)
+                ft.Row([
+                    ft.Container(img_feedback_antes, expand=1, bgcolor="white", border_radius=10, padding=10, shadow=ft.BoxShadow(blur_radius=5, color="black12")),
+                    ft.Container(img_feedback_atual, expand=1, bgcolor="white", border_radius=10, padding=10, shadow=ft.BoxShadow(blur_radius=5, color="black12")),
+                ], spacing=15, expand=1) # expand=1 faz essa linha ser menor que a de cima
+                
+            ], expand=2, spacing=15),
+            
+        ], expand=True, spacing=20)
+
+    ], visible=False, expand=True, spacing=10)
 
     
     #with open(image_path, "rb") as img_file:

@@ -741,7 +741,99 @@ def gera_bell_curve(estrategico = True, nao_estrategico = True):
     except Exception as e:
         print(f'❌ Erro ao gerar gráfico Bell Curve: {e}')
         return None, e
+
+
+def gera_grafico_conclusao_feedback(anterior = False):
+    try:
+
+        sql_condicao =''
+
+        if anterior:
+            tabela = 'QuestRH_Feedbacks'
+            texto_grafico = 'Feedabacks Ciclo Anterior'
+        else:
+            tabela =  'QuestRH_Relacoes'
+            texto_grafico = 'Feedabacks Ciclo Atual'
+            
+        connection = mysql_connection()
+        cursor = connection.cursor()
+        
+        sql_condicao= f"Select count(Participante) as Total from {tabela}"
+        cursor.execute(sql_condicao)
+        qtd_participantes = cursor.fetchone()[0]
+        if anterior:
+            sql_condicao= f"""Select count(Participante) as Total from QuestRH_Feedbacks where 
+            data_feedback is not null and id_ciclo = (SELECT MAX(id_ciclo) FROM QuestRH_Feedbacks);"""
+        else: 
+            sql_condicao= f"Select count(Participante) as Total from QuestRH_Relacoes where data_feedback is not null"
+        cursor.execute(sql_condicao)
+        realizado= cursor.fetchone()[0]
+        
+        connection.close()
+
+        if realizado is None:
+            realizado = 0
+
+        # Dados
+        nao_realizados = qtd_participantes - realizado
+        perc_realizado = round((realizado / qtd_participantes) * 100,2)
+        perc_nao_realizados = round((nao_realizados / qtd_participantes) * 100,2)
+
+        sizes = [perc_realizado, perc_nao_realizados]  # Percentuais ou valores absolutos
+        colors = ["#0076c5b2","#E4E4E49E"]  # Cores personalizadas
+
+        # Criando o gráfico de rosca
+        fig, ax = plt.subplots(figsize=(4, 4))
+        ax.pie(
+            sizes, 
+            #=labels,
+            colors=colors, 
+            startangle=90,  # Rotaciona o gráfico para começar de cima
+            wedgeprops={'width':0.4},  # largura da "roda", define o buraco do centro
+            #autopct='%1.1f%%'  # Mostra os percentuais
+        )
+        # Mantém o gráfico como círculo
+        ax.axis('equal')
+
+        ax.text(
+            0, 0, 
+            f'{perc_realizado}%',  # texto a ser exibido
+            horizontalalignment='center', 
+            verticalalignment='center',
+            fontsize=30,  # ajuste o tamanho conforme necessário
+            fontfamily='serif',
+            color="#0076c5ff"
+        )
+
     
+
+        plt.text(
+            0, -1.2,  # coordenadas x, y (y negativo abaixo do centro)
+            texto_grafico, 
+            horizontalalignment='center',
+            fontsize=18,
+            color="black",
+            fontfamily='serif'
+        )
+
+        #if finalizados == False:
+        #    plt.savefig("gauge.png", bbox_inches="tight")
+        #else:
+        #    plt.savefig("gauge_finalizado.png", bbox_inches="tight")
+        # Exibe o gráfico
+        #plt.show()
+
+        buf = io.BytesIO()
+        plt.savefig(buf, format="png", dpi=150, bbox_inches="tight", transparent=True)
+        plt.close(fig)
+        buf.seek(0)
+
+        # Converter para base64
+        return base64.b64encode(buf.read()).decode("utf-8"), ''
+
+    except Exception as e:
+        print(f'❌ Erro ao gerar gráfico de performances:{e}')
+        return None, e
 
 def gera_grafico_conclusao(finalizados = False):
     try:
@@ -751,7 +843,7 @@ def gera_grafico_conclusao(finalizados = False):
         if finalizados == False:
             agrupar = 'x.Participante, x.Nome_Avaliador'
             texto_grafico = 'Avaliações Finalizadas'
-            qtd_participantes = 410 #Quantidade constante na tabela Lista_Emails
+            qtd_participantes = 386 #Quantidade constante na tabela Lista_Emails
         else:
             sql_condicao = "Where Status_Av = 'Finalizado'"
             agrupar = 'x.Participante'
