@@ -569,7 +569,7 @@ def main(page: ft.Page):
     page.title = "Sistema de Avaliação ENIND"
     #page.scroll = ft.ScrollMode.AUTO
     page.window.maximized = True
-    data_limite = '2026/05/10 23:59:59'
+    data_limite = '2026/05/15 23:59:59'
     #data_limite = '2025/07/21 23:59:59'
     file_picker = ft.FilePicker()
     page.overlay.append(file_picker)
@@ -2611,14 +2611,15 @@ def main(page: ft.Page):
             
             lista_pend_view.controls.append(linha)
         
-        
+        baixar_rel_final.visible = True
+        baixar_rel_final_av1.visible = True
 
         if data_atual >=data_fechamento:
             container_expiração.visible = True
             btn_restaurar.visible = True
             btn_reiniciar_ciclo.visible = True
-            baixar_rel_final.visible = True
-            baixar_rel_final_av1.visible = True
+        
+            
             
 
         lista_pend_view.visible = True
