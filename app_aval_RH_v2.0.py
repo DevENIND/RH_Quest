@@ -2179,8 +2179,12 @@ def main(page: ft.Page):
         page.update()
 
     def atualiza_rel(e):
+        nonlocal lista_dados
+        nonlocal lista_pend
         nome_pessoa = texto_ola.value.replace("Olá, ",'')
         aguarde_overlay.visible = True
+        lista_dados = []
+        lista_pend = []
         page.update()
 
         chk_estrategico.value
