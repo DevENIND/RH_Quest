@@ -1307,30 +1307,54 @@ def main(page: ft.Page):
         conn.close()
     
     def limpar_campos(e=None):
+        # 1. Resetando ComboBoxes e Dropdowns simples
         cboxPessoa.value = None
         cboxPilar.value = None
         cboxCompetencia.value = None
         dropdown_Performance.value = None
+        
+        # Dica: Se o componente tiver a propriedade 'placeholder', você pode reforçá-la aqui
+        cboxPessoa.placeholder = "Pessoa"
+        cboxPilar.placeholder = "Pilar"
+        cboxCompetencia.placeholder = "Competência"
+        dropdown_Performance.placeholder = "Performance"
 
+        # 2. Resetando Controles de Múltipla Escolha (Checkboxes/Custom)
+        # Certifique-se de dar update no controle pai após o loop
+        for chk in dropdown_c_custo.controls[0].controls:
+            chk.selected = False
+            if hasattr(chk, "value"): chk.value = False # Garante se for um Checkbox real
+
+        for chk in dropdown_empresa.controls[0].controls: 
+            chk.selected = False
+            if hasattr(chk, "value"): chk.value = False
+
+        for chk in dropdown_cargo.controls[0].controls:
+            chk.selected = False
+            if hasattr(chk, "value"): chk.value = False
+
+        # 3. Campo de texto livre
+        txt_outro_query.value = ""
+
+        # 4. Atualização visual em lote
+        # Em vez de vários .update(), atualizar a página ou os containers principais é mais eficiente
         cboxPessoa.update()
         cboxPilar.update()
         cboxCompetencia.update()
         dropdown_Performance.update()
-
-        for chk in dropdown_c_custo.controls[0].controls:
-            chk.selected = False
-
-        for chk in dropdown_empresa.controls[0].controls: 
-            chk.selected = False
-         
-        for chk in dropdown_cargo.controls[0].controls:
-            chk.selected = False
-
-        txt_outro_query.value = ''
-        page.update()
         
+        # MUITO IMPORTANTE: Atualizar os dropdowns de lista para refletir que os itens não estão mais "selected
+        #dropdown_empresa.update()
+        #dropdown_cargo.update()
+        
+        # 5. Sincronização de dados
+        # Se essas funções dependem dos valores acima, elas agora lerão tudo vazio/None
         alimenta_competencias()
         alimenta_pessoas()
+        
+        page.update() # Garante a atualização de toda a árvore de componentes
+        
+        # Por fim, dispara a atualização dos gráficos com os filtros limpos
         atualiza_dados()
     
     def inicializa_grafico():
@@ -1375,8 +1399,7 @@ def main(page: ft.Page):
         else:
             performance = ''
 
-
-        grafico64, msgerro = gera_graficos.gera_ninebox(pilar=pilar, competencia=competencia, participante=participante,outras_condicoes=txt_outro_query.value)
+        grafico64, msgerro = gera_graficos.gera_ninebox(pilar=pilar, competencia=competencia, participante=participante,outras_condicoes=txt_outro_query.value, performance=performance)
         if grafico64 == None:
             img_Ninebox.visible = False
         else:
@@ -1745,7 +1768,8 @@ def main(page: ft.Page):
             query_cargo = "Cargo in ('" + "', '".join(cargos_selecionados) + "')"
             query_parts.append(query_cargo)
 
-    
+
+        
         #Atualiza o filtro de centro de custos
         if query_emp != '':
             conn = mysql_connection()
@@ -2611,14 +2635,14 @@ def main(page: ft.Page):
             
             lista_pend_view.controls.append(linha)
         
+        
         baixar_rel_final.visible = True
         baixar_rel_final_av1.visible = True
-
+            
         if data_atual >=data_fechamento:
             container_expiração.visible = True
             btn_restaurar.visible = True
             btn_reiniciar_ciclo.visible = True
-        
             
             
 
@@ -3035,7 +3059,7 @@ def main(page: ft.Page):
             MAX(CASE WHEN ID_Rel = 1 THEN Resposta END) AS Resposta_Av1,
             MAX(CASE WHEN ID_Rel = 2 THEN Resposta END) AS Resposta_Av2
         FROM 
-            QuestRH_Resp_BKP
+            QuestRH_Respostas 
         GROUP BY 
             ID_Pergunta, Participante -- Agrupamos para consolidar os avaliadores na mesma linha
         ORDER BY 
@@ -4848,6 +4872,82 @@ HAVING COUNT(DISTINCT CASE WHEN id_rel IN (1, 2) THEN id_rel END) = 2
     cboxPilar.on_change = atualiza_dados
     cboxCompetencia.on_change = atualiza_dados
     dropdown_Performance.on_change = atualiza_dados
+    
+    # Estilo comum para os containers de imagem (Cards)
+    def card_grafico(conteudo, titulo, expand_val=1):
+        return ft.Container(
+            content=ft.Column([
+                ft.Text(titulo, size=12, weight="bold", color=ft.Colors.BLUE_GREY_700),
+                conteudo
+            ], spacing=5),
+            padding=10,
+            border=ft.border.all(1, ft.Colors.BLACK12),
+            border_radius=8,
+            bgcolor=ft.Colors.WHITE,
+            shadow=ft.BoxShadow(blur_radius=5, color=ft.Colors.BLACK12),
+            expand=expand_val
+        )
+
+    # --- Novo Visual do Container ---
+    container_grafico = ft.Column(
+        [
+            # Linha de Cabeçalho Superior
+            ft.Row([
+                ft.Row([ft.IconButton(ft.Icons.ARROW_BACK, on_click=voltar_painel), texto_ola5]),
+                ft.Row([exportar_grafico_btn, btn_limpar_campos], spacing=10)
+            ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
+
+            ft.Text("📊 Análise Gráfica - Avaliação de Desempenho", size=20, weight="bold"),
+            
+            # Área de Filtros (Compacta)
+            ft.Container(
+                content=ft.Row(
+                    [
+                        ft.Container(cboxPessoa, expand=3),
+                        ft.Container(cboxPilar, expand=2),
+                        ft.Container(cboxCompetencia, expand=2),
+                        ft.Container(dropdown_Performance, expand=2),
+                        ft.Container(ft.Column([chk_estrategico_grafico, chk_nao_estrategico_grafico], spacing=0), expand=1),
+                    ],
+                    spacing=10,
+                ),
+                padding=ft.padding.symmetric(vertical=5)
+            ),
+            
+            ft.Divider(height=1, color=ft.Colors.TRANSPARENT),
+
+            # --- GRID DE GRÁFICOS (Onde a mágica acontece) ---
+            # Usamos uma Column com scroll apenas se necessário, mas organizada
+            ft.Column([
+                # Linha 1: Ninebox (Quadrado) e Pilares (Largo)
+                ft.Row([
+                    card_grafico(img_Ninebox, "Matriz NineBox", 2),
+                    card_grafico(img_Pilar, "Média por Pilar", 3),
+                ], height=300), # Altura fixa para evitar imagens gigantes
+
+                # Linha 2: Competências (Ocupa a largura toda por ter muitos dados)
+                ft.Row([
+                    card_grafico(img_Comp, "Detalhamento por Competência", 1),
+                ], height=350),
+
+                # Linha 3: Comparativo e BellCurve (Lado a Lado)
+                ft.Row([
+                    card_grafico(img_Compar, "Auto x Gestor", 1),
+                    card_grafico(
+                        ft.Row([img_BellCurve, container_bellcurve], alignment='center'), 
+                        "Curva de Vitalidade", 1
+                    ),
+                ], height=300),
+                
+                cabecalho_grafico,
+                container_grafico
+                
+            ], scroll=ft.ScrollMode.ADAPTIVE, expand=True) # Scroll apenas nos gráficos
+        ],
+        expand=True,
+        visible=False,
+        spacing=15
+    )
     
     container_grafico = ft.Column(
             [   ft.Row([ft.TextButton("Voltar", icon=ft.Icons.ARROW_BACK, on_click=voltar_painel), texto_ola5], spacing= 10),

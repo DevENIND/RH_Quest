@@ -31,605 +31,509 @@ def mysql_connection():
         return None
 
 
-def gera_ninebox(pilar = '', competencia = '', participante = '', outras_condicoes = ''):
+def gera_ninebox(pilar='', competencia='', participante='', outras_condicoes='', performance=''):
     try:
-        sql_condicao =  "id_rel IN (1,2)"
+        # 1. Construção da Condição SQL (Otimizada)
+        filtros = ["Status_Av = 'Finalizado'"]
+        if pilar: filtros.append(f"Pilar = '{pilar}'")
+        if competencia: filtros.append(f"Competencia = '{competencia}'")
+        if participante: filtros.append(f"Participante = '{participante}'")
+        if outras_condicoes: filtros.append(outras_condicoes)
+        
+        sql_condicao = " WHERE " + " AND ".join(filtros)
 
-        if pilar != '':
-            sql_condicao += f" and Pilar = '{pilar}'"
-
-        if competencia != '':
-            sql_condicao += f" and Competencia = '{competencia}'"
-
-        if participante != '':
-            sql_condicao += f" and Participante = '{participante}'"
-
-        if outras_condicoes != '' and outras_condicoes != None:
-            sql_condicao += f" and {outras_condicoes}"
-
+        # SQL unificado (já traz a Performance classificada)
         scrp_sql = f"""
-        Select Participante,
-            CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media_Avaliadores,
-            CASE WHEN média_desemp_av1 = média_desemp_av2 THEN média_desemp_av1 ELSE CEIL( (média_desemp_av1 + média_desemp_av2) / 2) END AS Media_Aval_Desemp
-        from 
-        (SELECT Participante, id_rel, Avaliacao, Sigla_Emp, C_Custo, Cargo, 
-            round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
-            round(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as média_desemp_av1,
-            round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2,
-            round(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as média_desemp_av2,
-            round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_auto,
-            round(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) as média_desemp_auto
-        FROM QuestRH_Respostas WHERE {sql_condicao}
-        group by Participante
-        HAVING COUNT(DISTINCT id_rel) = 2
-        ) as t
+        SELECT * FROM (
+            SELECT 
+                Participante, Media_Avaliadores, Media_Aval_Desemp,
+                CASE 
+                    WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'BAIXA PERFORMANCE'
+                    WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'INCONSISTENTE'
+                    WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'ESPECIALISTA'
+                    WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'DILEMA'
+                    WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'COMPETENTE'
+                    WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'FORTE ENTREGA'
+                    WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'DESAFIO'
+                    WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'FORTE CULTURA'
+                    WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'ALTO POTENCIAL'
+                    ELSE 'N/A'
+                END as Performance
+            FROM (
+                SELECT 
+                    Participante,
+                    CASE WHEN m_av1 = m_av2 THEN m_av1 ELSE CEIL((m_av1 + m_av2) / 2) END AS Media_Avaliadores,
+                    CASE WHEN m_d_av1 = m_d_av2 THEN m_d_av1 ELSE CEIL((m_d_av1 + m_d_av2) / 2) END AS Media_Aval_Desemp,
+                    Status_Av, C_Custo, Cargo, Grupo_estrategico, Sigla_Emp
+                    
+                FROM (
+                    SELECT 
+                        Participante, 
+                        ROUND(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as m_av1,
+                        ROUND(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as m_d_av1,
+                        ROUND(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as m_av2,
+                        ROUND(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as m_d_av2,
+                        CASE WHEN (COUNT(DISTINCT CASE WHEN id_rel IN (1,2) THEN id_rel END) = 2) THEN 'Finalizado' ELSE 'Pendente' END as Status_Av,
+                        Sigla_Emp, C_Custo, Cargo, Grupo_estrategico
+                    FROM QuestRH_Respostas 
+                    GROUP BY Participante
+                ) as t
+            ) as x {sql_condicao}
+        ) as final_query
         """
         
+        if performance:
+            scrp_sql += f" WHERE Performance = '{performance}'"
+
+        # 2. Execução
         conn = mysql_connection()
-
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute(scrp_sql)
-        resultados = cursor.fetchall()
- 
-        # === Converter para DataFrame ===
-        df = pd.DataFrame(resultados)
-       
-        # Exemplo de dados (simulação)
-        '''
-        data = {
-            "Participante": ["A", "B", "C", "D", "E", "F"],
-            "Potencial": [2, 3, 4, 5, 5, 1],
-            "Performance": [2, 4, 5, 3, 1, 5]
-        }
-        df = pd.DataFrame(data)
-        '''
-        # Função de classificação
-        def classificar(row):
-            x = row["Media_Avaliadores"]
-            y = row["Media_Aval_Desemp"]
-            participante = row["Participante"]
-
-            if participante == 'Leandro Cabrini':
-                print(x, y)
-
-            if x in (1, 2) and y in (1, 2):
-                return 'BAIXA PERFORMANCE'
-            elif x in (1, 2) and y in (3, 4):
-                return 'INCONSISTENTE'
-            elif x in (1, 2) and y == 5:
-                return 'ESPECIALISTA'
-            elif x in (3, 4) and y in (1, 2):
-                return 'DILEMA'
-            elif x in (3, 4) and y in (3, 4):
-                return 'COMPETENTE'
-            elif x in (3, 4) and y == 5:
-                return 'FORTE ENTREGA'
-            elif x == 5 and y in (1, 2):
-                return 'DESAFIO'
-            elif x == 5 and y in (3, 4):
-                return 'FORTE CULTURA'
-            elif x == 5 and y == 5:
-                return 'ALTO POTENCIAL'
-            else:
-                return 'N/A'
-
-        df["Categoria"] = df.apply(classificar, axis=1)
-
-        # Percentual por quadrante
-        n_total = len(df)
-        categorias = df.groupby("Categoria").size().reset_index(name="Qtd")
-        categorias["Perc"] = (categorias["Qtd"] / n_total * 100).round(1)
-
-        # Montar grid como imagem de Nine Box com base nas categorias
-        # Mapeia posições dos quadrantes
-        posicoes = {
-            'BAIXA PERFORMANCE': ('Baixo', 'Baixo'),
-            'INCONSISTENTE': ('Médio', 'Baixo'),
-            'ESPECIALISTA': ('Alto', 'Baixo'),
-            'DILEMA': ('Baixo', 'Médio'),
-            'COMPETENTE': ('Médio', 'Médio'),
-            'FORTE ENTREGA': ('Alto', 'Médio'),
-            'DESAFIO': ('Baixo', 'Alto'),
-            'FORTE CULTURA': ('Médio', 'Alto'),
-            'ALTO POTENCIAL': ('Alto', 'Alto')
-        }
-
-        # Criar nova coluna com Categoria_X e Categoria_Y
-        df['Categoria_X'] = df['Categoria'].map(lambda c: posicoes.get(c, ('', ''))[0])
-        df['Categoria_Y'] = df['Categoria'].map(lambda c: posicoes.get(c, ('', ''))[1])
-
-        # Títulos das células
-        descricoes = {
-            ('Alto','Baixo'): "DESAFIO",
-            ('Alto','Médio'): "FORTE CULTURA",
-            ('Alto','Alto'):  "ALTO POTENCIAL",
-            ('Médio','Baixo'): "DILEMA",
-            ('Médio','Médio'): "COMPETENTE",
-            ('Médio','Alto'):  "FORTE ENTREGA",
-            ('Baixo','Baixo'): "BAIXA PERFORMANCE",
-            ('Baixo','Médio'): "INCONSISTENTE",
-            ('Baixo','Alto'):  "ESPECIALISTA"
-        }
-
-        # Percentual por quadrante
-        quadros = df.groupby(["Categoria_X", "Categoria_Y"]).size().reset_index(name="Qtd")
-        quadros["Perc"] = (quadros["Qtd"] / n_total * 100).round(1)
-
-        # Limites dos quadrantes
-        boundaries = {
-            "Baixo": (0.5, 2.5),
-            "Médio": (2.5, 4.5),
-            "Alto":  (4.5, 6.5)
-        }
-
-        
-        # Cores das células
-        cell_colors = {
-            ('Baixo','Baixo'): (1.0, 0.3, 0.3, 0.6),
-            ('Baixo','Médio'): (1.0, 0.7, 0.4, 0.6),
-            ('Baixo','Alto'):  (1.0, 0.75, 0.0, 0.6),
-            ('Médio','Baixo'): (1.0, 0.7, 0.4, 0.6),
-            ('Médio','Médio'): (1.0, 0.75, 0.0, 0.6),
-            ('Médio','Alto'):  (0.8, 1.0, 0.8, 0.6),
-            ('Alto','Baixo'):  (1.0, 0.75, 0.0, 0.6),
-            ('Alto','Médio'):  (0.8, 1.0, 0.8, 0.6),
-            ('Alto','Alto'):   (0.7, 0.8, 0.9, 0.6)
-        }
-
-
-        # Criar figura
-        fig, ax = plt.subplots(figsize=(8, 8))
-
-        y_names = ["Alto","Médio","Baixo"]
-        x_names = ["Baixo","Médio","Alto"]
-
-        # Desenhar quadrantes e inserir textos
-        for y_name in y_names:
-            y0, y1 = boundaries[y_name]
-            for x_name in x_names:
-                x0, x1 = boundaries[x_name]
-
-                # Preencher célula com cor
-                ax.fill_between([x0,x1],[y0,y0],[y1,y1], color=cell_colors[(x_name,y_name)], edgecolor="k")
-
-                # Percentual
-                perc = quadros.loc[
-                    (quadros["Categoria_X"]==x_name) & (quadros["Categoria_Y"]==y_name),
-                    "Perc"
-                ]
-                perc_text = f"{perc.values[0]}%" if len(perc)>0 else "0%"
-
-                # Título da célula
-                titulo = descricoes.get((y_name, x_name), "")
-                texto = f"{titulo}\n{perc_text}"
-
-                ax.text((x0+x1)/2, (y0+y1)/2, texto,
-                        ha="center", va="center", fontsize=10, weight="bold")
-
-        # Ajuste dos eixos
-        ax.set_xlim(0.5,6.5)
-        ax.set_ylim(0.5,6.5)
-        ax.set_xticks([1.5,3.5,5.5])
-        ax.set_xticklabels(["Baixo (1-2)", "Médio (3-4)", "Alto (5)"])
-        ax.set_yticks([1.5,3.5,5.5])
-        ax.set_yticklabels(["Baixo (1-2)", "Médio (3-4)", "Alto (5)"])
-        ax.set_xlabel("Potencial")
-        ax.set_ylabel("Desempenho")
-        ax.set_title("Nine Box", fontsize=16, weight="bold")
-        ax.grid(False)
-
-        # Remover margens e fundo branco
-        fig.patch.set_alpha(0.0)
-        ax.patch.set_alpha(0.0)
-
-        # Salvar em memória como PNG transparente
-        buf = io.BytesIO()
-        plt.savefig(buf, format="png", transparent=True, bbox_inches="tight")
-        plt.close(fig)
-        buf.seek(0)
-        img_bytes = buf.getvalue()
-
-        # Converter para base64 (pronto para Flet)
-        img64 = base64.b64encode(img_bytes).decode()
-        #print(img64[:100], "...")  # mostra apenas início do base64
-
-        # img64 agora pode ser usado diretamente em Flet
-        return img64 , ''
-    except Exception as e:
-        print(f'❌ Erro ao gerar gráfico Ninebox: {e}')
-        return None,e
-
-def gera_gráfico_pilar(participante = '', pilar= '', competencia='', outras_condicoes = ''):
-    try:
-        # Dados
-        categorias = ["E", "P", "C"]
-        apurado = []
-
-        sql_condicao =  "id_rel IN (1,2)"
-
-        if pilar != '':
-            sql_condicao += f" and Pilar = '{pilar}'"
-
-        if competencia != '':
-            sql_condicao += f" and Competencia = '{competencia}'"
-
-        if participante != '':
-            sql_condicao += f" and Participante = '{participante}'"
-
-        if outras_condicoes != '' and outras_condicoes != None:
-            sql_condicao += f" and {outras_condicoes}"
-
-
-        scrp_sql = f"""
-            Select Pilar, round(AVG(Media_Geral),0) as Media_Geral from(
-            SELECT Pilar, Participante,
-            CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media_Geral 
-            from(SELECT Pilar, Participante, 
-                round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1, 
-                round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2
-                FROM QuestRH_Respostas
-                WHERE {sql_condicao}
-                GROUP BY Pilar, Participante
-            HAVING COUNT(DISTINCT id_rel) = 2)as x 
-            )as y group by Pilar
-        """
-        
-        conn = mysql_connection()
-
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute(scrp_sql)
-        resultados = cursor.fetchall()
-
+        df = pd.read_sql(scrp_sql, conn)
         conn.close()
 
-        if len(resultados) == 0:   
-            return None, 'Nenhum dado encontrado.'
+        if df.empty:
+            return None, "Nenhum dado encontrado"
+
+        # 3. Mapeamentos Estáticos (Otimizado)
+        mapeamento = {
+            'BAIXA PERFORMANCE': ('Baixo', 'Baixo', (1.0, 0.3, 0.3, 0.6)),
+            'INCONSISTENTE':     ('Médio', 'Baixo', (1.0, 0.7, 0.4, 0.6)),
+            'ESPECIALISTA':      ('Alto',  'Baixo', (1.0, 0.75, 0.0, 0.6)),
+            'DILEMA':            ('Baixo', 'Médio', (1.0, 0.7, 0.4, 0.6)),
+            'COMPETENTE':        ('Médio', 'Médio', (1.0, 0.75, 0.0, 0.6)),
+            'FORTE ENTREGA':     ('Alto',  'Médio', (0.8, 1.0, 0.8, 0.6)),
+            'DESAFIO':           ('Baixo', 'Alto',  (1.0, 0.75, 0.0, 0.6)),
+            'FORTE CULTURA':     ('Médio', 'Alto',  (0.8, 1.0, 0.8, 0.6)),
+            'ALTO POTENCIAL':    ('Alto',  'Alto',  (0.7, 0.8, 0.9, 0.6))
+        }
+
+        # Cálculo de percentuais direto no DF
+        n_total = len(df)
+        contagem = df['Performance'].value_counts(normalize=True) * 100
+
+        # 4. Geração do Gráfico
+        fig, ax = plt.subplots(figsize=(8, 8))
+        boundaries = {"Baixo": (0.5, 2.5), "Médio": (2.5, 4.5), "Alto": (4.5, 6.5)}
+
+        for label, (x_cat, y_cat, color) in mapeamento.items():
+            x0, x1 = boundaries[x_cat]
+            y0, y1 = boundaries[y_cat]
+            
+            # Desenha o quadrante
+            ax.fill_between([x0, x1], [y0, y0], [y1, y1], color=color, edgecolor="black", linewidth=0.5)
+            
+            # Texto (Título + %)
+            perc = contagem.get(label, 0.0)
+            ax.text((x0+x1)/2, (y0+y1)/2, f"{label}\n{perc:.1f}%", 
+                    ha="center", va="center", fontsize=9, weight="bold")
+
+        # Estilização final
+        ax.set_xlim(0.5, 6.5); ax.set_ylim(0.5, 6.5)
+        ax.set_xticks([1.5, 3.5, 5.5]); ax.set_xticklabels(["Baixo", "Médio", "Alto"])
+        ax.set_yticks([1.5, 3.5, 5.5]); ax.set_yticklabels(["Baixo", "Médio", "Alto"])
+        ax.set_title("Nine Box Performance", fontsize=14, pad=20, weight="bold")
         
-        if pilar == '':
-            apurado.append(float(resultados[1]['Media_Geral'])) #E
-            apurado.append(float(resultados[2]['Media_Geral'])) #P
-            apurado.append(float(resultados[0]['Media_Geral'])) #C
+        plt.tight_layout()
+        
+        # Base64
+        buf = io.BytesIO()
+        fig.savefig(buf, format="png", transparent=True)
+        plt.close(fig)
+        return base64.b64encode(buf.getvalue()).decode(), None
+
+    except Exception as e:
+        return None, str(e)
+
+def gera_gráfico_pilar(participante='', pilar='', competencia='', outras_condicoes='', performance=''):
+    try:
+        # 1. Construção da Condição SQL
+        filtros = ["Status_Av_Interno = 'Finalizado'"] # Alterado para o nome real do cálculo
+        if pilar: filtros.append(f"Pilar = '{pilar}'")
+        if competencia: filtros.append(f"Competencia = '{competencia}'")
+        if participante: filtros.append(f"Participante = '{participante}'")
+        if outras_condicoes: filtros.append(outras_condicoes)
+        
+        sql_condicao = " WHERE " + " AND ".join(filtros)
+
+        scrp_sql = f"""
+        SELECT Pilar, ROUND(AVG(Media_Geral), 0) as Media_Geral 
+        FROM (
+            SELECT * FROM (
+                SELECT 
+                    Pilar,
+                    Participante, 
+                    CASE WHEN m_av1 = m_av2 THEN m_av1 ELSE CEIL((m_av1 + m_av2) / 2) END AS Media_Geral,
+                    CASE 
+                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'BAIXA PERFORMANCE'
+                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'INCONSISTENTE'
+                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'ESPECIALISTA'
+                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'DILEMA'
+                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'COMPETENTE'
+                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'FORTE ENTREGA'
+                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'DESAFIO'
+                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'FORTE CULTURA'
+                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'ALTO POTENCIAL'
+                        ELSE 'N/A'
+                    END as Performance,
+                    Status_Av_Interno as Status_Av
+                FROM (
+                    SELECT 
+                        Pilar, Participante,
+                        CASE WHEN m_av1 = m_av2 THEN m_av1 ELSE CEIL((m_av1 + m_av2) / 2) END AS Media_Avaliadores,
+                        CASE WHEN m_d_av1 = m_d_av2 THEN m_d_av1 ELSE CEIL((m_d_av1 + m_d_av2) / 2) END AS Media_Aval_Desemp,
+                        m_av1, m_av2, Status_Av_Interno, Sigla_Emp, C_Custo, Cargo, Grupo_estrategico
+                    FROM (
+                        SELECT 
+                            Pilar, Participante, 
+                            ROUND(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as m_av1,
+                            ROUND(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as m_d_av1,
+                            ROUND(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as m_av2,
+                            ROUND(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as m_d_av2,
+                            CASE 
+                                WHEN (COUNT(DISTINCT CASE WHEN id_rel IN (1,2) THEN id_rel END) = 2) 
+                                THEN 'Finalizado' ELSE 'Pendente' 
+                            END as Status_Av_Interno, Sigla_Emp, C_Custo, Cargo, Grupo_estrategico
+                        FROM QuestRH_Respostas 
+                        GROUP BY Pilar, Participante
+                    ) as t
+                    {sql_condicao} -- Filtro aplicado onde a coluna 'Status_Av_Interno' já existe
+                ) as x
+            ) as final_query
+            {f"WHERE Performance = '{performance}'" if performance else ""}
+        ) as base_calculo
+        GROUP BY Pilar
+        """
+        
+        conn = mysql_connection()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        cursor.execute(scrp_sql)
+        res = cursor.fetchall()
+        conn.close()
+
+        if not res:
+            return None, 'Nenhum dado encontrado.'
+
+        # 2. Mapeamento Inteligente (Evita erro de índice [1], [2])
+        # Criamos um dicionário onde a chave é o nome do pilar
+        mapa_resultados = {r['Pilar'].strip(): float(r['Media_Geral']) for r in res}
+
+        # Nomes exatos dos pilares conforme seu banco (ajuste espaços se necessário)
+        p_excelencia = "Excelência com Cuidado"
+        p_protagonismo = "Protagonismo Empreendedor"
+        p_criacao = "Criação com Propósito"
+
+        # Buscar valores do mapa ou usar 0.0 se não existir
+        v_e = mapa_resultados.get(p_excelencia, 0.0)
+        v_p = mapa_resultados.get(p_protagonismo, 0.0)
+        v_c = mapa_resultados.get(p_criacao, 0.0)
+
+        # Definir Apurado e Desejado
+        apurado = [v_e, v_p, v_c]
+        
+        if not pilar:
             desejado = [4.0, 4.0, 5.0]
+        else:
+            # Se um pilar específico foi filtrado, zeramos os desejados dos outros
+            desejado = [
+                4.0 if pilar.strip() == p_excelencia else 0.0,
+                4.0 if pilar.strip() == p_protagonismo else 0.0,
+                5.0 if pilar.strip() == p_criacao else 0.0
+            ]
 
-        elif pilar == 'Excelência com Cuidado ':
-            apurado.append(float(resultados[0]['Media_Geral']))
-            apurado.append(0.0)
-            apurado.append(0.0)
-            desejado = [4.0, 0.0, 0.0]
-
-        elif pilar == 'Protagonismo Empreendedor ':
-            apurado.append(0.0)
-            apurado.append(float(resultados[0]['Media_Geral']))
-            apurado.append(0.0)
-            desejado = [0.0, 4.0, 0.0]
-
-
-        elif pilar == 'Criação com Propósito ':
-            apurado.append(0.0)
-            apurado.append(0.0)
-            apurado.append(float(resultados[0]['Media_Geral']))
-            desejado = [0.0, 0.0, 5.0]
-
-
+        # 3. Gerar Gráfico (mesma lógica sua, mas com proteção de dados)
+        categorias = ["Excelência", "Protagonismo", "Criação"]
         gap = [a - b for a, b in zip(apurado, desejado)]
 
-        x = np.arange(len(categorias))
+        x_pos = np.arange(len(categorias))
         largura = 0.25
 
-        fig, ax = plt.subplots(figsize=(8, 4))
+        fig, ax = plt.subplots(figsize=(10, 5))
+        # 1. Gerar as barras
+        b1 = ax.bar(x_pos - largura, desejado, largura, label="Desejado", color="#4472C4")
+        b2 = ax.bar(x_pos, apurado, largura, label="Apurado", color="#ED7D31")
+        b3 = ax.bar(x_pos + largura, gap, largura, label="GAP", color="gray")
 
-        # Barras
-        b1 = ax.bar(x - largura, desejado, largura, label="Desejado", color="#4472C4")
-        b2 = ax.bar(x, apurado, largura, label="Apurado", color="#ED7D31")
-        b3 = ax.bar(x + largura, gap, largura, label="GAP", color="gray")
+        # 2. Adicionar os rótulos automaticamente
+        # fmt='%.0f' define que não terá casas decimais. Use '%.1f' se quiser uma casa.
+        ax.bar_label(b1, padding=3, fmt='%.0f', fontsize=9)
+        ax.bar_label(b2, padding=3, fmt='%.0f', fontsize=9)
+        ax.bar_label(b3, padding=3, fmt='%.0f', fontsize=9)
 
-        # Título
-        ax.set_title("Comparativo Pilares", fontsize=14, fontweight="bold")
-
-        # Eixo X
-        ax.set_xticks(x)
+        # 3. Ajustes de layout
+        ax.set_title("Comparativo Pilares", fontsize=14, fontweight="bold", pad=20)
+        ax.set_xticks(x_pos)
         ax.set_xticklabels(categorias)
-
-        # Eixo Y com margem para não cortar rótulos
-        y_min = min(min(desejado), min(apurado), min(gap)) - 1.5
-        y_max = max(max(desejado), max(apurado), max(gap)) + 1.5
-        ax.set_ylim(y_min, y_max)
-
-        # Linha zero
+        
+        # Aumentar um pouco o limite superior para o rótulo não encostar no topo
+        ax.set_ylim(min(gap + [0]) - 1, max(desejado + apurado) + 2)
+        
+        ax.legend(loc="upper right", bbox_to_anchor=(1.2, 1))
         ax.axhline(0, color="black", linewidth=0.8)
 
-        # Legenda fora do gráfico (lado direito)
-        ax.legend(loc="center left", bbox_to_anchor=(1, 0.5))
-
-        # Função para rótulos
-        def autolabel(barras):
-            for barra in barras:
-                altura = barra.get_height()
-                ax.annotate(f'{altura:.0f}',
-                            xy=(barra.get_x() + barra.get_width() / 2, altura),
-                            xytext=(0, 5 if altura >= 0 else -10),
-                            textcoords="offset points",
-                            ha='center', va='bottom')
-
-        autolabel(b1)
-        autolabel(b2)
-        autolabel(b3)
-
         plt.tight_layout()
-
         buf = io.BytesIO()
-        plt.savefig(buf, format="png", dpi=150, bbox_inches="tight", transparent=True)
+        plt.savefig(buf, format="png", transparent=True)
         plt.close(fig)
-        buf.seek(0)
-
-        # Converter para base64
-        return base64.b64encode(buf.read()).decode("utf-8"), ''
+        
+        return base64.b64encode(buf.getvalue()).decode("utf-8"), ''
 
     except Exception as e:
-        return None, e
+        print(f"Erro: {e}") # Log para você ver no console
+        return None, str(e)
 
-def gera_gráfico_Competencia(participante = '', pilar= '', competencia='',  outras_condicoes = ''):
+def gera_gráfico_Competencia(participante='', pilar='', competencia='', outras_condicoes='', performance=''):
     try:
-        # Dados
- 
-        apurado = []
-        desejado = []
-
+        # 1. Mapeamento de Metas (Desejado)
         desejado_dict = {
-            'Equilibrio emocional':  4.0,
-            'Comprometimento com resultado':  4.0,
-            'Resiliência':  4.0,
-            'Faz como se fosse seu':  4.0,
-            'Foco em soluções':  4.0,
-            'Atualização e inovação constantes':  4.0,
-            'Inspiração e mobilização de pessoas':  5.0,
-            'Trabalho em equipe':  5.0,
-            'Ensinar e compartilhar conhecimento':  5.0,
-            'Resolve, não empurra':  4.0,
-            'Entrega com precisão':  4.0,
-            'Joga junto':  4.0,
-            'Melhora sempre':  5.0,
+            'Equilibrio emocional': 4.0, 'Comprometimento com resultado': 4.0,
+            'Resiliência': 4.0, 'Faz como se fosse seu': 4.0,
+            'Foco em soluções': 4.0, 'Atualização e inovação constantes': 4.0,
+            'Inspiração e mobilização de pessoas': 5.0, 'Trabalho em equipe': 5.0,
+            'Ensinar e compartilhar conhecimento': 5.0, 'Resolve, não empurra': 4.0,
+            'Entrega com precisão': 4.0, 'Joga junto': 4.0, 'Melhora sempre': 5.0,
         }
 
-        sql_condicao =  "id_rel IN (1,2)"
-
-        if pilar != '':
-            sql_condicao += f" and Pilar = '{pilar}'"
-
-        if competencia != '':
-            sql_condicao += f" and Competencia = '{competencia}'"
-
-        if participante != '':
-            sql_condicao += f" and Participante = '{participante}'"
+        # 2. Construção dos Filtros Dinâmicos
+        filtros = ["Status_Av_Interno = 'Finalizado'"]
+        if pilar: filtros.append(f"Pilar = '{pilar}'")
+        if competencia: filtros.append(f"Competencia = '{competencia}'")
+        if participante: filtros.append(f"Participante = '{participante}'")
+        if outras_condicoes: filtros.append(outras_condicoes)
         
-        if outras_condicoes != '' and outras_condicoes != None:
-            sql_condicao += f" and {outras_condicoes}"
+        sql_condicao = " WHERE " + " AND ".join(filtros)
 
+        # 3. SQL com Suporte a Filtro de Performance
         scrp_sql = f"""
-                SELECT Competencia, 
-                ROUND(AVG(Media_geral),0) as Media_Geral from(
-                SELECT Competencia, 
-                CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media_Geral
+        SELECT Competencia, ROUND(AVG(Media_Geral), 0) as Media_Geral 
+        FROM (
+            SELECT * FROM (
+                SELECT 
+                    Competencia, Participante, 
+                    CASE WHEN m_av1 = m_av2 THEN m_av1 ELSE CEIL((m_av1 + m_av2) / 2) END AS Media_Geral,
+                    CASE 
+                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'BAIXA PERFORMANCE'
+                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'INCONSISTENTE'
+                        WHEN Media_Avaliadores IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'ESPECIALISTA'
+                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'DILEMA'
+                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'COMPETENTE'
+                        WHEN Media_Avaliadores IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'FORTE ENTREGA'
+                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'DESAFIO'
+                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'FORTE CULTURA'
+                        WHEN Media_Avaliadores = 5 AND Media_Aval_Desemp = 5 THEN 'ALTO POTENCIAL'
+                        ELSE 'N/A'
+                    END as Performance,
+                    Status_Av_Interno
+                FROM (
+                    SELECT 
+                        Competencia, Pilar, Participante,
+                        CASE WHEN m_av1 = m_av2 THEN m_av1 ELSE CEIL((m_av1 + m_av2) / 2) END AS Media_Avaliadores,
+                        CASE WHEN m_d_av1 = m_d_av2 THEN m_d_av1 ELSE CEIL((m_d_av1 + m_d_av2) / 2) END AS Media_Aval_Desemp,
+                        m_av1, m_av2, Status_Av_Interno, Sigla_Emp, C_Custo, Cargo, Grupo_estrategico
                     FROM (
-                        SELECT Competencia, Participante, 
-                        round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1, 
-                        round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2
-                        FROM QuestRH_Respostas
-                        WHERE {sql_condicao}
-                        GROUP BY Competencia, Participante
-                        HAVING COUNT(DISTINCT id_rel) = 2
-                    ) AS Sub) as x
-                    GROUP BY Competencia
-                    ORDER BY Competencia;
+                        SELECT 
+                            Competencia, Pilar, Participante, 
+                            ROUND(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as m_av1,
+                            ROUND(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as m_d_av1,
+                            ROUND(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as m_av2,
+                            ROUND(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as m_d_av2,
+                            CASE 
+                                WHEN (COUNT(DISTINCT CASE WHEN id_rel IN (1,2) THEN id_rel END) = 2) 
+                                THEN 'Finalizado' ELSE 'Pendente' 
+                            END as Status_Av_Interno,
+                            Sigla_Emp, C_Custo, Cargo, Grupo_estrategico
+                        FROM QuestRH_Respostas 
+                        GROUP BY Competencia, Pilar, Participante
+                    ) as t
+                    {sql_condicao}
+                ) as x
+            ) as final_query
+            {f"WHERE Performance = '{performance}'" if performance else ""}
+        ) as base_calculo
+        GROUP BY Competencia
+        ORDER BY Competencia
         """
 
         conn = mysql_connection()
-
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         cursor.execute(scrp_sql)
         resultados = cursor.fetchall()
-
         conn.close()
 
-        if len(resultados) == 0:   
+        if not resultados:
             return None, 'Nenhum dado encontrado.'
-        
+
+        # 4. Processamento dos Dados para o Gráfico
         labels_apurado = []
-        for res in resultados:
-            competencia = str(res['Competencia']).strip()
-            apurado.append(float(res['Media_Geral']))
-            desejado.append(float(desejado_dict[competencia]))
-            labels_apurado.append(competencia)
-
-
-        gap = np.array(apurado) - np.array(desejado)
-
-        x = np.arange(len(desejado))
-        largura = 0.25
-
-        # Altera o tamanho da figura, tamanho da colunas e texto
-        fig, ax = plt.subplots(figsize=(15, 5))
-
-        # Barras
-        b1 = ax.bar(x - largura, desejado, largura, label="Desejado", color="#6DDAE9")
-        b2 = ax.bar(x, apurado, largura, label="Apurado", color="#0353FF")
-        b3 = ax.bar(x + largura, gap, largura, label="GAP", color="gray")
-
-        # Título
-        ax.set_title("Comparativo Competências", fontsize=14, fontweight="bold")
-
-        # Eixo X
-        ax.set_xticks(x)
-        ax.set_xticklabels(labels_apurado, rotation=45, ha="right")
-
-        # Eixo Y com margem para não cortar rótulos
-        y_min = min(min(desejado), min(apurado), min(gap)) - 1.5
-        y_max = max(max(desejado), max(apurado), max(gap)) + 1.5
-        ax.set_ylim(y_min, y_max)
-
-        # Linha zero
-        ax.axhline(0, color="black", linewidth=0.8)
-
-        # Legenda fora do gráfico (lado direito)
-        ax.legend(loc="center left", bbox_to_anchor=(1, 0.5))
-
-        # Função para rótulos
-        def autolabel(barras):
-            for barra in barras:
-                altura = barra.get_height()
-                ax.annotate(f'{altura:.0f}',
-                            xy=(barra.get_x() + barra.get_width() / 2, altura),
-                            xytext=(0, 5 if altura >= 0 else -10),
-                            textcoords="offset points",
-                            ha='right')
-
-        
-        autolabel(b1)
-        autolabel(b2)
-        autolabel(b3)
-
-        plt.tight_layout()
-
-        buf = io.BytesIO()
-        plt.savefig(buf, format="png", dpi=150, bbox_inches="tight", transparent=True)
-        plt.close(fig)
-        buf.seek(0)
-
-        # Converter para base64
-        return base64.b64encode(buf.read()).decode("utf-8"), ''
-
-    except Exception as e:
-        print(f'❌ Erro ao gerar gráfico de competências: {e}')
-        return None, e
-
-def gera_gráfico_Comparativo(participante = '', pilar= '', competencia='', outras_condicoes = ''):
-    try:
-        # Dados
-        categorias = ['Equilibrio emocional',
-            'Comprometimento com resultado',
-            'Resiliência',
-            'Faz como se fosse seu',
-            'Foco em soluções',
-            'Atualização e inovação constantes',
-            'Inspiração e mobilização de pessoas',
-            'Trabalho em equipe',
-            'Ensinar e compartilhar conhecimento',
-            'Resolve, não empurra',
-            'Entrega com precisão',
-            'Joga junto',
-            'Melhora sempre',
-            ]
         apurado = []
         desejado = []
 
-        sql_condicao =  "id_rel IN (0,1,2)"
+        for res in resultados:
+            comp_nome = str(res['Competencia']).strip()
+            val_apurado = float(res['Media_Geral'])
+            val_desejado = desejado_dict.get(comp_nome, 0.0) # 0.0 caso não ache no dict
+            
+            labels_apurado.append(comp_nome)
+            apurado.append(val_apurado)
+            desejado.append(val_desejado)
 
-        if pilar != '':
-            sql_condicao += f" and Pilar = '{pilar}'"
+        gap = np.array(apurado) - np.array(desejado)
+        x_pos = np.arange(len(labels_apurado))
+        largura = 0.25
 
-        if competencia != '':
-            sql_condicao += f" and Competencia = '{competencia}'"
+        # 5. Geração do Gráfico
+        fig, ax = plt.subplots(figsize=(15, 6))
 
-        if participante != '':
-            sql_condicao += f" and Participante = '{participante}'"
+        b1 = ax.bar(x_pos - largura, desejado, largura, label="Desejado", color="#6DDAE9")
+        b2 = ax.bar(x_pos, apurado, largura, label="Apurado", color="#0353FF")
+        b3 = ax.bar(x_pos + largura, gap, largura, label="GAP", color="gray")
 
-        if outras_condicoes != '' and outras_condicoes != None:
-            sql_condicao += f" and {outras_condicoes}"
+        # Rótulos das barras (Aparecer valores)
+        ax.bar_label(b1, padding=3, fmt='%.0f', fontsize=8)
+        ax.bar_label(b2, padding=3, fmt='%.0f', fontsize=8)
+        ax.bar_label(b3, padding=3, fmt='%.0f', fontsize=8)
 
+        ax.set_title("Comparativo por Competência", fontsize=14, fontweight="bold", pad=20)
+        ax.set_xticks(x_pos)
+        ax.set_xticklabels(labels_apurado, rotation=45, ha="right", fontsize=9)
+        
+        # Ajuste de escala Y
+        y_vals = list(desejado) + list(apurado) + list(gap)
+        ax.set_ylim(min(y_vals) - 1, max(y_vals) + 1.5)
+        
+        ax.axhline(0, color="black", linewidth=0.8)
+        ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
+
+        plt.tight_layout()
+
+        # Converter para Base64
+        buf = io.BytesIO()
+        plt.savefig(buf, format="png", dpi=120, bbox_inches="tight", transparent=True)
+        plt.close(fig)
+        return base64.b64encode(buf.getvalue()).decode("utf-8"), ''
+
+    except Exception as e:
+        print(f"❌ Erro Competências: {e}")
+        return None, str(e)
+
+def gera_gráfico_Comparativo(participante='', pilar='', competencia='', outras_condicoes='', performance=''):
+    try:
+        # 1. Construção dos Filtros Dinâmicos
+        # Nota: Aqui usamos id_rel IN (0,1,2) pois precisamos da Auto Avaliação (0)
+        filtros = ["Status_Av_Interno = 'Finalizado'"]
+        if pilar: filtros.append(f"Pilar = '{pilar}'")
+        if competencia: filtros.append(f"Competencia = '{competencia}'")
+        if participante: filtros.append(f"Participante = '{participante}'")
+        if outras_condicoes: filtros.append(outras_condicoes)
+        
+        sql_condicao = " WHERE " + " AND ".join(filtros)
+
+        # 2. SQL Otimizado com Auto Avaliação e Filtro de Performance
         scrp_sql = f"""
-                    Select Competencia,
-                    ROUND(AVG(Media_Auto),0) as Media_Auto,
-                    ROUND(AVG(Media_Avaliadores),0) as Media_Avaliadores from (
-                    Select Competencia,
-                        Participante,
-                        Media_Auto,
-                        CASE WHEN média_av1 = média_av2 THEN média_av1 ELSE CEIL( (média_av1 + média_av2) / 2) END AS Media_Avaliadores
-                    from (SELECT Competencia, Participante,
-                        ROUND(AVG(CASE WHEN id_rel = 0 THEN Resposta END), 0) AS Media_Auto,
-                        round(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as média_av1,
-                        round(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as média_av2
-                    FROM QuestRH_Respostas WHERE {sql_condicao} AND Participante IN (
-                            SELECT Participante
-                            FROM QuestRH_Respostas
-                            WHERE id_rel IN (0,1,2)
-                            GROUP BY  Participante
-                            HAVING COUNT(DISTINCT id_rel) = 3
-                        )group by  Competencia, Participante) as x
-                        ) as y group by  Competencia
-                    """
-
+SELECT Competencia, 
+       ROUND(AVG(Media_Auto), 0) as Media_Auto, 
+       ROUND(AVG(Media_Gestores), 0) as Media_Gestores
+FROM (
+    SELECT 
+        Competencia, 
+        Participante, 
+        Media_Auto,
+        Media_Avaliadores_Final as Media_Gestores,
+        -- Classificação de Performance baseada nas médias calculadas
+        CASE 
+            WHEN Media_Avaliadores_Final IN (1, 2) AND Media_Aval_Desemp IN (1, 2) THEN 'BAIXA PERFORMANCE'
+            WHEN Media_Avaliadores_Final IN (1, 2) AND Media_Aval_Desemp IN (3, 4) THEN 'INCONSISTENTE'
+            WHEN Media_Avaliadores_Final IN (1, 2) AND Media_Aval_Desemp = 5 THEN 'ESPECIALISTA'
+            WHEN Media_Avaliadores_Final IN (3, 4) AND Media_Aval_Desemp IN (1, 2) THEN 'DILEMA'
+            WHEN Media_Avaliadores_Final IN (3, 4) AND Media_Aval_Desemp IN (3, 4) THEN 'COMPETENTE'
+            WHEN Media_Avaliadores_Final IN (3, 4) AND Media_Aval_Desemp = 5 THEN 'FORTE ENTREGA'
+            WHEN Media_Avaliadores_Final = 5 AND Media_Aval_Desemp IN (1, 2) THEN 'DESAFIO'
+            WHEN Media_Avaliadores_Final = 5 AND Media_Aval_Desemp IN (3, 4) THEN 'FORTE CULTURA'
+            WHEN Media_Avaliadores_Final = 5 AND Media_Aval_Desemp = 5 THEN 'ALTO POTENCIAL'
+            ELSE 'N/A'
+        END as Performance
+    FROM (
+        SELECT 
+            Competencia, 
+            Participante,
+            ROUND(m_auto_raw, 0) AS Media_Auto,
+            CASE WHEN m_av1 = m_av2 THEN m_av1 ELSE CEIL((m_av1 + m_av2) / 2) END AS Media_Avaliadores_Final,
+            CASE WHEN m_d_av1 = m_d_av2 THEN m_d_av1 ELSE CEIL((m_d_av1 + m_d_av2) / 2) END AS Media_Aval_Desemp,
+            Status_Av_Interno,
+            Sigla_Emp, C_Custo, Cargo, Grupo_estrategico
+        FROM (
+            SELECT 
+                Competencia, Pilar, Participante, 
+                AVG(CASE WHEN id_rel = 0 THEN Resposta END) as m_auto_raw,
+                ROUND(AVG(CASE WHEN id_rel = 1 THEN Resposta END), 0) as m_av1,
+                ROUND(AVG(CASE WHEN id_rel = 1 THEN Desempenho_Tecnico END), 0) as m_d_av1,
+                ROUND(AVG(CASE WHEN id_rel = 2 THEN Resposta END), 0) as m_av2,
+                ROUND(AVG(CASE WHEN id_rel = 2 THEN Desempenho_Tecnico END), 0) as m_d_av2,
+                -- A coluna id_rel é usada aqui para o COUNT, mas não precisa estar no SELECT externo
+                CASE 
+                    WHEN (COUNT(DISTINCT id_rel) = 3) THEN 'Finalizado' 
+                    ELSE 'Pendente' 
+                END as Status_Av_Interno,
+                Sigla_Emp, C_Custo, Cargo, Grupo_estrategico
+            FROM QuestRH_Respostas 
+            GROUP BY Competencia, Pilar, Participante
+        ) as t
+        {sql_condicao}
+    ) as x
+    {f"WHERE Performance = '{performance}'" if performance else ""}
+) as base_calculo
+GROUP BY Competencia
+ORDER BY Competencia
+"""
 
         conn = mysql_connection()
-
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         cursor.execute(scrp_sql)
         resultados = cursor.fetchall()
         conn.close()
 
-        if len(resultados) == 0:   
+        if not resultados:
             return None, 'Nenhum dado encontrado.'
+
+        # 3. Preparação dos Dados
+        labels = [str(r['Competencia']).strip() for r in resultados]
+        auto_vals = [float(r['Media_Auto']) for r in resultados]
+        gestor_vals = [float(r['Media_Gestores']) for r in resultados]
+
+        x_pos = np.arange(len(labels))
+        largura = 0.35
+
+        # 4. Geração do Gráfico
+        fig, ax = plt.subplots(figsize=(15, 6))
         
-        labels_apurado = []
-        for res in resultados:
-            apurado.append(float(res['Media_Avaliadores']))
-            desejado.append(float(res['Media_Auto']))
-            labels_apurado.append(str(res['Competencia']).strip())
+        b1 = ax.bar(x_pos - largura/2, auto_vals, largura, label="Auto Avaliação", color="#0BE1FD")
+        b2 = ax.bar(x_pos + largura/2, gestor_vals, largura, label="Avaliação Gestores", color="#0642C4")
 
-        x = np.arange(len(labels_apurado))
-        largura = 0.25
+        # Rótulos automáticos
+        ax.bar_label(b1, padding=3, fmt='%.0f', fontsize=9)
+        ax.bar_label(b2, padding=3, fmt='%.0f', fontsize=9)
 
-        # Altera o tamanho da figura, tamanho da colunas e texto
-        fig, ax = plt.subplots(figsize=(15, 5))
+        # Estilização
+        ax.set_title("Comparativo: Auto Avaliação vs. Gestores", fontsize=14, fontweight="bold", pad=20)
+        ax.set_xticks(x_pos)
+        ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=10)
+        
+        # Ajuste do eixo Y para os números não sumirem
+        max_val = max(max(auto_vals), max(gestor_vals))
+        ax.set_ylim(0, max_val + 1.5)
 
-        # Barras
-        b1 = ax.bar(x - largura, desejado, largura, label="Auto", color="#0BE1FD")
-        b2 = ax.bar(x, apurado, largura, label="Gestores", color="#0642C4")
-
-        # Título
-        ax.set_title("Comparativo - Auto Avaliação x Avaliação Gestores", fontsize=14, fontweight="bold")
-
-        # Eixo X
-        ax.set_xticks(x)
-        ax.set_xticklabels(labels_apurado, rotation=45, ha="right")
-
-        # Eixo Y com margem para não cortar rótulos
-        y_min = min(min(desejado), min(apurado)) - 1.5
-        y_max = max(max(desejado), max(apurado)) + 1.5
-        ax.set_ylim(y_min, y_max)
-
-        # Linha zero
+        ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
         ax.axhline(0, color="black", linewidth=0.8)
-
-        # Legenda fora do gráfico (lado direito)
-        ax.legend(loc="center left", bbox_to_anchor=(1, 0.5))
-
-        # Função para rótulos
-        def autolabel(barras):
-            for barra in barras:
-                altura = barra.get_height()
-                ax.annotate(f'{altura:.0f}',
-                            xy=(barra.get_x() + barra.get_width() / 2, altura),
-                            xytext=(0, 5 if altura >= 0 else -10),
-                            textcoords="offset points",
-                            ha='right')
-
-
-        autolabel(b1)
-        autolabel(b2)
 
         plt.tight_layout()
 
+        # Converter para Base64
         buf = io.BytesIO()
-        plt.savefig(buf, format="png", dpi=150, bbox_inches="tight", transparent=True)
+        plt.savefig(buf, format="png", dpi=120, bbox_inches="tight", transparent=True)
         plt.close(fig)
-        buf.seek(0)
-
-        # Converter para base64
-        return base64.b64encode(buf.read()).decode("utf-8"), ''
+        return base64.b64encode(buf.getvalue()).decode("utf-8"), ''
 
     except Exception as e:
-        print(f'❌ Erro ao gerar gráfico de comparação: {e}')
-        return None, e
+        print(f"❌ Erro Comparativo: {e}")
+        return None, str(e)
     
 def gera_bell_curve(estrategico = True, nao_estrategico = True):
     try:
@@ -843,7 +747,21 @@ def gera_grafico_conclusao(finalizados = False):
         if finalizados == False:
             agrupar = 'x.Participante, x.Nome_Avaliador'
             texto_grafico = 'Avaliações Finalizadas'
-            qtd_participantes = 386 #Quantidade constante na tabela Lista_Emails
+            scrp_participantes = f"Select count(Participante) from QuestRH_Relacoes Where Tipo_Avaliacao <>'A3';"
+            scrp_avaliadores = f"Select count(Participante) as Total from QuestRH_Relacoes"
+            connection = mysql_connection()
+            cursor = connection.cursor()
+            
+            cursor.execute(scrp_participantes)
+            qtd_participantes = cursor.fetchone()[0]
+            
+            cursor.execute(scrp_avaliadores)
+            qtd_avaliadores = cursor.fetchone()[0]
+            
+            connection.close()
+            
+            #qtd participantes = todos participantes + avaliadores A1 e A2 por isso consta qtd_avaliadores*2
+            qtd_participantes += qtd_avaliadores*2  
         else:
             sql_condicao = "Where Status_Av = 'Finalizado'"
             agrupar = 'x.Participante'
@@ -1179,8 +1097,16 @@ def gera_grafico_empresas():
         ) as y where Status_Av = 'Finalizado' group by Sigla_Emp order by Sigla_Emp
         """
         Valores = [0,0,0,0]
-        Textos=['0 de 96 (0%)','0 de 2 (0%)','0 de 15 (0%)','0 de 30 (0%)']
-        Percentual = []
+        
+        scrp_sql2 = f"""SELECT 
+    y.Sigla_Emp, 
+    count(x.Participante) as Cont
+FROM QuestRH_Relacoes AS x
+INNER JOIN QuestRH_Pessoas AS y ON y.Nome = x.Participante
+Group by y.Sigla_Emp;"""        
+        
+        
+      
 
         conn = mysql_connection()
 
@@ -1188,23 +1114,20 @@ def gera_grafico_empresas():
         cursor.execute(scrp_sql)
         resultados = cursor.fetchall()
 
+        total_empresas = cursor.execute(scrp_sql2)
+        total_empresas = cursor.fetchall()
+        Listagem_Avaliacoes = {}
+        labels = []
+        Textos = []
+        Percentual = []
+        
+        for row in total_empresas:
+            Listagem_Avaliacoes[row['Sigla_Emp']] = row['Cont']
+            labels.append(row['Sigla_Emp'])
+            Textos.append(f'0 de {row['Cont']} (0%)')
+            
         conn.close()
         
-
-        Listagem_Avaliacoes ={
-            'Construção': 96,
-            'Locações': 2,
-            'Montagens Industriais': 15,
-            'Serviços': 30,
-        }
-
-        # Dados
-        labels = [
-            "Construção",
-            "Locações",
-            "Montagens Industriais",
-            "Serviços",
-        ]
 
         if len(resultados) == 0:   
             return None, 'Nenhum dado encontrado.'
