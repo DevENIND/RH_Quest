@@ -1124,7 +1124,7 @@ Group by y.Sigla_Emp;"""
         for row in total_empresas:
             Listagem_Avaliacoes[row['Sigla_Emp']] = row['Cont']
             labels.append(row['Sigla_Emp'])
-            Textos.append(f'0 de {row['Cont']} (0%)')
+            Textos.append(f"0 de {row['Cont']} (0%)")
             
         conn.close()
         
