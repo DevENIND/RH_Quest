@@ -4140,7 +4140,9 @@ HAVING COUNT(DISTINCT CASE WHEN id_rel IN (1, 2) THEN id_rel END) = 2
     
     def exportar_para_excel(e=None):
         try:
-            # Conexão e consulta
+            mostrar_alerta_temporario('Gerando arquivo de respostas, aguarde a finalização...', ft.Colors.BLUE_400)
+
+            # 1. Conexão e consulta
             conn = mysql_connection()
             cursor = conn.cursor(pymysql.cursors.DictCursor)
             scrp_sql = "SELECT * FROM QuestRH_Respostas"
@@ -4149,27 +4151,45 @@ HAVING COUNT(DISTINCT CASE WHEN id_rel IN (1, 2) THEN id_rel END) = 2
             cursor.close()
             conn.close()
 
-            # Criar DataFrame
+            if not consulta:
+                mostrar_alerta_temporario('Não existem dados para exportar', ft.Colors.ORANGE_400)
+                return
+
+            # 2. Criar DataFrame
             df = pd.DataFrame(consulta)
 
-            # Criar arquivo em memória
-            output = io.BytesIO()
-            df.to_excel(output, index=False, engine='openpyxl')
-            output.seek(0)
+            # 3. Definição de caminhos seguros no servidor/máquina local
+            # Certifica que a pasta assets/relatorios existe
+            pasta_exportacao = os.path.join("assets", "relatorios")
+            if not os.path.exists(pasta_exportacao):
+                os.makedirs(pasta_exportacao)
 
-            # Nome do arquivo
+            # Nome único baseado no timestamp
             nome_arquivo = f"exportacao_respostas_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
-             
-            # Codificar para base64
-            b64 = base64.b64encode(output.read()).decode()
+            caminho_file = os.path.join(pasta_exportacao, nome_arquivo)
 
-            # Criar link de download
-            link_download = f"data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}"
+            # 4. Salvar o arquivo fisicamente no servidor usando o openpyxl
+            with pd.ExcelWriter(caminho_file, engine='openpyxl') as writer:
+                df.to_excel(writer, index=False)
+
+            # 5. Criar a URL relativa que o Flet expõe publicamente
+            # O Flet mapeia a pasta 'assets' como a raiz '/', então 'assets/relatorios/arq.xlsx' vira '/relatorios/arq.xlsx'
+            caminho_url = f"/relatorios/{nome_arquivo}"
             
-            # Abrir o link no navegador (força o download)
-            page.launch_url(link_download, web_window_name=nome_arquivo)
+            # Abre o link real e limpo no navegador do usuário (evita bloqueio de segurança)
+            page.launch_url(f"{caminho_url}?t={datetime.datetime.now().timestamp()}")
+
+            # 6. Criar uma tarefa em segundo plano para deletar o arquivo após 45 segundos
+            # Isso impede que o seu servidor fique lotado de arquivos antigos de exportação
+            def deletar_depois():
+                time.sleep(45) # Tempo suficiente para o usuário terminar o download
+                if os.path.exists(caminho_file):
+                    os.remove(caminho_file)
+                    
+            threading.Thread(target=deletar_depois, daemon=True).start()
 
             mostrar_alerta_temporario('Exportação realizada com sucesso', ft.Colors.GREEN_400)
+            
         except Exception as ex:
             mostrar_alerta_temporario(f'Erro ao exportar: {ex}', ft.Colors.RED_400)
 
