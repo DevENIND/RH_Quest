@@ -3227,30 +3227,30 @@ def main(page: ft.Page):
                 
             writer.close()
             
-            try:
-                # 2. Certifique-se que a pasta assets existe na VPS 
-                if not os.path.exists(os.path.join("assets", "relatorios")):
-                    os.makedirs(os.path.join("assets", "relatorios"))
-                    
-                    
-                caminho_url = f"/relatorios/{nome_arquivo}"
-                page.launch_url(f"{caminho_url}?t={datetime.datetime.now().timestamp()}")
-                
-                # Cria uma tarefa em segundo plano para deletar daqui a 30 segundos
-                def deletar_depois():
-                    time.sleep(30) # Tempo suficiente para o navegador completar o download
-                    if os.path.exists(caminho_file):
-                        os.remove(caminho_file)
-                        
-                threading.Thread(target=deletar_depois, daemon=True).start()
-                
-                mostrar_alerta_temporario('Exportação realizada com sucesso', ft.Colors.GREEN_400)
-            except Exception as ex:
-                mostrar_alerta_temporario(f'Erro ao exportar: {ex}', ft.Colors.RED_400)
+        
         else:
             enviar_msg('Sem dados para realizar a exportação', ft.Colors.RED_400)
         
-    
+        try:
+            # 2. Certifique-se que a pasta assets existe na VPS 
+            if not os.path.exists(os.path.join("assets", "relatorios")):
+                os.makedirs(os.path.join("assets", "relatorios"))
+                
+                
+            caminho_url = f"/relatorios/{nome_arquivo}"
+            page.launch_url(f"{caminho_url}?t={datetime.datetime.now().timestamp()}")
+            
+            # Cria uma tarefa em segundo plano para deletar daqui a 30 segundos
+            def deletar_depois():
+                time.sleep(30) # Tempo suficiente para o navegador completar o download
+                if os.path.exists(caminho_file):
+                    os.remove(caminho_file)
+                    
+            threading.Thread(target=deletar_depois, daemon=True).start()
+            
+            mostrar_alerta_temporario('Exportação realizada com sucesso', ft.Colors.GREEN_400)
+        except Exception as ex:
+            mostrar_alerta_temporario(f'Erro ao exportar: {ex}', ft.Colors.RED_400)
     
     
     #Função para construir os formulários de respostas
