@@ -3118,8 +3118,7 @@ def main(page: ft.Page):
                 grafico64, msgerro = gera_graficos.gera_ninebox(participante=p)
                 grafico_pilar64, msgerro = gera_graficos.gera_gráfico_pilar(participante=p)
                 grafico_comp64, msgerro = gera_graficos.gera_gráfico_Competencia(participante=p)
-                grafico_compar64, msgerro_compar = gera_
-                ativo(participante=p)
+                grafico_compar64, msgerro_compar = gera_graficos.gera_gráfico_Comparativo(participante=p)
 
                 # Transformar dados em DataFrame para a tabela
                 df = df_participante
