@@ -3069,12 +3069,15 @@ def main(page: ft.Page):
         ORDER BY 
             Participante, ID_Pergunta;
         '''
+
+        sql_texto = 'CALL GerarRelatorioCiclosDinamico();'
         
         cursor.execute(sql_texto)
         consulta = cursor.fetchall()
         cursor.close()
-        conn.close()
         
+
+        df_geral = pd.DataFrame(consulta)
         
         if av1== True:
             conn = mysql_connection()
@@ -3096,11 +3099,11 @@ def main(page: ft.Page):
             
             df_avaliadores = pd.DataFrame(consulta_avaliadores1)
             avaliadores = df_avaliadores['Avaliador1'].unique()
+            
         
         if consulta and av1 == False:
             participante_anterior = ''
-            
-            df_geral = pd.DataFrame(consulta)
+        
             participantes = df_geral['Participante'].unique()
             
             nome_arquivo = f"Relatorio_final.xlsx"
@@ -3115,7 +3118,8 @@ def main(page: ft.Page):
                 grafico64, msgerro = gera_graficos.gera_ninebox(participante=p)
                 grafico_pilar64, msgerro = gera_graficos.gera_gráfico_pilar(participante=p)
                 grafico_comp64, msgerro = gera_graficos.gera_gráfico_Competencia(participante=p)
-                grafico_compar64, msgerro_compar = gera_graficos.gera_gráfico_Comparativo(participante=p)
+                grafico_compar64, msgerro_compar = gera_
+                ativo(participante=p)
 
                 # Transformar dados em DataFrame para a tabela
                 df = df_participante
@@ -3161,7 +3165,6 @@ def main(page: ft.Page):
                 
             writer.close()
         elif consulta and av1 == True:
-            df_geral = pd.DataFrame(consulta)
             participantes = df_geral['Participante'].unique()
             
             nome_arquivo = f"Relatorio_final_av1.xlsx"
