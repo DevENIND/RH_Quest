@@ -13,7 +13,7 @@ from pathlib import Path
 import io
 import gera_graficos
 import pytz
-from xhtml2pdf import pisa
+from xhtml2pdf import 
 
 import os
 import json
