@@ -568,7 +568,7 @@ def main(page: ft.Page):
     page.title = "Sistema de Avaliação ENIND"
     #page.scroll = ft.ScrollMode.AUTO
     page.window.maximized = True
-    data_limite = '2026/06/16 23:59:59'
+    data_limite = '2026/06/18 23:59:59'
     #data_limite = '2025/07/21 23:59:59'
     file_picker = ft.FilePicker()
     page.overlay.append(file_picker)
